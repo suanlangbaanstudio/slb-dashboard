@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>สวนหลังบ้าน สตูดิโอ</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Sarabun',sans-serif;background:#f5f0e8;color:#1a3a2a;min-height:100vh}
+.header{background:#1a3a2a;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-icon{width:38px;height:38px;border-radius:50%;background:#c9a84c;display:flex;align-items:center;justify-content:center;font-size:18px}
+.logo-text{color:#f5f0e8;font-size:16px;font-weight:600}
+.logo-sub{color:#7aad8f;font-size:11px;letter-spacing:1px}
+.status{display:flex;align-items:center;gap:8px;color:#7aad8f;font-size:12px}
+.dot{width:8px;height:8px;border-radius:50%;background:#7aad8f;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.main{max-width:1200px;margin:0 auto;padding:24px 20px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:24px}
+.stat{background:#faf8f4;border-radius:12px;padding:18px 20px;border-left:4px solid #c9a84c}
+.stat.green{border-left-color:#4a7c5f}
+.stat.blue{border-left-color:#2471a3}
+.stat.red{border-left-color:#c0392b}
+.stat-label{font-size:11px;font-weight:700;color:#4a7c5f;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.stat-value{font-size:24px;font-weight:700;color:#1a3a2a}
+.stat-sub{font-size:12px;color:#888;margin-top:4px}
+.section{background:#faf8f4;border-radius:14px;overflow:hidden;margin-bottom:20px}
+.section-header{background:linear-gradient(135deg,#1a3a2a,#2d5a3d);padding:14px 20px}
+.section-title{color:#f5f0e8;font-size:15px;font-weight:600}
+.section-body{padding:16px 20px}
+.proj-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(74,124,95,0.1)}
+.proj-item:last-child{border-bottom:none}
+.proj-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.proj-name{font-size:14px;font-weight:600;flex:1}
+.proj-status{font-size:11px;padding:3px 8px;border-radius:20px;font-weight:700;white-space:nowrap}
+.s-build{background:rgba(201,168,76,0.15);color:#8a6f1e}
+.s-design{background:rgba(36,113,163,0.12);color:#2471a3}
+.s-done{background:rgba(74,124,95,0.12);color:#2d5a3d}
+.proj-amount{font-size:13px;font-weight:700;min-width:80px;text-align:right}
+.payment-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(74,124,95,0.1)}
+.payment-item:last-child{border-bottom:none}
+.pay-name{flex:1;font-size:13px}
+.pay-amount{font-size:14px;font-weight:700;white-space:nowrap}
+.pay-status{font-size:11px;padding:3px 8px;border-radius:20px;font-weight:700;white-space:nowrap}
+.ps-wait{background:rgba(201,168,76,0.15);color:#8a6f1e}
+.ps-sent{background:rgba(36,113,163,0.12);color:#2471a3}
+.empty{text-align:center;padding:30px;color:#aaa;font-size:13px}
+.loading{text-align:center;padding:30px;color:#888;font-size:13px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:700px){.grid2{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}}
+@media(max-width:400px){.stats{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">
+    <div class="logo-icon">🌿</div>
+    <div>
+      <div class="logo-text">สวนหลังบ้าน สตูดิโอ</div>
+      <div class="logo-sub">LIVE DASHBOARD</div>
+    </div>
+  </div>
+  <div class="status">
+    <div class="dot"></div>
+    <span id="statusText">กำลังโหลด...</span>
+  </div>
+</div>
+
+<div class="main">
+
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-label">มูลค่างานทั้งหมด</div>
+      <div class="stat-value" id="s1">—</div>
+      <div class="stat-sub" id="s1b">—</div>
+    </div>
+    <div class="stat green">
+      <div class="stat-label">รับเงินแล้ว</div>
+      <div class="stat-value" id="s2">—</div>
+      <div class="stat-sub" id="s2b">—</div>
+    </div>
+    <div class="stat blue">
+      <div class="stat-label">รอรับเงิน</div>
+      <div class="stat-value" id="s3">—</div>
+      <div class="stat-sub" id="s3b">—</div>
+    </div>
+    <div class="stat red">
+      <div class="stat-label">ค่าใช้จ่ายรวม</div>
+      <div class="stat-value" id="s4">—</div>
+      <div class="stat-sub" id="s4b">—</div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">🌳 โปรเจคที่กำลังดำเนินการ</div>
+      </div>
+      <div class="section-body" id="projList">
+        <div class="loading">กำลังโหลด...</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">💰 งวดที่รอรับเงิน</div>
+      </div>
+      <div class="section-body" id="payList">
+        <div class="loading">กำลังโหลด...</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">💸 ค่าใช้จ่ายล่าสุด</div>
+    </div>
+    <div class="section-body" id="expList">
+      <div class="loading">กำลังโหลด...</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const fmt  = n => '฿' + Math.round(n||0).toLocaleString('th-TH');
+const fmtM = n => n>=1000000 ? '฿'+(n/1000000).toFixed(2)+'M' : fmt(n);
+const getTitle = (p,k) => p?.properties?.[k]?.title?.[0]?.plain_text || '';
+const getRich  = (p,k) => p?.properties?.[k]?.rich_text?.[0]?.plain_text || '';
+const getNum   = (p,k) => p?.properties?.[k]?.number || 0;
+const getSel   = (p,k) => p?.properties?.[k]?.select?.name || '';
+const set      = (id,v) => { const e=document.getElementById(id); if(e) e.textContent=v; };
+const setHTML  = (id,v) => { const e=document.getElementById(id); if(e) e.innerHTML=v; };
+
+async function load() {
+  try {
+    const res  = await fetch('/api/notion');
+    const json = await res.json();
+    if (!json.success) throw new Error(json.error || 'API error');
+    const {projects, payments, expenses} = json.data;
+
+    let totalContract=0, totalPaid=0, totalPending=0, totalExp=0, pendingCount=0;
+    projects.forEach(p => { totalContract += getNum(p,'มูลค่าสัญญา'); });
+    payments.forEach(p => {
+      const s = getSel(p,'สถานะ');
+      const a = getNum(p,'ยอดที่ต้องรับ');
+      if (s==='✅ รับเงินแล้ว') totalPaid += a;
+      else if (s==='⏳ รอเรียกเก็บ' || s==='📨 ส่งใบแจ้งหนี้แล้ว') { totalPending+=a; pendingCount++; }
+    });
+    expenses.forEach(p => { totalExp += getNum(p,'จ่ายแล้ว'); });
+
+    const active = projects.filter(p => getSel(p,'สถานะ')!=='✅ ส่งมอบแล้ว');
+
+    set('s1', fmtM(totalContract));
+    set('s1b', active.length+' active / '+projects.length+' ทั้งหมด');
+    set('s2', fmtM(totalPaid));
+    set('s2b', (totalContract>0?(totalPaid/totalContract*100).toFixed(1):0)+'% ของสัญญา');
+    set('s3', fmtM(totalPending));
+    set('s3b', pendingCount+' งวดรอเรียกเก็บ');
+    set('s4', fmtM(totalExp));
+    set('s4b', 'รายจ่ายทั้งหมด');
+
+    const colorMap = {'🔨 กำลังก่อสร้าง':'#c9a84c','✏️ ขั้นออกแบบ':'#2471a3','✅ ส่งมอบแล้ว':'#4a7c5f'};
+    const pillMap  = {'🔨 กำลังก่อสร้าง':'s-build','✏️ ขั้นออกแบบ':'s-design','✅ ส่งมอบแล้ว':'s-done'};
+
+    if (active.length===0) {
+      setHTML('projList','<div class="empty">ไม่มีโปรเจคที่กำลังดำเนินการ</div>');
+    } else {
+      setHTML('projList', active.slice(0,8).map(p => {
+        const name   = getTitle(p,'ชื่อโปรเจค');
+        const status = getSel(p,'สถานะ');
+        const value  = getNum(p,'มูลค่าสัญญา');
+        const color  = colorMap[status]||'#888';
+        const pill   = pillMap[status]||'s-done';
+        return `<div class="proj-item">
+          <div class="proj-dot" style="background:${color}"></div>
+          <div class="proj-name">${name}</div>
+          <span class="proj-status ${pill}">${status}</span>
+          <div class="proj-amount">${fmtM(value)}</div>
+        </div>`;
+      }).join(''));
+    }
+
+    const pending = payments
+      .filter(p => { const s=getSel(p,'สถานะ'); return s==='⏳ รอเรียกเก็บ'||s==='📨 ส่งใบแจ้งหนี้แล้ว'; })
+      .sort((a,b) => getNum(b,'ยอดที่ต้องรับ')-getNum(a,'ยอดที่ต้องรับ'));
+
+    if (pending.length===0) {
+      setHTML('payList','<div class="empty">ไม่มีงวดค้างรับ</div>');
+    } else {
+      setHTML('payList', pending.slice(0,8).map(p => {
+        const name = getTitle(p,'ชื่อโปรเจค');
+        const s    = getSel(p,'สถานะ');
+        const a    = getNum(p,'ยอดที่ต้องรับ');
+        const pill = s==='📨 ส่งใบแจ้งหนี้แล้ว' ? 'ps-sent' : 'ps-wait';
+        return `<div class="payment-item">
+          <div class="pay-name">${name}</div>
+          <span class="pay-status ${pill}">${s}</span>
+          <div class="pay-amount">${fmt(a)}</div>
+        </div>`;
+      }).join(''));
+    }
+
+    const recentExp = expenses
+      .filter(p => getNum(p,'จ่ายแล้ว')>0)
+      .sort((a,b) => {
+        const da = a.properties?.['วันที่จ่าย']?.date?.start||'';
+        const db = b.properties?.['วันที่จ่าย']?.date?.start||'';
+        return db.localeCompare(da);
+      });
+
+    if (recentExp.length===0) {
+      setHTML('expList','<div class="empty">ยังไม่มีรายจ่าย</div>');
+    } else {
+      setHTML('expList',
+        '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:8px">' +
+        recentExp.slice(0,6).map(p => {
+          const name    = getTitle(p,'รายละเอียด');
+          const who     = getRich(p,'ชื่อช่าง/ผู้รับ');
+          const amt     = getNum(p,'จ่ายแล้ว');
+          const dt      = p.properties?.['วันที่จ่าย']?.date?.start||'';
+          const dateStr = dt ? new Date(dt).toLocaleDateString('th-TH',{day:'numeric',month:'short'}) : '-';
+          return `<div style="background:#f5f0e8;border-radius:8px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:8px">
+            <div>
+              <div style="font-size:13px;font-weight:600">${name}</div>
+              <div style="font-size:11px;color:#888">${who} · ${dateStr}</div>
+            </div>
+            <div style="font-size:14px;font-weight:700;color:#c0392b;flex-shrink:0">${fmt(amt)}</div>
+          </div>`;
+        }).join('') + '</div>'
+      );
+    }
+
+    const now = new Date();
+    set('statusText','อัปเดต '+now.toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'})+' น.');
+
+  } catch(e) {
+    console.error('Dashboard error:', e);
+    set('statusText','โหลดไม่สำเร็จ');
+  }
+}
+
+load();
+</script>
+</body>
+</html>
