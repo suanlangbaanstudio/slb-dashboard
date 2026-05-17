@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>สวนหลังบ้าน — Finance</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --deep: #1a3a2a;
+  --mid: #2d5a3d;
+  --soft: #4a7c5f;
+  --light: #7aad8f;
+  --cream: #f5f0e8;
+  --warm: #faf8f4;
+  --gold: #c9a84c;
+  --gold-l: #e8d5a0;
+  --earth: #8b6f47;
+  --red: #c0392b;
+  --red-bg: #fdecea;
+  --blue: #2471a3;
+  --blue-bg: #eaf4fb;
+  --purple: #6c3483;
+  --purple-bg: #f4ecf7;
+  --amber: #d68910;
+  --amber-bg: #fef9e7;
+  --shadow: rgba(26,58,42,0.1);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Sarabun', sans-serif;
+  background: var(--cream);
+  color: var(--deep);
+  min-height: 100vh;
+}
+
+/* HEADER */
+.header {
+  background: var(--deep);
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+}
+
+.header-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 28px; max-width: 1300px; margin: 0 auto;
+}
+
+.brand { display: flex; align-items: center; gap: 12px; }
+.brand-logo {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: var(--gold); display: flex; align-items: center;
+  justify-content: center; font-size: 18px;
+}
+.brand-name { font-family: 'Playfair Display', serif; font-size: 17px; color: var(--cream); }
+.brand-sub { font-size: 11px; color: var(--light); letter-spacing: 1.5px; text-transform: uppercase; }
+
+.header-nav { display: flex; gap: 6px; }
+.nav-btn {
+  padding: 7px 16px; border-radius: 6px; border: none;
+  font-family: 'Sarabun', sans-serif; font-size: 13px; font-weight: 500;
+  cursor: pointer; transition: all 0.2s; color: rgba(245,240,232,0.65);
+  background: transparent;
+}
+.nav-btn:hover { background: rgba(255,255,255,0.08); color: var(--cream); }
+.nav-btn.active { background: var(--gold); color: var(--deep); font-weight: 700; }
+
+/* MAIN */
+.main { max-width: 1300px; margin: 0 auto; padding: 24px 28px 60px; }
+
+/* PROJECT SELECTOR */
+.project-bar {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 22px; flex-wrap: wrap;
+}
+.project-bar-label { font-size: 12px; font-weight: 700; color: var(--soft); text-transform: uppercase; letter-spacing: 1px; }
+.proj-chip {
+  padding: 7px 16px; border-radius: 20px; border: 1.5px solid rgba(74,124,95,0.25);
+  background: var(--warm); font-family: 'Sarabun', sans-serif; font-size: 13px;
+  font-weight: 600; color: var(--soft); cursor: pointer; transition: all 0.2s;
+}
+.proj-chip:hover { border-color: var(--soft); color: var(--deep); }
+.proj-chip.active { background: var(--deep); color: var(--gold-l); border-color: var(--deep); }
+
+/* SUMMARY ROW */
+.summary-row {
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 14px;
+  margin-bottom: 24px;
+}
+
+.sum-card {
+  background: var(--warm); border-radius: 12px;
+  border: 1px solid rgba(74,124,95,0.12);
+  box-shadow: 0 2px 10px var(--shadow);
+  padding: 18px 20px; position: relative; overflow: hidden;
+}
+
+.sum-card::before {
+  content: ''; position: absolute;
+  left: 0; top: 0; width: 4px; height: 100%;
+}
+.sum-card.green::before { background: var(--soft); }
+.sum-card.gold::before { background: var(--gold); }
+.sum-card.red::before { background: var(--red); }
+.sum-card.blue::before { background: var(--blue); }
+.sum-card.purple::before { background: var(--purple); }
+
+.sum-label { font-size: 11px; font-weight: 700; color: var(--soft); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 7px; }
+.sum-value { font-size: 24px; font-weight: 700; color: var(--deep); line-height: 1; }
+.sum-sub { font-size: 12px; color: #888; margin-top: 5px; }
+.sum-badge {
+  display: inline-block; padding: 2px 8px; border-radius: 20px;
+  font-size: 11px; font-weight: 700; margin-top: 6px;
+}
+.badge-green { background: rgba(74,124,95,0.12); color: var(--mid); }
+.badge-red { background: var(--red-bg); color: var(--red); }
+.badge-gold { background: rgba(201,168,76,0.18); color: #8a6f1e; }
+.badge-blue { background: var(--blue-bg); color: var(--blue); }
+.badge-purple { background: var(--purple-bg); color: var(--purple); }
+.badge-amber { background: var(--amber-bg); color: var(--amber); }
+
+/* SECTION TABS */
+.tabs {
+  display: flex; gap: 4px; background: rgba(45,90,61,0.08);
+  padding: 4px; border-radius: 10px; margin-bottom: 22px; flex-wrap: wrap;
+}
+.tab {
+  padding: 8px 20px; border-radius: 7px; border: none;
+  background: transparent; font-family: 'Sarabun', sans-serif;
+  font-size: 14px; color: var(--soft); cursor: pointer;
+  transition: all 0.2s; font-weight: 500;
+}
+.tab.active {
+  background: var(--warm); color: var(--deep);
+  box-shadow: 0 1px 6px var(--shadow); font-weight: 700;
+}
+
+/* SECTION WRAPPER */
+.section { display: none; }
+.section.active { display: block; }
+
+/* ===== 1.1 รายรับงวด ===== */
+.installment-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 16px;
+}
+.section-title {
+  font-family: 'Playfair Display', serif; font-size: 19px;
+  color: var(--deep); display: flex; align-items: center; gap: 10px;
+}
+
+.inst-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(340px,1fr)); gap: 16px; }
+
+.inst-card {
+  background: var(--warm); border-radius: 14px;
+  border: 1px solid rgba(74,124,95,0.12);
+  box-shadow: 0 2px 12px var(--shadow); overflow: hidden;
+}
+
+.inst-card-header {
+  background: linear-gradient(135deg, var(--deep), var(--mid));
+  padding: 16px 20px;
+  display: flex; align-items: flex-start; justify-content: space-between;
+}
+.inst-proj-name { font-family: 'Playfair Display', serif; font-size: 16px; color: var(--cream); }
+.inst-proj-sub { font-size: 12px; color: rgba(245,240,232,0.6); margin-top: 3px; }
+.inst-total { text-align: right; }
+.inst-total-val { font-size: 18px; font-weight: 700; color: var(--gold-l); }
+.inst-total-label { font-size: 11px; color: rgba(245,240,232,0.5); }
+
+.inst-progress-wrap { padding: 14px 20px 0; }
+.inst-progress-label { display: flex; justify-content: space-between; font-size: 12px; color: #888; margin-bottom: 6px; }
+.inst-progress-track { height: 8px; background: rgba(74,124,95,0.1); border-radius: 99px; overflow: hidden; margin-bottom: 14px; }
+.inst-progress-fill { height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--soft), var(--light)); transition: width 0.6s ease; }
+
+.inst-rows { padding: 0 20px 14px; }
+.inst-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 0; border-bottom: 1px solid rgba(74,124,95,0.07);
+  font-size: 13px;
+}
+.inst-row:last-child { border-bottom: none; }
+.inst-num {
+  width: 26px; height: 26px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; flex-shrink: 0;
+}
+.num-done { background: var(--soft); color: white; }
+.num-current { background: var(--gold); color: var(--deep); box-shadow: 0 0 0 3px rgba(201,168,76,0.25); }
+.num-pending { background: rgba(74,124,95,0.1); color: var(--soft); }
+.inst-row-desc { flex: 1; color: var(--deep); font-weight: 500; }
+.inst-row-pct { font-size: 11px; color: #aaa; min-width: 36px; }
+.inst-row-amount { font-weight: 700; font-size: 14px; color: var(--deep); min-width: 90px; text-align: right; }
+.inst-row-status { min-width: 72px; text-align: right; }
+
+.status-pill {
+  display: inline-block; padding: 2px 8px; border-radius: 20px;
+  font-size: 10px; font-weight: 700;
+}
+.s-done { background: rgba(74,124,95,0.12); color: var(--mid); }
+.s-current { background: rgba(201,168,76,0.2); color: #8a6f1e; }
+.s-pending { background: rgba(74,124,95,0.06); color: #bbb; }
+
+.inst-card-footer {
+  padding: 12px 20px; background: rgba(74,124,95,0.04);
+  border-top: 1px solid rgba(74,124,95,0.1);
+  display: flex; gap: 20px;
+}
+.inst-footer-stat { text-align: center; }
+.inst-footer-val { font-size: 15px; font-weight: 700; color: var(--deep); }
+.inst-footer-label { font-size: 11px; color: #888; }
+
+/* VO box */
+.vo-box {
+  margin: 0 20px 14px;
+  background: rgba(201,168,76,0.08);
+  border: 1px solid rgba(201,168,76,0.25);
+  border-radius: 8px; padding: 10px 14px;
+}
+.vo-box-title { font-size: 11px; font-weight: 700; color: var(--earth); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 7px; }
+.vo-row { display: flex; justify-content: space-between; font-size: 13px; color: #555; margin-bottom: 4px; }
+.vo-row:last-child { margin-bottom: 0; }
+.vo-amount { font-weight: 700; }
+.vo-add { color: var(--mid); }
+.vo-reduce { color: var(--red); }
+
+/* ===== 1.2 รายจ่าย ===== */
+.expense-filters {
+  display: flex; gap: 10px; margin-bottom: 18px; flex-wrap: wrap; align-items: center;
+}
+.filter-select {
+  padding: 8px 14px; border-radius: 8px;
+  border: 1.5px solid rgba(74,124,95,0.2); background: var(--warm);
+  font-family: 'Sarabun', sans-serif; font-size: 13px; color: var(--deep);
+  cursor: pointer; outline: none; appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath fill='%234a7c5f' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 10px center;
+  padding-right: 32px;
+}
+.filter-select:focus { border-color: var(--soft); }
+
+.expense-summary-row {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 20px;
+}
+.exp-sum {
+  background: var(--warm); border-radius: 10px;
+  border: 1px solid rgba(74,124,95,0.12);
+  padding: 14px 16px; text-align: center;
+}
+.exp-sum-val { font-size: 20px; font-weight: 700; color: var(--deep); }
+.exp-sum-label { font-size: 11px; color: #888; margin-top: 3px; text-transform: uppercase; letter-spacing: 0.8px; }
+
+.expense-table-wrap {
+  background: var(--warm); border-radius: 14px;
+  border: 1px solid rgba(74,124,95,0.12);
+  box-shadow: 0 2px 12px var(--shadow); overflow: hidden;
+}
+.expense-table-header {
+  background: var(--deep); padding: 14px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.expense-table-header h4 { font-family: 'Playfair Display', serif; color: var(--cream); font-size: 16px; }
+
+.exp-table { width: 100%; border-collapse: collapse; }
+.exp-table th {
+  background: rgba(74,124,95,0.07); padding: 10px 16px;
+  text-align: left; font-size: 11px; font-weight: 700;
+  color: var(--soft); text-transform: uppercase; letter-spacing: 0.8px;
+  border-bottom: 1px solid rgba(74,124,95,0.1);
+}
+.exp-table td {
+  padding: 12px 16px; font-size: 13.5px;
+  border-bottom: 1px solid rgba(74,124,95,0.06); color: #444;
+}
+.exp-table tr:last-child td { border-bottom: none; }
+.exp-table tr:hover td { background: rgba(74,124,95,0.03); }
+
+.type-a-badge { background: rgba(74,124,95,0.12); color: var(--mid); padding: 2px 8px; border-radius: 99px; font-size: 10px; font-weight: 700; }
+.type-b-badge { background: rgba(201,168,76,0.18); color: #8a6f1e; padding: 2px 8px; border-radius: 99px; font-size: 10px; font-weight: 700; }
+
+.paid-bar-wrap { display: flex; align-items: center; gap: 8px; }
+.paid-bar-track { flex: 1; height: 5px; background: rgba(74,124,95,0.1); border-radius: 99px; overflow: hidden; min-width: 60px; }
+.paid-bar-fill { height: 100%; border-radius: 99px; background: var(--soft); }
+.paid-bar-fill.full { background: var(--gold); }
+.remaining-amt { font-weight: 700; color: var(--red); font-size: 13px; }
+.remaining-zero { font-weight: 700; color: var(--soft); font-size: 13px; }
+
+/* worker summary card */
+.worker-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(280px,1fr)); gap: 14px; margin-top: 20px; }
+.worker-card {
+  background: var(--warm); border-radius: 12px;
+  border: 1px solid rgba(74,124,95,0.12);
+  box-shadow: 0 2px 10px var(--shadow); padding: 16px 18px;
+}
+.worker-name { font-family: 'Playfair Display', serif; font-size: 15px; color: var(--deep); margin-bottom: 4px; }
+.worker-role { font-size: 12px; color: var(--soft); margin-bottom: 12px; }
+.worker-bar-wrap { margin-bottom: 8px; }
+.worker-bar-label { display: flex; justify-content: space-between; font-size: 12px; color: #888; margin-bottom: 4px; }
+.worker-bar-track { height: 8px; background: rgba(74,124,95,0.1); border-radius: 99px; overflow: hidden; }
+.worker-bar-fill { height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--soft), var(--light)); }
+.worker-stats { display: flex; gap: 12px; margin-top: 10px; }
+.worker-stat { flex: 1; background: rgba(74,124,95,0.06); border-radius: 7px; padding: 8px 10px; text-align: center; }
+.worker-stat-val { font-size: 14px; font-weight: 700; color: var(--deep); }
+.worker-stat-label { font-size: 10px; color: #999; }
+
+/* ===== 1.3 งบคาดคะเน ===== */
+.budget-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 18px; }
+
+.budget-proj-card {
+  background: var(--warm); border-radius: 14px;
+  border: 1px solid rgba(74,124,95,0.12);
+  box-shadow: 0 2px 12px var(--shadow); overflow: hidden;
+}
+
+.budget-proj-header {
+  background: linear-gradient(135deg, var(--deep), var(--mid));
+  padding: 16px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.budget-proj-name { font-family: 'Playfair Display', serif; font-size: 16px; color: var(--cream); }
+.budget-result {
+  text-align: right;
+}
+.budget-result-label { font-size: 11px; color: rgba(245,240,232,0.55); }
+.budget-result-val { font-size: 20px; font-weight: 700; }
+.result-positive { color: #7aad8f; }
+.result-negative { color: #e8a09a; }
+
+.budget-body { padding: 16px 20px; }
+
+.budget-section-title {
+  font-size: 11px; font-weight: 700; color: var(--soft);
+  text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;
+  padding-bottom: 6px; border-bottom: 1px solid rgba(74,124,95,0.1);
+}
+
+.budget-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 0; border-bottom: 1px solid rgba(74,124,95,0.06);
+}
+.budget-item:last-child { border-bottom: none; }
+.budget-item-name { flex: 1; font-size: 13.5px; color: #444; }
+.budget-item-cat { font-size: 10px; padding: 1px 6px; border-radius: 99px; margin-right: 4px; }
+.budget-item-est { font-weight: 700; font-size: 14px; color: var(--deep); }
+.budget-item-actual { font-size: 12px; color: #888; }
+
+.budget-totals {
+  background: rgba(74,124,95,0.05);
+  border: 1px solid rgba(74,124,95,0.12);
+  border-radius: 10px; padding: 14px 16px; margin-top: 14px;
+}
+.budget-total-row {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 14px; padding: 5px 0;
+  border-bottom: 1px solid rgba(74,124,95,0.08);
+}
+.budget-total-row:last-child { border-bottom: none; font-weight: 700; font-size: 15px; }
+.budget-total-label { color: #555; }
+.budget-total-val { font-weight: 600; color: var(--deep); }
+.budget-total-val.negative { color: var(--red); }
+.budget-total-val.positive { color: var(--mid); }
+
+/* Claude insight panel */
+.claude-panel {
+  background: linear-gradient(160deg, #1a3a2a, #2d5a3d);
+  border-radius: 14px; padding: 20px;
+  border: 1px solid rgba(201,168,76,0.25);
+  box-shadow: 0 4px 20px rgba(26,58,42,0.2);
+  display: flex; flex-direction: column; gap: 14px;
+}
+
+.claude-panel-header {
+  display: flex; align-items: center; gap: 10px;
+}
+.claude-icon { font-size: 22px; }
+.claude-panel-title { font-family: 'Playfair Display', serif; color: var(--gold-l); font-size: 16px; }
+
+.claude-insight {
+  background: rgba(255,255,255,0.07);
+  border-radius: 9px; padding: 12px 14px;
+  border-left: 3px solid var(--gold);
+}
+.claude-insight-label { font-size: 10px; font-weight: 700; color: rgba(201,168,76,0.8); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+.claude-insight-text { font-size: 13px; color: rgba(245,240,232,0.85); line-height: 1.65; }
+.claude-insight-text strong { color: var(--gold-l); }
+
+.claude-ask-btn {
+  width: 100%; padding: 11px; background: rgba(201,168,76,0.15);
+  border: 1px solid rgba(201,168,76,0.35); border-radius: 8px;
+  font-family: 'Sarabun', sans-serif; font-size: 13px;
+  color: var(--gold-l); cursor: pointer; transition: all 0.2s;
+  font-weight: 600; text-align: left;
+}
+.claude-ask-btn:hover { background: rgba(201,168,76,0.25); }
+
+/* ACCOUNT BALANCE card */
+.account-card {
+  background: var(--warm); border-radius: 14px;
+  border: 1px solid rgba(74,124,95,0.12);
+  box-shadow: 0 2px 12px var(--shadow); overflow: hidden;
+  margin-top: 18px;
+}
+.account-header {
+  background: var(--deep); padding: 14px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.account-header h4 { font-family: 'Playfair Display', serif; color: var(--cream); font-size: 16px; }
+.account-body { padding: 16px 20px; }
+.account-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 0; border-bottom: 1px solid rgba(74,124,95,0.08); font-size: 14px;
+}
+.account-row:last-child { border-bottom: none; }
+.account-row-label { color: #555; display: flex; align-items: center; gap: 8px; }
+.account-row-val { font-weight: 700; font-size: 15px; color: var(--deep); }
+.account-row-val.credit { color: var(--mid); }
+.account-row-val.debit { color: var(--red); }
+
+/* ADD EXPENSE QUICK FORM */
+.quick-form {
+  background: var(--warm); border-radius: 14px;
+  border: 1.5px dashed rgba(74,124,95,0.3);
+  padding: 18px 20px; margin-bottom: 20px;
+}
+.quick-form-title { font-size: 13px; font-weight: 700; color: var(--soft); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 12px; }
+.quick-form-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr auto; gap: 10px; align-items: end; }
+.form-group label { display: block; font-size: 11px; font-weight: 700; color: var(--soft); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
+.form-group input, .form-group select {
+  width: 100%; padding: 9px 12px;
+  border: 1.5px solid rgba(74,124,95,0.2); border-radius: 8px;
+  font-family: 'Sarabun', sans-serif; font-size: 13.5px;
+  background: var(--cream); color: var(--deep); outline: none; transition: border-color 0.2s;
+}
+.form-group input:focus, .form-group select:focus {
+  border-color: var(--soft); box-shadow: 0 0 0 3px rgba(74,124,95,0.1);
+}
+.btn-add {
+  padding: 9px 18px; background: var(--deep); color: var(--cream);
+  border: none; border-radius: 8px; font-family: 'Sarabun', sans-serif;
+  font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; transition: background 0.2s;
+}
+.btn-add:hover { background: var(--mid); }
+
+/* TOAST */
+.toast {
+  position: fixed; bottom: 24px; right: 24px;
+  background: var(--deep); color: var(--cream);
+  padding: 12px 20px; border-radius: 8px; font-size: 14px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  transform: translateY(100px); opacity: 0; transition: all 0.3s;
+  z-index: 300; border-left: 4px solid var(--gold);
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .main { padding: 16px 16px 40px; }
+  .summary-row { grid-template-columns: 1fr 1fr; }
+  .budget-grid { grid-template-columns: 1fr; }
+  .quick-form-grid { grid-template-columns: 1fr 1fr; }
+  .expense-summary-row { grid-template-columns: 1fr 1fr 1fr; }
+  .inst-grid { grid-template-columns: 1fr; }
+  .worker-grid { grid-template-columns: 1fr; }
+  .header-inner { padding: 12px 16px; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="brand" style="display:flex;align-items:center;gap:6px;">
+      <button onclick="history.back()" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:var(--cream);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0;margin-right:4px;" title="ย้อนกลับ" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">←</button>
+      <a href="slb-home.html" style="text-decoration:none;display:flex;align-items:center;gap:12px;">
+      <div class="brand-logo">🌿</div>
+      <div>
+        <div class="brand-name">สวนหลังบ้าน สตูดิโอ</div>
+        <div class="brand-sub">Finance Dashboard</div>
+      </div>
+      </a>
+    </div>
+    <div class="header-nav">
+      <button class="nav-btn" onclick="location.href='#'">📋 โปรเจค</button>
+      <button class="nav-btn active">💰 การเงิน</button>
+      <button class="nav-btn">👤 ลูกค้า</button>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- PROJECT SELECTOR -->
+  <div class="project-bar">
+    <span class="project-bar-label">โปรเจค:</span>
+    <button class="proj-chip active" onclick="selectProj(this,'all')">ทั้งหมด</button>
+    <button class="proj-chip" onclick="selectProj(this,'vv98')">คุณขวัญ VV-98</button>
+    <button class="proj-chip" onclick="selectProj(this,'kb22')">คุณโมช่า KB-22</button>
+    <button class="proj-chip" onclick="selectProj(this,'st10')">คุณทีปกร ST-10</button>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="summary-row">
+    <div class="sum-card gold">
+      <div class="sum-label">รายรับตามสัญญา (รวม)</div>
+      <div class="sum-value">฿10,350,000</div>
+      <div class="sum-sub">3 โปรเจคที่ดำเนินการ</div>
+      <span class="sum-badge badge-gold">รวม VO แล้ว</span>
+    </div>
+    <div class="sum-card green">
+      <div class="sum-label">รับเงินแล้ว</div>
+      <div class="sum-value">฿6,280,000</div>
+      <div class="sum-sub">งวดที่ผ่านมาทั้งหมด</div>
+      <span class="sum-badge badge-green">60.7% ของสัญญา</span>
+    </div>
+    <div class="sum-card blue">
+      <div class="sum-label">รอรับอีก</div>
+      <div class="sum-value">฿4,070,000</div>
+      <div class="sum-sub">งวดที่เหลือทุกโปรเจค</div>
+      <span class="sum-badge badge-blue">39.3% คงเหลือ</span>
+    </div>
+    <div class="sum-card red">
+      <div class="sum-label">ค่าใช้จ่ายสะสม</div>
+      <div class="sum-value">฿3,940,000</div>
+      <div class="sum-sub">ทุกโปรเจครวมกัน</div>
+      <span class="sum-badge badge-red">38.1% ของรายรับ</span>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab(this,'installments')">💵 รายรับตามงวด</button>
+    <button class="tab" onclick="switchTab(this,'expenses')">🔧 รายจ่าย & ค่าแรง</button>
+    <button class="tab" onclick="switchTab(this,'budget')">📊 งบคาดคะเน</button>
+  </div>
+
+  <!-- ===== TAB 1: รายรับตามงวด ===== -->
+  <div id="sec-installments" class="section active">
+    <div class="installment-header">
+      <div class="section-title">💵 รายรับตามงวด</div>
+    </div>
+
+    <div class="inst-grid">
+
+      <!-- โปรเจค VV-98 (4 งวด) -->
+      <div class="inst-card">
+        <div class="inst-card-header">
+          <div>
+            <div class="inst-proj-name">คุณขวัญ VV-98</div>
+            <div class="inst-proj-sub">📍 วิลล่า วีระนคร · 4 งวด</div>
+          </div>
+          <div class="inst-total">
+            <div class="inst-total-val">฿3,450,000</div>
+            <div class="inst-total-label">มูลค่าสัญญา</div>
+          </div>
+        </div>
+        <div class="inst-progress-wrap">
+          <div class="inst-progress-label">
+            <span>รับแล้ว 2 งวด จาก 4 งวด</span>
+            <span style="font-weight:700;color:var(--mid)">฿1,725,000 / ฿3,450,000</span>
+          </div>
+          <div class="inst-progress-track">
+            <div class="inst-progress-fill" style="width:50%"></div>
+          </div>
+        </div>
+        <!-- VO box -->
+        <div class="vo-box">
+          <div class="vo-box-title">งานเพิ่ม/งานลด (VO)</div>
+          <div class="vo-row"><span>เพิ่มระบบไฟสวน Zone C</span><span class="vo-amount vo-add">+฿45,000</span></div>
+          <div class="vo-row"><span>ลดรั้วไม้แนวเหนือ</span><span class="vo-amount vo-reduce">−฿28,000</span></div>
+          <div class="vo-row" style="border-top:1px solid rgba(74,124,95,0.1);margin-top:5px;padding-top:5px;font-weight:700;"><span>ยอดสุทธิ VO</span><span class="vo-amount vo-add">+฿17,000</span></div>
+        </div>
+        <div class="inst-rows">
+          <div class="inst-row">
+            <div class="inst-num num-done">1</div>
+            <div class="inst-row-desc">เริ่มงาน + ส่งแบบ</div>
+            <div class="inst-row-pct">30%</div>
+            <div class="inst-row-amount">฿1,035,000</div>
+            <div class="inst-row-status"><span class="status-pill s-done">✓ รับแล้ว</span></div>
+          </div>
+          <div class="inst-row">
+            <div class="inst-num num-done">2</div>
+            <div class="inst-row-desc">โครงสร้างแล้วเสร็จ 50%</div>
+            <div class="inst-row-pct">20%</div>
+            <div class="inst-row-amount">฿690,000</div>
+            <div class="inst-row-status"><span class="status-pill s-done">✓ รับแล้ว</span></div>
+          </div>
+          <div class="inst-row">
+            <div class="inst-num num-current">3</div>
+            <div class="inst-row-desc">งานสวนแล้วเสร็จ 80%</div>
+            <div class="inst-row-pct">30%</div>
+            <div class="inst-row-amount">฿1,035,000</div>
+            <div class="inst-row-status"><span class="status-pill s-current">⏳ งวดนี้</span></div>
+          </div>
+          <div class="inst-row">
+            <div class="inst-num num-pending">4</div>
+            <div class="inst-row-desc">ส่งมอบงาน</div>
+            <div class="inst-row-pct">20%</div>
+            <div class="inst-row-amount">฿690,000</div>
+            <div class="inst-row-status"><span class="status-pill s-pending">รอ</span></div>
+          </div>
+        </div>
+        <div class="inst-card-footer">
+          <div class="inst-footer-stat">
+            <div class="inst-footer-val" style="color:var(--mid)">฿1,725,000</div>
+            <div class="inst-footer-label">รับแล้ว</div>
+          </div>
+          <div class="inst-footer-stat">
+            <div class="inst-footer-val" style="color:var(--gold)">฿1,035,000</div>
+            <div class="inst-footer-label">งวดปัจจุบัน</div>
+          </div>
+          <div class="inst-footer-stat">
+            <div class="inst-footer-val" style="color:var(--blue)">฿690,000</div>
+            <div class="inst-footer-label">รอรับต่อไป</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- โปรเจค KB-22 (6 งวด) -->
+      <div class="inst-card">
+        <div class="inst-card-header">
+          <div>
+            <div class="inst-proj-name">คุณโมช่า KB-22</div>
+            <div class="inst-proj-sub">📍 บ้านเลขที่ 22 · 6 งวด</div>
+          </div>
+          <div class="inst-total">
+            <div class="inst-total-val">฿2,600,000</div>
+            <div class="inst-total-label">มูลค่าสัญญา</div>
+          </div>
+        </div>
+        <div class="inst-progress-wrap">
+          <div class="inst-progress-label">
+            <span>รับแล้ว 3 งวด จาก 6 งวด</span>
+            <span style="font-weight:700;color:var(--mid)">฿1,300,000 / ฿2,600,000</span>
+          </div>
+          <div class="inst-progress-track">
+            <div class="inst-progress-fill" style="width:50%"></div>
+          </div>
+        </div>
+        <div class="inst-rows">
+          <div class="inst-row"><div class="inst-num num-done">1</div><div class="inst-row-desc">ทำสัญญา + ออกแบบ</div><div class="inst-row-pct">15%</div><div class="inst-row-amount">฿390,000</div><div class="inst-row-status"><span class="status-pill s-done">✓ รับแล้ว</span></div></div>
+          <div class="inst-row"><div class="inst-num num-done">2</div><div class="inst-row-desc">อนุมัติแบบ + BOQ</div><div class="inst-row-pct">15%</div><div class="inst-row-amount">฿390,000</div><div class="inst-row-status"><span class="status-pill s-done">✓ รับแล้ว</span></div></div>
+          <div class="inst-row"><div class="inst-num num-done">3</div><div class="inst-row-desc">งานดิน + โครงสร้าง</div><div class="inst-row-pct">20%</div><div class="inst-row-amount">฿520,000</div><div class="inst-row-status"><span class="status-pill s-done">✓ รับแล้ว</span></div></div>
+          <div class="inst-row"><div class="inst-num num-current">4</div><div class="inst-row-desc">ระบบน้ำ + ไฟ</div><div class="inst-row-pct">20%</div><div class="inst-row-amount">฿520,000</div><div class="inst-row-status"><span class="status-pill s-current">⏳ งวดนี้</span></div></div>
+          <div class="inst-row"><div class="inst-num num-pending">5</div><div class="inst-row-desc">ปลูกต้นไม้ + ตกแต่ง</div><div class="inst-row-pct">20%</div><div class="inst-row-amount">฿520,000</div><div class="inst-row-status"><span class="status-pill s-pending">รอ</span></div></div>
+          <div class="inst-row"><div class="inst-num num-pending">6</div><div class="inst-row-desc">ส่งมอบ + รับประกัน</div><div class="inst-row-pct">10%</div><div class="inst-row-amount">฿260,000</div><div class="inst-row-status"><span class="status-pill s-pending">รอ</span></div></div>
+        </div>
+        <div class="inst-card-footer">
+          <div class="inst-footer-stat"><div class="inst-footer-val" style="color:var(--mid)">฿1,300,000</div><div class="inst-footer-label">รับแล้ว</div></div>
+          <div class="inst-footer-stat"><div class="inst-footer-val" style="color:var(--gold)">฿520,000</div><div class="inst-footer-label">งวดปัจจุบัน</div></div>
+          <div class="inst-footer-stat"><div class="inst-footer-val" style="color:var(--blue)">฿780,000</div><div class="inst-footer-label">รอรับต่อไป</div></div>
+        </div>
+      </div>
+
+      <!-- ST-10 (4 งวด เสร็จแล้ว) -->
+      <div class="inst-card">
+        <div class="inst-card-header" style="background:linear-gradient(135deg,#2c4a1e,#3d7a52)">
+          <div>
+            <div class="inst-proj-name">คุณทีปกร ST-10</div>
+            <div class="inst-proj-sub">📍 บาราสาธารณคนที่ 10 · 4 งวด</div>
+          </div>
+          <div class="inst-total">
+            <div class="inst-total-val">฿4,300,000</div>
+            <div class="inst-total-label">มูลค่าสัญญา</div>
+          </div>
+        </div>
+        <div class="inst-progress-wrap">
+          <div class="inst-progress-label">
+            <span>รับแล้ว 4 งวด จาก 4 งวด ✓</span>
+            <span style="font-weight:700;color:var(--mid)">฿4,300,000 / ฿4,300,000</span>
+          </div>
+          <div class="inst-progress-track">
+            <div class="inst-progress-fill" style="width:100%;background:linear-gradient(90deg,#c9a84c,#e8d5a0)"></div>
+          </div>
+        </div>
+        <div class="inst-rows">
+          <div class="inst-row"><div class="inst-num num-done">1</div><div class="inst-row-desc">ทำสัญญา + ออกแบบ</div><div class="inst-row-pct">25%</div><div class="inst-row-amount">฿1,075,000</div><div class="inst-row-status"><span class="status-pill s-done">✓ รับแล้ว</span></div></div>
+          <div class="inst-row"><div class="inst-num num-done">2</div><div class="inst-row-desc">โครงสร้าง 50%</div><div class="inst-row-pct">25%</div><div class="inst-row-amount">฿1,075,000</div><div class="inst-row-status"><span class="status-pill s-done">✓ รับแล้ว</span></div></div>
+          <div class="inst-row"><div class="inst-num num-done">3</div><div class="inst-row-desc">งานสวน + ระบบ</div><div class="inst-row-pct">25%</div><div class="inst-row-amount">฿1,075,000</div><div class="inst-row-status"><span class="status-pill s-done">✓ รับแล้ว</span></div></div>
+          <div class="inst-row"><div class="inst-num num-done">4</div><div class="inst-row-desc">ส่งมอบงาน</div><div class="inst-row-pct">25%</div><div class="inst-row-amount">฿1,075,000</div><div class="inst-row-status"><span class="status-pill s-done">✓ รับแล้ว</span></div></div>
+        </div>
+        <div class="inst-card-footer">
+          <div class="inst-footer-stat"><div class="inst-footer-val" style="color:var(--mid)">฿4,300,000</div><div class="inst-footer-label">รับครบแล้ว</div></div>
+          <div class="inst-footer-stat"><div class="inst-footer-val" style="color:var(--gold)">4 / 4 งวด</div><div class="inst-footer-label">ส่งมอบเสร็จ</div></div>
+          <div class="inst-footer-stat"><div class="inst-footer-val" style="color:#aaa">฿0</div><div class="inst-footer-label">คงค้าง</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== TAB 2: รายจ่าย & ค่าแรง ===== -->
+  <div id="sec-expenses" class="section">
+
+    <!-- Quick add form -->
+    <div class="quick-form">
+      <div class="quick-form-title">+ บันทึกค่าใช้จ่าย</div>
+      <div class="quick-form-grid">
+        <div class="form-group">
+          <label>รายละเอียด / ชื่อช่าง</label>
+          <input type="text" id="expDesc" placeholder="เช่น ช่างเหล็ก พี่สมพล...">
+        </div>
+        <div class="form-group">
+          <label>โปรเจค</label>
+          <select id="expProj">
+            <option>VV-98</option><option>KB-22</option><option>ST-10</option><option>ค่าใช้จ่ายบริษัท</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>หมวด</label>
+          <select id="expCat">
+            <option>ค่าแรงช่าง</option>
+            <option>ค่าวัสดุ/ต้นไม้</option>
+            <option>ค่าออกแบบ</option>
+            <option>ค่าจ้างวิชาชีพ</option>
+            <option>เงินเดือน/ค่าตอบแทน</option>
+            <option>ค่าอาหาร</option>
+            <option>ค่าเดินทาง/ทางด่วน</option>
+            <option>ค่าซ่อมบำรุงรถ</option>
+            <option>ค่าภาษี</option>
+            <option>ค่าโฆษณา</option>
+            <option>ค่าซอฟต์แวร์/สมาชิก</option>
+            <option>อื่นๆ</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>จำนวนเงิน (฿)</label>
+          <input type="number" id="expAmount" placeholder="0">
+        </div>
+        <button class="btn-add" onclick="addExpense()">+ บันทึก</button>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="expense-filters">
+      <select class="filter-select">
+        <option>ทุกโปรเจค</option>
+        <option>VV-98</option><option>KB-22</option><option>ST-10</option><option>ค่าใช้จ่ายบริษัท</option>
+      </select>
+      <select class="filter-select">
+        <option>ทุกหมวด</option>
+        <option>ค่าแรงช่าง</option><option>ค่าวัสดุ/ต้นไม้</option>
+        <option>ค่าจ้างวิชาชีพ</option><option>เงินเดือน/ค่าตอบแทน</option>
+        <option>ค่าเดินทาง/ทางด่วน</option><option>ค่าภาษี</option>
+        <option>ค่าโฆษณา</option><option>ค่าซอฟต์แวร์/สมาชิก</option>
+      </select>
+      <select class="filter-select">
+        <option>ทุกช่าง/ผู้รับจ้าง</option>
+        <option>พี่สมพล (ช่างเหล็ก)</option>
+        <option>ทีมช่างเอก</option>
+        <option>พี่แบงก์ (Freelance 3D)</option>
+        <option>นักบัญชี</option>
+      </select>
+    </div>
+
+    <!-- Summary -->
+    <div class="expense-summary-row">
+      <div class="exp-sum">
+        <div class="exp-sum-val">฿3,940,000</div>
+        <div class="exp-sum-label">จ่ายแล้วทั้งหมด</div>
+      </div>
+      <div class="exp-sum">
+        <div class="exp-sum-val" style="color:var(--red)">฿680,000</div>
+        <div class="exp-sum-label">ค้างจ่าย (แบบ A)</div>
+      </div>
+      <div class="exp-sum">
+        <div class="exp-sum-val" style="color:var(--amber)">฿420,000</div>
+        <div class="exp-sum-label">เบิกสะสม (แบบ B)</div>
+      </div>
+    </div>
+
+    <!-- Expense table -->
+    <div class="expense-table-wrap">
+      <div class="expense-table-header">
+        <h4>รายการค่าใช้จ่ายทั้งหมด</h4>
+        <span style="font-size:12px;color:rgba(245,240,232,0.5)">เรียงตามวันล่าสุด</span>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="exp-table" id="expTable">
+          <thead>
+            <tr>
+              <th>วันที่</th>
+              <th>รายการ / ช่าง</th>
+              <th>โปรเจค</th>
+              <th>หมวด</th>
+              <th>แบบ</th>
+              <th>ยอดตกลง</th>
+              <th>จ่ายแล้ว</th>
+              <th>คงเหลือ</th>
+            </tr>
+          </thead>
+          <tbody id="expBody">
+            <tr>
+              <td>8 พ.ค. 68</td>
+              <td><strong>พี่สมพล</strong> ช่างเหล็กประตูรั้ว</td>
+              <td>VV-98</td>
+              <td>ค่าแรงช่าง</td>
+              <td><span class="type-a-badge">A-รู้ยอด</span></td>
+              <td>฿18,000</td>
+              <td>
+                <div class="paid-bar-wrap">
+                  <div class="paid-bar-track"><div class="paid-bar-fill" style="width:55%"></div></div>
+                  <span style="font-size:12px;color:#888">฿10,000</span>
+                </div>
+              </td>
+              <td><span class="remaining-amt">฿8,000</span></td>
+            </tr>
+            <tr>
+              <td>7 พ.ค. 68</td>
+              <td><strong>ทีมช่างเอก</strong> ขุดดิน+วางท่อ 3 คน</td>
+              <td>KB-22</td>
+              <td>ค่าแรงช่าง</td>
+              <td><span class="type-b-badge">B-เบิกสะสม</span></td>
+              <td>—</td>
+              <td>
+                <div class="paid-bar-wrap">
+                  <div class="paid-bar-track"><div class="paid-bar-fill" style="width:100%"></div></div>
+                  <span style="font-size:12px;color:#888">฿14,400</span>
+                </div>
+              </td>
+              <td><span class="remaining-zero">สะสม</span></td>
+            </tr>
+            <tr>
+              <td>6 พ.ค. 68</td>
+              <td><strong>นักบัญชี</strong> ค่าจัดทำภาษีรายเดือน</td>
+              <td>ค่าใช้จ่ายบริษัท</td>
+              <td>ค่าจ้างวิชาชีพ</td>
+              <td><span class="type-a-badge">A-รู้ยอด</span></td>
+              <td>฿5,000</td>
+              <td>
+                <div class="paid-bar-wrap">
+                  <div class="paid-bar-track"><div class="paid-bar-fill full" style="width:100%"></div></div>
+                  <span style="font-size:12px;color:#888">฿5,000</span>
+                </div>
+              </td>
+              <td><span class="remaining-zero">฿0 ✓</span></td>
+            </tr>
+            <tr>
+              <td>5 พ.ค. 68</td>
+              <td><strong>จิรภิญญา</strong> ค่าตอบแทนกรรมการ พ.ค.</td>
+              <td>ค่าใช้จ่ายบริษัท</td>
+              <td>เงินเดือน/ค่าตอบแทน</td>
+              <td><span class="type-a-badge">A-รู้ยอด</span></td>
+              <td>฿45,000</td>
+              <td>
+                <div class="paid-bar-wrap">
+                  <div class="paid-bar-track"><div class="paid-bar-fill full" style="width:100%"></div></div>
+                  <span style="font-size:12px;color:#888">฿45,000</span>
+                </div>
+              </td>
+              <td><span class="remaining-zero">฿0 ✓</span></td>
+            </tr>
+            <tr>
+              <td>4 พ.ค. 68</td>
+              <td><strong>ปั๊มน้ำมัน</strong> ค่าเชื้อเพลิง + ทางด่วน</td>
+              <td>VV-98</td>
+              <td>ค่าเดินทาง/ทางด่วน</td>
+              <td><span class="type-b-badge">B-เบิกสะสม</span></td>
+              <td>—</td>
+              <td>
+                <div class="paid-bar-wrap">
+                  <div class="paid-bar-track"><div class="paid-bar-fill" style="width:100%"></div></div>
+                  <span style="font-size:12px;color:#888">฿1,240</span>
+                </div>
+              </td>
+              <td><span class="remaining-zero">สะสม</span></td>
+            </tr>
+            <tr>
+              <td>3 พ.ค. 68</td>
+              <td><strong>Meta Ads</strong> ค่าโฆษณา IG/FB เดือน พ.ค.</td>
+              <td>ค่าใช้จ่ายบริษัท</td>
+              <td>ค่าโฆษณา</td>
+              <td><span class="type-b-badge">B-เบิกสะสม</span></td>
+              <td>—</td>
+              <td>
+                <div class="paid-bar-wrap">
+                  <div class="paid-bar-track"><div class="paid-bar-fill" style="width:100%"></div></div>
+                  <span style="font-size:12px;color:#888">฿8,500</span>
+                </div>
+              </td>
+              <td><span class="remaining-zero">สะสม</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Worker summary -->
+    <div style="margin-top:24px;">
+      <div class="section-title" style="margin-bottom:16px;">👷 สรุปรายช่าง/ผู้รับจ้าง</div>
+      <div class="worker-grid">
+        <div class="worker-card">
+          <div class="worker-name">พี่สมพล</div>
+          <div class="worker-role">ช่างเหล็ก · รับงานหลายโปรเจค</div>
+          <div class="worker-bar-wrap">
+            <div class="worker-bar-label"><span>จ่ายแล้ว / ยอดตกลงรวม</span><span style="font-weight:700">55%</span></div>
+            <div class="worker-bar-track"><div class="worker-bar-fill" style="width:55%"></div></div>
+          </div>
+          <div class="worker-stats">
+            <div class="worker-stat"><div class="worker-stat-val" style="color:var(--mid)">฿42,000</div><div class="worker-stat-label">จ่ายแล้ว</div></div>
+            <div class="worker-stat"><div class="worker-stat-val" style="color:var(--red)">฿34,500</div><div class="worker-stat-label">ค้างอยู่</div></div>
+            <div class="worker-stat"><div class="worker-stat-val">3</div><div class="worker-stat-label">โปรเจค</div></div>
+          </div>
+        </div>
+        <div class="worker-card">
+          <div class="worker-name">ทีมช่างเอก</div>
+          <div class="worker-role">ช่างก่อสร้าง/ขุดดิน · เบิกสะสม</div>
+          <div class="worker-bar-wrap">
+            <div class="worker-bar-label"><span>ยอดสะสมทั้งหมด</span></div>
+            <div class="worker-bar-track"><div class="worker-bar-fill" style="width:100%"></div></div>
+          </div>
+          <div class="worker-stats">
+            <div class="worker-stat"><div class="worker-stat-val" style="color:var(--amber)">฿86,400</div><div class="worker-stat-label">สะสมทั้งหมด</div></div>
+            <div class="worker-stat"><div class="worker-stat-val">2</div><div class="worker-stat-label">โปรเจค</div></div>
+          </div>
+        </div>
+        <div class="worker-card">
+          <div class="worker-name">พี่แบงก์</div>
+          <div class="worker-role">Freelance 3D / งานออกแบบ</div>
+          <div class="worker-bar-wrap">
+            <div class="worker-bar-label"><span>จ่ายแล้ว / ยอดตกลงรวม</span><span style="font-weight:700">80%</span></div>
+            <div class="worker-bar-track"><div class="worker-bar-fill" style="width:80%"></div></div>
+          </div>
+          <div class="worker-stats">
+            <div class="worker-stat"><div class="worker-stat-val" style="color:var(--mid)">฿48,000</div><div class="worker-stat-label">จ่ายแล้ว</div></div>
+            <div class="worker-stat"><div class="worker-stat-val" style="color:var(--red)">฿12,000</div><div class="worker-stat-label">ค้างอยู่</div></div>
+            <div class="worker-stat"><div class="worker-stat-val">2</div><div class="worker-stat-label">โปรเจค</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TAB 3: งบคาดคะเน ===== -->
+  <div id="sec-budget" class="section">
+    <div class="budget-grid">
+      <div>
+        <!-- Budget card: VV-98 -->
+        <div class="budget-proj-card" style="margin-bottom:18px;">
+          <div class="budget-proj-header">
+            <div>
+              <div class="budget-proj-name">VV-98 คุณขวัญ — งบคาดคะเน</div>
+              <div style="font-size:12px;color:rgba(245,240,232,0.55);margin-top:3px;">ณ วันที่ 8 พ.ค. 68</div>
+            </div>
+            <div class="budget-result">
+              <div class="budget-result-label">คาดว่าจะเหลือ</div>
+              <div class="budget-result-val result-positive">+฿312,000</div>
+            </div>
+          </div>
+          <div class="budget-body">
+            <div class="budget-section-title">รายการที่ยังไม่ได้จ่าย (คาดคะเน)</div>
+            <div class="budget-item">
+              <div class="budget-item-name">ช่างเหล็กค้างจ่าย (พี่สมพล)</div>
+              <div><span class="budget-item-cat badge-red">แรงงาน</span></div>
+              <div class="budget-item-est">฿8,000</div>
+            </div>
+            <div class="budget-item">
+              <div class="budget-item-name">ต้นไม้โซน C (คาด)</div>
+              <div><span class="budget-item-cat badge-green">วัสดุ</span></div>
+              <div class="budget-item-est">฿45,000</div>
+            </div>
+            <div class="budget-item">
+              <div class="budget-item-name">ระบบไฟสวน Zone C</div>
+              <div><span class="budget-item-cat badge-gold">ระบบ</span></div>
+              <div class="budget-item-est">฿38,000</div>
+            </div>
+            <div class="budget-item">
+              <div class="budget-item-name">ค่าขนส่งต้นไม้ (คาด)</div>
+              <div><span class="budget-item-cat badge-blue">อื่นๆ</span></div>
+              <div class="budget-item-est">฿12,000</div>
+            </div>
+            <div class="budget-item">
+              <div class="budget-item-name">งวดสุดท้ายช่างเอก (คาด)</div>
+              <div><span class="budget-item-cat badge-red">แรงงาน</span></div>
+              <div class="budget-item-est">฿25,000</div>
+            </div>
+
+            <div class="budget-totals">
+              <div class="budget-total-row">
+                <span class="budget-total-label">รายรับตามสัญญา (รวม VO)</span>
+                <span class="budget-total-val">฿3,467,000</span>
+              </div>
+              <div class="budget-total-row">
+                <span class="budget-total-label">จ่ายไปแล้ว (จริง)</span>
+                <span class="budget-total-val negative">−฿1,845,000</span>
+              </div>
+              <div class="budget-total-row">
+                <span class="budget-total-label">ค่าใช้จ่ายที่คาดว่าเหลือ</span>
+                <span class="budget-total-val negative">−฿1,310,000</span>
+              </div>
+              <div class="budget-total-row">
+                <span class="budget-total-label" style="font-weight:700">กำไรคาดการณ์</span>
+                <span class="budget-total-val positive" style="font-size:17px">+฿312,000 (9.0%)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Account balance -->
+        <div class="account-card">
+          <div class="account-header">
+            <h4>💳 ยอดเงินในบัญชีบริษัท</h4>
+            <span style="font-size:12px;color:rgba(245,240,232,0.5)">อัปเดต: 8 พ.ค. 68</span>
+          </div>
+          <div class="account-body">
+            <div class="account-row">
+              <div class="account-row-label">🏦 ธนาคารกรุงเทพ (บัญชีหลัก)</div>
+              <div class="account-row-val credit">฿1,248,500</div>
+            </div>
+            <div class="account-row">
+              <div class="account-row-label">🏦 กสิกรไทย (บัญชีค่าใช้จ่าย)</div>
+              <div class="account-row-val credit">฿342,000</div>
+            </div>
+            <div class="account-row" style="border-top:2px solid rgba(74,124,95,0.15);margin-top:4px;padding-top:12px;">
+              <div class="account-row-label" style="font-weight:700;color:var(--deep)">รวมเงินในมือ</div>
+              <div class="account-row-val" style="font-size:18px;color:var(--mid)">฿1,590,500</div>
+            </div>
+            <div class="account-row" style="background:var(--red-bg);border-radius:8px;padding:10px 14px;margin-top:8px;">
+              <div class="account-row-label" style="color:var(--red)">⚠ ค่าใช้จ่ายที่ค้างจ่ายทุกโปรเจค</div>
+              <div class="account-row-val debit">−฿680,000</div>
+            </div>
+            <div class="account-row" style="background:rgba(74,124,95,0.06);border-radius:8px;padding:10px 14px;margin-top:6px;">
+              <div class="account-row-label" style="font-weight:700">เงินที่ใช้ได้จริง (สุทธิ)</div>
+              <div class="account-row-val" style="color:var(--mid)">฿910,500</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Claude panel -->
+      <div>
+        <div class="claude-panel">
+          <div class="claude-panel-header">
+            <span class="claude-icon">🌿</span>
+            <div class="claude-panel-title">Claude วิเคราะห์การเงิน</div>
+          </div>
+
+          <div class="claude-insight">
+            <div class="claude-insight-label">⚠ ความเสี่ยงโปรเจค</div>
+            <div class="claude-insight-text">
+              <strong>VV-98</strong> มี margin คาดการณ์ที่ 9% — ต่ำกว่าเป้า 15% เพราะค่าแรงช่างเหล็กเกินประมาณการ ถ้า VO งานไฟ Zone C บวกเพิ่มอีก ควรเจรจาปรับ BOQ ก่อนเริ่มงาน
+            </div>
+          </div>
+
+          <div class="claude-insight">
+            <div class="claude-insight-label">💰 กระแสเงินสดเดือนนี้</div>
+            <div class="claude-insight-text">
+              เงินในมือ <strong>฿1.59M</strong> แต่ค้างจ่าย <strong>฿680K</strong> เหลือใช้จริง ~฿910K งวดที่รอรับ VV-98 งวด 3 (฿1.03M) และ KB-22 งวด 4 (฿520K) — ถ้าทั้งสองรับในเดือนนี้ กระแสเงินสดดีมาก
+            </div>
+          </div>
+
+          <div class="claude-insight">
+            <div class="claude-insight-label">👷 ค่าแรงสะสมที่ต้องติดตาม</div>
+            <div class="claude-insight-text">
+              ทีมช่างเอกเบิกสะสมไปแล้ว <strong>฿86,400</strong> ยังไม่มียอดสุดท้าย ควรประเมินงานที่เหลือก่อนปิดโปรเจค KB-22 เพื่อคาดการณ์ต้นทุนจริงได้แม่นขึ้น
+            </div>
+          </div>
+
+          <div class="claude-insight">
+            <div class="claude-insight-label">📊 ภาพรวม 3 โปรเจค</div>
+            <div class="claude-insight-text">
+              ST-10 ปิดครบ margin ดี — ใช้เป็นต้นแบบ BOQ สำหรับงานขนาดเดียวกันได้ KB-22 อยู่ในเกณฑ์ปกติ ควรอัปเดตงบคาดคะเนหลังงวด 4
+            </div>
+          </div>
+
+          <button class="claude-ask-btn" onclick="showToast('กำลังวิเคราะห์เพิ่มเติม...')">
+            🤖 ขอการวิเคราะห์เพิ่มเติม →
+          </button>
+          <button class="claude-ask-btn" onclick="showToast('กำลังสร้างรายงาน...')">
+            📄 สร้างรายงานการเงินเดือนนี้ →
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+function switchTab(el, sec) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('sec-' + sec).classList.add('active');
+}
+
+function selectProj(el) {
+  document.querySelectorAll('.proj-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+function addExpense() {
+  const desc = document.getElementById('expDesc').value.trim();
+  const proj = document.getElementById('expProj').value;
+  const cat  = document.getElementById('expCat').value;
+  const amt  = parseInt(document.getElementById('expAmount').value);
+
+  if (!desc || !amt) { showToast('⚠ กรุณากรอกรายละเอียดและจำนวนเงิน'); return; }
+
+  const today = new Date();
+  const months = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+  const dateStr = today.getDate() + ' ' + months[today.getMonth()] + ' 68';
+
+  const tbody = document.getElementById('expBody');
+  const row = document.createElement('tr');
+  row.innerHTML = `
+    <td>${dateStr}</td>
+    <td><strong>${desc}</strong></td>
+    <td>${proj}</td>
+    <td>${cat}</td>
+    <td><span class="type-b-badge">B-เบิกสะสม</span></td>
+    <td>—</td>
+    <td>
+      <div class="paid-bar-wrap">
+        <div class="paid-bar-track"><div class="paid-bar-fill" style="width:100%"></div></div>
+        <span style="font-size:12px;color:#888">฿${amt.toLocaleString()}</span>
+      </div>
+    </td>
+    <td><span class="remaining-zero">สะสม</span></td>
+  `;
+  tbody.insertBefore(row, tbody.firstChild);
+  document.getElementById('expDesc').value = '';
+  document.getElementById('expAmount').value = '';
+  showToast('✅ บันทึกค่าใช้จ่ายเรียบร้อย');
+}
+
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.querySelectorAll('.inst-progress-fill, .worker-bar-fill').forEach(el => {
+      const w = el.style.width; el.style.width = '0';
+      setTimeout(() => { el.style.width = w; }, 100);
+    });
+  }, 200);
+});
+</script>
+
+<script>
+// ===== Notion Finance Loader =====
+const API = '/api/notion';
+const getTitle = (p,k) => p?.properties?.[k]?.title?.[0]?.plain_text || '';
+const getRich  = (p,k) => p?.properties?.[k]?.rich_text?.[0]?.plain_text || '';
+const getNum   = (p,k) => p?.properties?.[k]?.number || 0;
+const getSel   = (p,k) => p?.properties?.[k]?.select?.name || '';
+const getDate  = (p,k) => p?.properties?.[k]?.date?.start || '';
+const fmtB     = (n) => '฿' + Math.round(n||0).toLocaleString('th-TH');
+
+async function loadFinance() {
+  try {
+    const res = await fetch(API);
+    const json = await res.json();
+    if (!json.success) throw new Error(json.error);
+    const { projects, payments, expenses } = json.data;
+
+    // === Summary stats ===
+    let totalContract=0, totalPaid=0, totalExp=0, totalRemain=0;
+    projects.forEach(p => totalContract += getNum(p,'มูลค่าสัญญา'));
+    payments.forEach(p => {
+      const s = getSel(p,'สถานะ');
+      const amt = getNum(p,'ยอดที่ต้องรับ');
+      if (s === '✅ รับเงินแล้ว') totalPaid += amt;
+      else totalRemain += amt;
+    });
+    expenses.forEach(p => totalExp += getNum(p,'จ่ายแล้ว'));
+
+    // อัปเดต summary cards
+    const sumCards = document.querySelectorAll('.sum-card');
+    if (sumCards[0]) sumCards[0].querySelector('.sum-value').textContent = fmtB(totalContract);
+    if (sumCards[1]) sumCards[1].querySelector('.sum-value').textContent = fmtB(totalPaid);
+    if (sumCards[2]) sumCards[2].querySelector('.sum-value').textContent = fmtB(totalRemain);
+    if (sumCards[3]) sumCards[3].querySelector('.sum-value').textContent = fmtB(totalExp);
+
+    // === Installment cards ===
+    const instGrid = document.querySelector('.inst-grid');
+    if (instGrid && projects.length > 0) {
+      instGrid.innerHTML = projects.map(p => {
+        const name   = getTitle(p,'ชื่อโปรเจค');
+        const code   = getRich(p,'รหัสโปรเจค');
+        const value  = getNum(p,'มูลค่าสัญญา');
+        const loc    = getRich(p,'ที่อยู่หน้างาน');
+
+        // งวดของโปรเจคนี้
+        const projPay = payments.filter(pay => {
+          const rel = pay?.properties?.['โปรเจค']?.relation || [];
+          return rel.some(r => r.id === p.id);
+        });
+        const paidAmt = projPay.filter(pay => getSel(pay,'สถานะ')==='✅ รับเงินแล้ว').reduce((s,pay)=>s+getNum(pay,'ยอดที่ต้องรับ'),0);
+        const paidPct = value > 0 ? Math.round(paidAmt/value*100) : 0;
+        const currentInst = projPay.find(pay => getSel(pay,'สถานะ')==='📨 ส่งใบแจ้งหนี้แล้ว');
+        const pendingInst = projPay.filter(pay => getSel(pay,'สถานะ')==='⏳ รอเรียกเก็บ');
+
+        const rows = projPay.map((pay, i) => {
+          const s = getSel(pay,'สถานะ');
+          const desc = getTitle(pay,'ชื่องวด');
+          const amt = getNum(pay,'ยอดที่ต้องรับ');
+          const isDone = s==='✅ รับเงินแล้ว';
+          const isCurrent = s==='📨 ส่งใบแจ้งหนี้แล้ว';
+          const numCls = isDone?'num-done':isCurrent?'num-current':'num-pending';
+          const pillCls = isDone?'s-done':isCurrent?'s-current':'s-pending';
+          const pillLabel = isDone?'✓ รับแล้ว':isCurrent?'⏳ งวดนี้':'รอ';
+          return '<div class="inst-row">' +
+            '<div class="inst-num '+ numCls +'">'+(i+1)+'</div>' +
+            '<div class="inst-row-desc">'+(desc||'งวดที่ '+(i+1))+'</div>' +
+            '<div class="inst-row-amount">'+fmtB(amt)+'</div>' +
+            '<div class="inst-row-status"><span class="status-pill '+pillCls+'">'+pillLabel+'</span></div>' +
+          '</div>';
+        }).join('');
+
+        return '<div class="inst-card">' +
+          '<div class="inst-card-header">' +
+            '<div><div class="inst-proj-name">'+(name||code)+'</div>' +
+            '<div class="inst-proj-sub">📍 '+(loc||'-')+' · '+projPay.length+' งวด</div></div>' +
+            '<div class="inst-total"><div class="inst-total-val">'+fmtB(value)+'</div><div class="inst-total-label">มูลค่าสัญญา</div></div>' +
+          '</div>' +
+          '<div class="inst-progress-wrap">' +
+            '<div class="inst-progress-label"><span>รับแล้ว '+(projPay.filter(pay=>getSel(pay,"สถานะ")==="✅ รับเงินแล้ว").length)+' งวด จาก '+projPay.length+' งวด</span>' +
+            '<span style="font-weight:700;color:var(--mid)">'+fmtB(paidAmt)+' / '+fmtB(value)+'</span></div>' +
+            '<div class="inst-progress-track"><div class="inst-progress-fill" style="width:'+paidPct+'%"></div></div>' +
+          '</div>' +
+          '<div class="inst-rows">'+rows+'</div>' +
+          '<div class="inst-card-footer">' +
+            '<div class="inst-footer-stat"><div class="inst-footer-val" style="color:var(--mid)">'+fmtB(paidAmt)+'</div><div class="inst-footer-label">รับแล้ว</div></div>' +
+            '<div class="inst-footer-stat"><div class="inst-footer-val" style="color:var(--blue)">'+fmtB(value-paidAmt)+'</div><div class="inst-footer-label">รอรับอีก</div></div>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+    }
+
+    // === Expense table ===
+    const expBody = document.getElementById('expBody');
+    if (expBody && expenses.length > 0) {
+      const thMonths=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+      expBody.innerHTML = expenses.slice(0, 20).map(e => {
+        const desc   = getTitle(e,'รายละเอียด');
+        const worker = getRich(e,'ชื่อช่าง/ผู้รับ');
+        const cat    = getSel(e,'หมวด');
+        const type   = getSel(e,'แบบ');
+        const agreed = getNum(e,'ยอดตกลง');
+        const paid   = getNum(e,'จ่ายแล้ว');
+        const remain = agreed - paid;
+        const date   = getDate(e,'วันที่จ่าย');
+        const dateStr = date ? new Date(date).getDate()+' '+thMonths[new Date(date).getMonth()] : '—';
+        const typeA = type && type.includes('A');
+        const pct = agreed > 0 ? Math.round(paid/agreed*100) : 100;
+        return '<tr>' +
+          '<td>'+dateStr+'</td>' +
+          '<td><strong>'+(worker||desc)+'</strong></td>' +
+          '<td><span style="font-size:11px;padding:2px 7px;border-radius:99px;background:rgba(74,124,95,0.1);color:var(--mid)">'+cat+'</span></td>' +
+          '<td><span class="'+(typeA?'type-a-badge':'type-b-badge')+'">'+(typeA?'A-รู้ยอด':'B-เบิกสะสม')+'</span></td>' +
+          '<td>'+(agreed?fmtB(agreed):'—')+'</td>' +
+          '<td><div class="paid-bar-wrap"><div class="paid-bar-track"><div class="paid-bar-fill'+(pct>=100?' full':'')+'" style="width:'+Math.min(pct,100)+'%"></div></div><span style="font-size:12px;color:#888">'+fmtB(paid)+'</span></div></td>' +
+          '<td>'+(typeA&&remain>0?'<span class="remaining-amt">'+fmtB(remain)+'</span>':'<span class="remaining-zero">'+(remain<=0?'฿0 ✓':'สะสม')+'</span>')+'</td>' +
+        '</tr>';
+      }).join('');
+    }
+
+  } catch(err) {
+    console.error('Finance load error:', err);
+  }
+}
+
+window.addEventListener('load', () => setTimeout(loadFinance, 300));
+</script>
+</body>
+</html>

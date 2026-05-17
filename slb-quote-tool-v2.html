@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>สวนหลังบ้าน — ต่อราคาช่าง v2</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--deep:#1a3a2a;--mid:#2d5a3d;--soft:#4a7c5f;--light:#7aad8f;--cream:#f5f0e8;--warm:#faf8f4;--gold:#c9a84c;--gold-l:#e8d5a0;--red:#c0392b;--red-bg:#fdecea;--blue:#2471a3;--blue-bg:#eaf4fb;--amber:#d68910;--amber-bg:#fef9e7;--shadow:rgba(26,58,42,0.1);}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Sarabun',sans-serif;background:var(--cream);color:var(--deep);min-height:100vh;}
+.header{background:var(--deep);box-shadow:0 2px 16px rgba(0,0,0,0.25);}
+.header-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;max-width:1300px;margin:0 auto;}
+.brand{display:flex;align-items:center;gap:12px;}
+.brand-logo{width:36px;height:36px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:17px;}
+.brand-name{font-family:'Playfair Display',serif;font-size:16px;color:var(--cream);}
+.brand-sub{font-size:11px;color:var(--light);letter-spacing:1.5px;text-transform:uppercase;}
+.header-nav{display:flex;gap:4px;}
+.nav-btn{padding:7px 14px;border-radius:6px;border:none;font-family:'Sarabun',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all 0.2s;color:rgba(245,240,232,0.65);background:transparent;text-decoration:none;display:inline-block;}
+.nav-btn:hover{background:rgba(255,255,255,0.1);color:var(--cream);}
+.nav-btn.active{background:var(--gold);color:var(--deep);font-weight:700;}
+.btn{padding:8px 18px;border-radius:7px;border:none;font-family:'Sarabun',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.2s;}
+.btn-gold{background:var(--gold);color:var(--deep);}
+.btn-gold:hover{background:var(--gold-l);}
+.btn-outline{background:transparent;color:rgba(245,240,232,0.7);border:1px solid rgba(255,255,255,0.25);}
+.btn-outline:hover{background:rgba(255,255,255,0.1);color:var(--cream);}
+.btn-green{background:var(--soft);color:white;}
+.btn-sm{padding:5px 12px;font-size:12px;border-radius:6px;border:1.5px solid rgba(74,124,95,0.25);background:transparent;color:var(--soft);cursor:pointer;font-family:'Sarabun',sans-serif;font-weight:600;transition:all 0.2s;}
+.btn-sm:hover{background:var(--deep);color:var(--cream);border-color:var(--deep);}
+.main{max-width:1300px;margin:0 auto;padding:24px 28px 60px;}
+
+/* INFO */
+.info-card{background:var(--warm);border-radius:14px;border:1px solid rgba(74,124,95,0.15);box-shadow:0 2px 12px var(--shadow);padding:20px 24px;margin-bottom:20px;}
+.info-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+.field-group label{display:block;font-size:11px;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:5px;}
+.field-group input,.field-group select{width:100%;padding:9px 12px;border:1.5px solid rgba(74,124,95,0.2);border-radius:8px;font-family:'Sarabun',sans-serif;font-size:14px;background:var(--cream);color:var(--deep);outline:none;transition:border-color 0.2s;}
+.field-group input:focus,.field-group select:focus{border-color:var(--soft);box-shadow:0 0 0 3px rgba(74,124,95,0.1);}
+
+/* REFERENCE PRICE PANEL */
+.ref-panel{background:var(--warm);border-radius:14px;border:1.5px solid rgba(201,168,76,0.3);box-shadow:0 2px 12px var(--shadow);margin-bottom:20px;overflow:hidden;}
+.ref-panel-header{background:linear-gradient(135deg,#3d2a05,#6b4a10);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;}
+.ref-panel-header h4{font-family:'Playfair Display',serif;color:var(--gold-l);font-size:16px;display:flex;align-items:center;gap:8px;}
+.ref-panel-body{padding:16px 20px;}
+.ref-cats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
+.ref-cat-btn{padding:6px 14px;border-radius:20px;border:1.5px solid rgba(74,124,95,0.2);background:var(--cream);font-family:'Sarabun',sans-serif;font-size:12px;font-weight:700;color:var(--soft);cursor:pointer;transition:all 0.2s;}
+.ref-cat-btn:hover{border-color:var(--soft);}
+.ref-cat-btn.active{background:var(--gold);color:var(--deep);border-color:var(--gold);}
+.ref-table{width:100%;border-collapse:collapse;font-size:13px;}
+.ref-table th{background:rgba(201,168,76,0.1);padding:8px 12px;text-align:left;font-size:11px;font-weight:700;color:#8a6f1e;text-transform:uppercase;letter-spacing:0.8px;border-bottom:1px solid rgba(201,168,76,0.2);}
+.ref-table td{padding:9px 12px;border-bottom:1px solid rgba(74,124,95,0.07);color:#444;vertical-align:middle;}
+.ref-table tr:last-child td{border-bottom:none;}
+.ref-table tr:hover td{background:rgba(201,168,76,0.05);}
+.ref-range{font-weight:700;color:var(--deep);}
+.ref-use-btn{padding:3px 10px;border-radius:99px;border:1px solid rgba(74,124,95,0.3);background:transparent;font-family:'Sarabun',sans-serif;font-size:11px;font-weight:700;color:var(--soft);cursor:pointer;transition:all 0.2s;}
+.ref-use-btn:hover{background:var(--soft);color:white;}
+.ref-add-row{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr auto;gap:8px;padding:12px 0 0;border-top:1px dashed rgba(74,124,95,0.2);margin-top:8px;align-items:end;}
+.ref-input{padding:7px 10px;border:1.5px solid rgba(74,124,95,0.2);border-radius:7px;font-family:'Sarabun',sans-serif;font-size:13px;background:var(--cream);color:var(--deep);outline:none;width:100%;}
+.ref-input:focus{border-color:var(--gold);}
+
+/* ZONE TABS */
+.zone-bar{display:flex;align-items:center;gap:8px;margin-bottom:18px;flex-wrap:wrap;}
+.zone-bar-label{font-size:12px;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:1px;}
+.zone-tab{padding:7px 16px;border-radius:20px;border:1.5px solid rgba(74,124,95,0.25);background:var(--warm);font-family:'Sarabun',sans-serif;font-size:13px;font-weight:600;color:var(--soft);cursor:pointer;transition:all 0.2s;}
+.zone-tab:hover{border-color:var(--soft);}
+.zone-tab.active{background:var(--deep);color:var(--gold-l);border-color:var(--deep);}
+.zone-tab.add-zone{border-style:dashed;color:var(--light);}
+
+/* COMPARE TABLE */
+.compare-card{background:var(--warm);border-radius:14px;border:1px solid rgba(74,124,95,0.15);box-shadow:0 2px 14px var(--shadow);overflow:hidden;margin-bottom:18px;}
+.compare-header{background:linear-gradient(135deg,var(--deep),var(--mid));padding:16px 22px;display:flex;align-items:center;justify-content:space-between;}
+.compare-header h3{font-family:'Playfair Display',serif;color:var(--cream);font-size:17px;}
+
+.col-headers{display:grid;grid-template-columns:2fr 0.7fr 0.9fr 0.9fr 0.75fr 0.9fr 0.85fr 0.75fr 0.5fr;background:rgba(74,124,95,0.07);border-bottom:1px solid rgba(74,124,95,0.12);}
+.col-h{padding:9px 8px;font-size:11px;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:0.6px;}
+.col-h.right{text-align:right;}
+.col-h.center{text-align:center;}
+.ref-bg{background:rgba(201,168,76,0.06);}
+.offer-bg{background:rgba(201,168,76,0.04);}
+.counter-bg{background:rgba(74,124,95,0.04);border-left:2px solid rgba(201,168,76,0.3);border-right:2px solid rgba(74,124,95,0.2);}
+
+.item-row{display:grid;grid-template-columns:2fr 0.7fr 0.9fr 0.9fr 0.75fr 0.9fr 0.85fr 0.75fr 0.5fr;border-bottom:1px solid rgba(74,124,95,0.07);align-items:center;transition:background 0.15s;}
+.item-row:hover{background:rgba(74,124,95,0.03);}
+.item-row:last-child{border-bottom:none;}
+.cell{padding:7px 8px;}
+.cell-desc input{width:100%;border:none;background:transparent;font-family:'Sarabun',sans-serif;font-size:13.5px;color:var(--deep);outline:none;font-weight:500;}
+.cell-desc input::placeholder{color:#ccc;font-weight:400;}
+.cell-desc input:focus{background:rgba(74,124,95,0.05);border-radius:4px;}
+.num-input{width:100%;border:none;background:transparent;font-family:'Sarabun',sans-serif;font-size:13px;color:var(--deep);outline:none;text-align:right;padding:4px 5px;border-radius:5px;transition:background 0.15s;}
+.num-input:focus{background:rgba(74,124,95,0.08);}
+.num-input.ref{color:#b8860b;font-weight:600;}
+.num-input.ref:focus{background:rgba(201,168,76,0.12);}
+.num-input.offer{color:#777;}
+.num-input.counter{color:var(--deep);font-weight:700;}
+.num-input.counter:focus{background:rgba(201,168,76,0.12);}
+.cell-amount{text-align:right;font-size:13px;color:var(--deep);padding:7px 8px;font-weight:500;}
+.cell-diff{text-align:right;font-size:12px;padding:7px 8px;font-weight:700;}
+.diff-save{color:var(--soft);}
+.diff-same{color:#ccc;}
+.diff-over{color:var(--red);}
+
+/* ref vs offer indicator */
+.ref-vs{text-align:center;font-size:11px;padding:7px 4px;font-weight:700;}
+.rv-high{color:var(--red);}
+.rv-ok{color:var(--soft);}
+.rv-low{color:var(--blue);}
+
+.cell-actions{text-align:center;padding:7px 5px;}
+.del-btn{width:24px;height:24px;border-radius:50%;border:none;background:transparent;color:#ccc;cursor:pointer;font-size:13px;transition:all 0.2s;display:inline-flex;align-items:center;justify-content:center;}
+.del-btn:hover{background:var(--red-bg);color:var(--red);}
+.add-row-wrap{padding:10px 22px;border-top:1px dashed rgba(74,124,95,0.2);}
+.add-row-btn{width:100%;padding:9px;background:transparent;border:1.5px dashed rgba(74,124,95,0.25);border-radius:8px;font-family:'Sarabun',sans-serif;font-size:13px;color:var(--light);cursor:pointer;transition:all 0.2s;}
+.add-row-btn:hover{background:rgba(74,124,95,0.06);color:var(--soft);border-color:var(--soft);}
+
+/* FOOTER */
+.compare-footer{background:rgba(74,124,95,0.05);border-top:2px solid rgba(74,124,95,0.12);padding:14px 22px;}
+.totals-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:10px;}
+.total-box{background:var(--warm);border-radius:9px;border:1px solid rgba(74,124,95,0.12);padding:11px 13px;text-align:center;}
+.total-box-label{font-size:10px;color:#888;text-transform:uppercase;letter-spacing:0.7px;margin-bottom:4px;}
+.total-box-val{font-size:17px;font-weight:700;color:var(--deep);}
+.total-box-sub{font-size:10px;color:#aaa;margin-top:2px;}
+
+/* ADVANCE */
+.advance-card{background:var(--warm);border-radius:14px;border:1px solid rgba(74,124,95,0.15);box-shadow:0 2px 12px var(--shadow);overflow:hidden;margin-bottom:18px;}
+.advance-header{background:var(--deep);padding:13px 22px;display:flex;align-items:center;justify-content:space-between;}
+.advance-header h4{font-family:'Playfair Display',serif;color:var(--cream);font-size:16px;}
+.advance-body{padding:14px 22px;}
+.advance-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.adv-input{padding:8px 11px;border:1.5px solid rgba(74,124,95,0.2);border-radius:8px;font-family:'Sarabun',sans-serif;font-size:13.5px;color:var(--deep);background:var(--cream);outline:none;}
+.adv-input:focus{border-color:var(--soft);}
+.advance-summary{display:flex;gap:18px;padding:12px;background:rgba(74,124,95,0.06);border-radius:10px;margin-top:4px;}
+.adv-stat-val{font-size:16px;font-weight:700;color:var(--deep);}
+.adv-stat-label{font-size:11px;color:#888;}
+
+/* SUMMARY */
+.summary-panel{background:linear-gradient(160deg,var(--deep),var(--mid));border-radius:14px;padding:20px 24px;border:1px solid rgba(201,168,76,0.25);display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:14px;}
+.summary-title{font-family:'Playfair Display',serif;color:var(--gold-l);font-size:17px;grid-column:1/-1;margin-bottom:4px;}
+.summary-stat{background:rgba(255,255,255,0.07);border-radius:9px;padding:12px 15px;}
+.summary-stat-val{font-size:19px;font-weight:700;color:var(--gold-l);}
+.summary-stat-label{font-size:10px;color:rgba(245,240,232,0.5);margin-top:3px;text-transform:uppercase;letter-spacing:0.8px;}
+
+.toast{position:fixed;bottom:24px;right:24px;background:var(--deep);color:var(--cream);padding:12px 20px;border-radius:8px;font-size:14px;box-shadow:0 4px 20px rgba(0,0,0,0.25);transform:translateY(100px);opacity:0;transition:all 0.3s;z-index:300;border-left:4px solid var(--gold);}
+.toast.show{transform:translateY(0);opacity:1;}
+
+@media(max-width:900px){
+  .main{padding:14px 14px 40px;}
+  .info-grid{grid-template-columns:1fr 1fr;}
+  .totals-grid{grid-template-columns:1fr 1fr;}
+  .summary-panel{grid-template-columns:1fr 1fr;}
+  .col-headers,.item-row{grid-template-columns:1.8fr 0.6fr 0.8fr 0.8fr 0.7fr 0.8fr 0.8fr 0.7fr 0.5fr;}
+}
+@media print{
+  .header-nav,.add-row-btn,.add-zone,.del-btn,.ref-panel,.btn{display:none!important;}
+  body{background:white;}
+}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-inner">
+    <div class="brand" style="display:flex;align-items:center;gap:6px;">
+      <button onclick="history.back()" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:var(--cream);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0;margin-right:4px;" title="ย้อนกลับ" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">←</button>
+      <a href="slb-home.html" style="text-decoration:none;display:flex;align-items:center;gap:12px;">
+      <div class="brand-logo">🌿</div>
+      <div>
+        <div class="brand-name">สวนหลังบ้าน สตูดิโอ</div>
+        <div class="brand-sub">ต่อราคาช่าง v2</div>
+      </div>
+      </a>
+    </div>
+    <div class="header-nav">
+      <a class="nav-btn" href="slb-home.html">🏠 หน้าหลัก</a>
+      <a class="nav-btn" href="suanlangbaan-project-tracker-v2.html">📋 โปรเจค</a>
+      <a class="nav-btn" href="slb-finance-dashboard.html">💰 การเงิน</a>
+      <a class="nav-btn active" href="#">📝 ต่อราคา</a>
+      <a class="nav-btn" href="slb-marketing.html">📣 Ad</a>
+      <a class="nav-btn" href="slb-tax.html">🧾 ภาษี</a>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <!-- INFO -->
+  <div class="info-card">
+    <div class="info-grid">
+      <div class="field-group"><label>ชื่อช่าง / บริษัท</label><input type="text" id="workerName" placeholder="เช่น หจก.SK โปรเจ็ค"></div>
+      <div class="field-group"><label>โปรเจค</label><select id="projectSel"><option value="">เลือกโปรเจค</option><option>VV-98 คุณขวัญ</option><option>KB-22 คุณโมช่า</option><option>ST-10 คุณทีปกร</option><option>BBL-15 คุณเกี้ย</option><option>อื่นๆ</option></select></div>
+      <div class="field-group"><label>ฝ่ายงาน / ประเภท</label><input type="text" id="workType" placeholder="เช่น งานหลังคา, กระเบื้อง"></div>
+      <div class="field-group"><label>วันที่</label><input type="date" id="quoteDate"></div>
+    </div>
+  </div>
+
+  <!-- REFERENCE PRICE PANEL -->
+  <div class="ref-panel">
+    <div class="ref-panel-header">
+      <h4>📊 ฐานราคากลางอ้างอิง</h4>
+      <div style="display:flex;gap:8px;">
+        <button class="btn-sm" style="color:var(--gold-l);border-color:rgba(201,168,76,0.4)" onclick="toggleRefPanel()">ซ่อน/แสดง</button>
+        <button class="btn-sm" style="color:var(--gold-l);border-color:rgba(201,168,76,0.4)" onclick="showAddRef()">+ เพิ่มราคากลาง</button>
+      </div>
+    </div>
+    <div class="ref-panel-body" id="refPanelBody">
+      <div class="ref-cats">
+        <button class="ref-cat-btn active" onclick="filterRef('all',this)">ทั้งหมด</button>
+        <button class="ref-cat-btn" onclick="filterRef('หลังคา',this)">หลังคา</button>
+        <button class="ref-cat-btn" onclick="filterRef('กระเบื้อง',this)">กระเบื้อง</button>
+        <button class="ref-cat-btn" onclick="filterRef('งานสวน',this)">งานสวน</button>
+        <button class="ref-cat-btn" onclick="filterRef('ระบบน้ำ',this)">ระบบน้ำ</button>
+        <button class="ref-cat-btn" onclick="filterRef('งานไฟ',this)">งานไฟ</button>
+        <button class="ref-cat-btn" onclick="filterRef('โครงสร้าง',this)">โครงสร้าง</button>
+      </div>
+      <table class="ref-table" id="refTable">
+        <thead>
+          <tr><th>รายการ</th><th>หมวด</th><th>หน่วย</th><th>ราคากลาง (ต่ำ)</th><th>ราคากลาง (สูง)</th><th>อ้างอิงจาก</th><th></th></tr>
+        </thead>
+        <tbody id="refBody"></tbody>
+      </table>
+      <div class="ref-add-row" id="refAddRow" style="display:none">
+        <div><label style="font-size:11px;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:0.7px;display:block;margin-bottom:4px">รายการ</label><input class="ref-input" type="text" id="newRefItem" placeholder="เช่น ปูกระเบื้องพื้น"></div>
+        <div><label style="font-size:11px;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:0.7px;display:block;margin-bottom:4px">หมวด</label><select class="ref-input" id="newRefCat"><option>หลังคา</option><option>กระเบื้อง</option><option>งานสวน</option><option>ระบบน้ำ</option><option>งานไฟ</option><option>โครงสร้าง</option></select></div>
+        <div><label style="font-size:11px;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:0.7px;display:block;margin-bottom:4px">หน่วย</label><input class="ref-input" type="text" id="newRefUnit" placeholder="ตรม./เมตร"></div>
+        <div><label style="font-size:11px;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:0.7px;display:block;margin-bottom:4px">ราคากลาง</label><input class="ref-input" type="text" id="newRefRange" placeholder="350 – 450"></div>
+        <button class="btn btn-gold" onclick="addRefItem()" style="white-space:nowrap;padding:8px 14px;font-size:13px">+ บันทึก</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ZONES -->
+  <div class="zone-bar">
+    <span class="zone-bar-label">โซน:</span>
+    <div id="zoneTabs"></div>
+    <button class="zone-tab add-zone" onclick="addZone()">+ เพิ่มโซน</button>
+  </div>
+
+  <div id="zonesContainer"></div>
+
+  <!-- ADVANCE -->
+  <div class="advance-card">
+    <div class="advance-header">
+      <h4>💳 การเบิกล่วงหน้า</h4>
+      <button class="btn-sm" style="color:rgba(245,240,232,0.7);border-color:rgba(255,255,255,0.25)" onclick="addAdvance()">+ เพิ่มรายการ</button>
+    </div>
+    <div class="advance-body">
+      <div id="advanceRows"></div>
+      <div class="advance-summary">
+        <div><div class="adv-stat-val" id="advTotal">฿0</div><div class="adv-stat-label">เบิกล่วงหน้าไปแล้ว</div></div>
+        <div><div class="adv-stat-val" id="advRemain" style="color:var(--red)">฿0</div><div class="adv-stat-label">ยังค้างจ่าย</div></div>
+        <div><div class="adv-stat-val" id="advPct" style="color:var(--blue)">0%</div><div class="adv-stat-label">เบิกแล้ว / ยอดรวม</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="summary-panel">
+    <div class="summary-title">📊 สรุปการต่อราคา</div>
+    <div class="summary-stat"><div class="summary-stat-val" id="sumOffer">฿0</div><div class="summary-stat-label">ราคาช่างเสนอ (รวม VAT)</div></div>
+    <div class="summary-stat"><div class="summary-stat-val" id="sumCounter">฿0</div><div class="summary-stat-label">ราคาที่เราต่อ (รวม VAT)</div></div>
+    <div class="summary-stat"><div class="summary-stat-val" id="sumSaved" style="color:#7aad8f">฿0</div><div class="summary-stat-label">ประหยัดได้ vs ช่างเสนอ</div></div>
+    <div class="summary-stat"><div class="summary-stat-val" id="sumVsRef" style="color:var(--gold-l)">—</div><div class="summary-stat-label">เทียบกับราคากลาง</div></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== REFERENCE PRICE DATA =====
+let refItems = [
+  {item:'ติดตั้งหลังคาโพลีตัน 6มม',cat:'หลังคา',unit:'ตรม.',low:4200,high:4800,src:'ST-10, VV-98'},
+  {item:'ระแนงไม้เทียม',cat:'หลังคา',unit:'เมตร',low:900,high:1100,src:'VV-98'},
+  {item:'รางน้ำสแตนเลส 6"',cat:'หลังคา',unit:'เมตร',low:750,high:850,src:'ST-10'},
+  {item:'ปูพื้นกระเบื้อง + ปรับพื้น',cat:'กระเบื้อง',unit:'ตรม.',low:350,high:500,src:'KB-22, ST-10'},
+  {item:'ก่อฉาบผนัง',cat:'กระเบื้อง',unit:'ตรม.',low:250,high:300,src:'KB-22'},
+  {item:'ขอบ 45 องศา',cat:'กระเบื้อง',unit:'เมตร',low:280,high:380,src:'KB-22'},
+  {item:'ปลูกต้นไม้ขนาดกลาง',cat:'งานสวน',unit:'ต้น',low:800,high:1500,src:'ST-10'},
+  {item:'วางระบบสปริงเกอร์',cat:'ระบบน้ำ',unit:'จุด',low:350,high:600,src:'ST-10'},
+  {item:'ติดตั้งไฟสวน',cat:'งานไฟ',unit:'จุด',low:800,high:1200,src:'VV-98'},
+  {item:'งานดินขุด + ปรับ',cat:'โครงสร้าง',unit:'ตรม.',low:120,high:200,src:'KB-22'},
+];
+
+let zones = [];
+let currentRefCat = 'all';
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded',()=>{
+  document.getElementById('quoteDate').value = new Date().toISOString().split('T')[0];
+  renderRefTable();
+  addZone('งานหลักคา');
+  addAdvance('','','');
+});
+
+// ===== REF PRICE =====
+function renderRefTable(){
+  const tbody = document.getElementById('refBody');
+  const filtered = currentRefCat==='all' ? refItems : refItems.filter(r=>r.cat===currentRefCat);
+  tbody.innerHTML = filtered.map((r,i)=>`
+    <tr>
+      <td style="font-weight:600;color:var(--deep)">${r.item}</td>
+      <td><span style="background:rgba(74,124,95,0.1);color:var(--mid);padding:2px 7px;border-radius:99px;font-size:10px;font-weight:700">${r.cat}</span></td>
+      <td style="color:#888">${r.unit}</td>
+      <td class="ref-range">฿${r.low.toLocaleString()}</td>
+      <td class="ref-range">฿${r.high.toLocaleString()}</td>
+      <td style="font-size:12px;color:#aaa">${r.src}</td>
+      <td><button class="ref-use-btn" onclick="useRefPrice(${refItems.indexOf(r)})">ใช้ราคานี้</button></td>
+    </tr>`).join('');
+}
+
+function filterRef(cat,btn){
+  currentRefCat=cat;
+  document.querySelectorAll('.ref-cat-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderRefTable();
+}
+
+function toggleRefPanel(){
+  const body = document.getElementById('refPanelBody');
+  body.style.display = body.style.display==='none' ? 'block' : 'none';
+}
+
+function showAddRef(){
+  const row = document.getElementById('refAddRow');
+  row.style.display = row.style.display==='none'||row.style.display==='' ? 'grid' : 'none';
+}
+
+function addRefItem(){
+  const item = document.getElementById('newRefItem').value.trim();
+  const cat  = document.getElementById('newRefCat').value;
+  const unit = document.getElementById('newRefUnit').value.trim();
+  const range= document.getElementById('newRefRange').value.trim();
+  if(!item||!range){showToast('⚠ กรุณากรอกรายการและราคากลาง');return;}
+  const parts = range.split(/[-–]/);
+  const low = parseInt(parts[0])||0;
+  const high= parseInt(parts[1])||low;
+  refItems.push({item,cat,unit:unit||'ตรม.',low,high,src:'เพิ่มเอง'});
+  renderRefTable();
+  document.getElementById('newRefItem').value='';
+  document.getElementById('newRefRange').value='';
+  showToast('✅ เพิ่มราคากลางแล้ว');
+}
+
+function useRefPrice(idx){
+  const r = refItems[idx];
+  showToast(`📋 คัดลอก: ${r.item} ฿${r.low.toLocaleString()}–฿${r.high.toLocaleString()}/${r.unit} — ไปวางในช่องราคากลางของรายการที่ต้องการ`);
+}
+
+// ===== ZONES =====
+function addZone(name){
+  const id='zone_'+Date.now();
+  const zoneName = name||('โซน '+(zones.length+1));
+  zones.push({id,name:zoneName});
+  renderZoneTabs();
+  renderZone({id,name:zoneName});
+  setActiveZone(id);
+  addItemRow(id);addItemRow(id);addItemRow(id);
+}
+
+function renderZoneTabs(){
+  const cont=document.getElementById('zoneTabs');
+  cont.innerHTML='';
+  zones.forEach(z=>{
+    const btn=document.createElement('button');
+    btn.className='zone-tab';
+    btn.id='ztab_'+z.id;
+    btn.textContent=z.name;
+    btn.ondblclick=()=>renameZone(z.id,btn);
+    btn.onclick=()=>setActiveZone(z.id);
+    cont.appendChild(btn);
+  });
+}
+
+function setActiveZone(id){
+  document.querySelectorAll('.zone-tab').forEach(t=>t.classList.remove('active'));
+  const tab=document.getElementById('ztab_'+id);
+  if(tab)tab.classList.add('active');
+  zones.forEach(z=>{
+    const el=document.getElementById('zcard_'+z.id);
+    if(el)el.style.display=z.id===id?'block':'none';
+  });
+}
+
+function renameZone(id,btn){
+  const z=zones.find(z=>z.id===id);
+  const n=prompt('ชื่อโซน:',z.name);
+  if(n&&n.trim()){z.name=n.trim();btn.textContent=z.name;const h=document.querySelector('#zcard_'+id+' h3');if(h)h.textContent=z.name;}
+}
+
+function renderZone(zone){
+  const cont=document.getElementById('zonesContainer');
+  const card=document.createElement('div');
+  card.className='compare-card';
+  card.id='zcard_'+zone.id;
+  card.style.display='none';
+  card.innerHTML=`
+    <div class="compare-header">
+      <h3>${zone.name}</h3>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:13px;color:rgba(245,240,232,0.7)">
+          <input type="checkbox" id="vat_${zone.id}" checked onchange="recalc()" style="cursor:pointer"> รวม VAT 7%
+        </label>
+      </div>
+    </div>
+    <div class="col-headers">
+      <div class="col-h">รายละเอียดงาน</div>
+      <div class="col-h right">ตรม./เมตร</div>
+      <div class="col-h right ref-bg">ราคากลาง</div>
+      <div class="col-h right offer-bg">ราคาช่างเสนอ</div>
+      <div class="col-h center offer-bg">vs กลาง</div>
+      <div class="col-h right counter-bg">ราคาที่เราต่อ</div>
+      <div class="col-h right">รวม (เรา)</div>
+      <div class="col-h right diff-save">ประหยัด</div>
+      <div class="col-h center"></div>
+    </div>
+    <div class="rows-container" id="rows_${zone.id}"></div>
+    <div class="add-row-wrap"><button class="add-row-btn" onclick="addItemRow('${zone.id}')">+ เพิ่มรายการ</button></div>
+    <div class="compare-footer">
+      <div class="totals-grid">
+        <div class="total-box"><div class="total-box-label">ราคากลาง (รวม VAT)</div><div class="total-box-val" id="tot_ref_${zone.id}" style="color:var(--amber)">฿0</div><div class="total-box-sub">อ้างอิงโปรเจคก่อน</div></div>
+        <div class="total-box"><div class="total-box-label">ช่างเสนอ (รวม VAT)</div><div class="total-box-val" id="tot_offer_${zone.id}" style="color:#888">฿0</div></div>
+        <div class="total-box"><div class="total-box-label">เราต่อ (รวม VAT)</div><div class="total-box-val" id="tot_counter_${zone.id}">฿0</div></div>
+        <div class="total-box"><div class="total-box-label">ประหยัดจากช่างเสนอ</div><div class="total-box-val" id="tot_saved_${zone.id}" style="color:var(--soft)">฿0</div><div class="total-box-sub" id="tot_saved_pct_${zone.id}">0%</div></div>
+        <div class="total-box"><div class="total-box-label">vs ราคากลาง</div><div class="total-box-val" id="tot_vs_ref_${zone.id}">—</div><div class="total-box-sub" id="tot_vs_ref_sub_${zone.id}"></div></div>
+      </div>
+    </div>`;
+  cont.appendChild(card);
+}
+
+// ===== ITEM ROWS =====
+function addItemRow(zoneId){
+  const rowId='row_'+Date.now()+'_'+Math.random().toString(36).slice(2,5);
+  const cont=document.getElementById('rows_'+zoneId);
+  const row=document.createElement('div');
+  row.className='item-row';
+  row.id=rowId;
+  row.innerHTML=`
+    <div class="cell cell-desc"><input type="text" placeholder="รายละเอียดงาน..." oninput="recalc()"></div>
+    <div class="cell" style="padding:5px 6px"><input class="num-input" type="number" placeholder="0" step="0.01" oninput="recalc()" style="text-align:right"></div>
+    <div class="cell ref-bg" style="padding:5px 6px"><input class="num-input ref" type="number" placeholder="ราคากลาง" step="1" oninput="recalc()" style="text-align:right" title="ใส่ราคากลางที่เคยจ้างมา"></div>
+    <div class="cell offer-bg" style="padding:5px 6px"><input class="num-input offer" type="number" placeholder="ช่างเสนอ" step="1" oninput="recalc()" style="text-align:right"></div>
+    <div class="ref-vs offer-bg" id="rvs_${rowId}">—</div>
+    <div class="cell counter-bg" style="padding:5px 6px"><input class="num-input counter" type="number" placeholder="ที่เราต่อ" step="1" oninput="recalc()" style="text-align:right"></div>
+    <div class="cell-amount" id="amtCounter_${rowId}">—</div>
+    <div class="cell-diff" id="diff_${rowId}">—</div>
+    <div class="cell-actions"><button class="del-btn" onclick="delRow('${rowId}','${zoneId}')" title="ลบ">✕</button></div>`;
+  cont.appendChild(row);
+  recalc();
+}
+
+function delRow(rowId,zoneId){document.getElementById(rowId)?.remove();recalc();}
+
+// ===== ADVANCE =====
+function addAdvance(date,amount,note){
+  const id='adv_'+Date.now();
+  const row=document.createElement('div');
+  row.className='advance-row';
+  row.id=id;
+  row.innerHTML=`
+    <input class="adv-input" type="text" placeholder="วันที่" value="${date||''}" oninput="recalc()" style="width:120px">
+    <input class="adv-input" type="number" placeholder="จำนวนเงิน" value="${amount||''}" oninput="recalc()" style="width:120px;text-align:right">
+    <input class="adv-input" type="text" placeholder="หมายเหตุ..." value="${note||''}" style="flex:1">
+    <button class="del-btn" onclick="document.getElementById('${id}').remove();recalc()" title="ลบ">✕</button>`;
+  document.getElementById('advanceRows').appendChild(row);
+  recalc();
+}
+
+// ===== RECALC =====
+function recalc(){
+  let totalOffer=0,totalCounter=0,totalRef=0;
+  zones.forEach(z=>{
+    const vatOn=document.getElementById('vat_'+z.id)?.checked??true;
+    const rows=document.querySelectorAll('#rows_'+z.id+' .item-row');
+    let zOffer=0,zCounter=0,zRef=0;
+    rows.forEach(row=>{
+      const inputs=row.querySelectorAll('input[type=number]');
+      const qty=parseFloat(inputs[0]?.value)||0;
+      const ref=parseFloat(inputs[1]?.value)||0;
+      const offer=parseFloat(inputs[2]?.value)||0;
+      const counter=parseFloat(inputs[3]?.value)||0;
+      const rowId=row.id;
+      const refAmt=qty*ref;
+      const offerAmt=qty*offer;
+      const counterAmt=qty*counter;
+      const diff=offerAmt-counterAmt;
+
+      // vs ref indicator
+      const rvsEl=document.getElementById('rvs_'+rowId);
+      if(rvsEl){
+        if(!offer||!ref){rvsEl.textContent='—';rvsEl.className='ref-vs offer-bg';}
+        else{
+          const pct=((offer-ref)/ref*100);
+          if(pct>15){rvsEl.textContent=`+${pct.toFixed(0)}%`;rvsEl.className='ref-vs offer-bg rv-high';}
+          else if(pct<-5){rvsEl.textContent=`${pct.toFixed(0)}%`;rvsEl.className='ref-vs offer-bg rv-low';}
+          else{rvsEl.textContent=`+${pct.toFixed(0)}%`;rvsEl.className='ref-vs offer-bg rv-ok';}
+        }
+      }
+
+      const cEl=document.getElementById('amtCounter_'+rowId);
+      if(cEl)cEl.textContent=counterAmt?fmt(counterAmt):'—';
+      const dEl=document.getElementById('diff_'+rowId);
+      if(dEl){
+        if(!offerAmt&&!counterAmt){dEl.textContent='—';dEl.className='cell-diff diff-same';}
+        else if(diff>0){dEl.textContent='−'+fmt(diff);dEl.className='cell-diff diff-save';}
+        else if(diff<0){dEl.textContent='+'+fmt(Math.abs(diff));dEl.className='cell-diff diff-over';}
+        else{dEl.textContent='—';dEl.className='cell-diff diff-same';}
+      }
+      zRef+=refAmt;zOffer+=offerAmt;zCounter+=counterAmt;
+    });
+    const vm=vatOn?1.07:1;
+    const zRefV=zRef*vm,zOfferV=zOffer*vm,zCounterV=zCounter*vm;
+    const zSaved=zOfferV-zCounterV;
+    setText('tot_ref_'+z.id,fmt(zRefV));
+    setText('tot_offer_'+z.id,fmt(zOfferV));
+    setText('tot_counter_'+z.id,fmt(zCounterV));
+    setText('tot_saved_'+z.id,fmt(zSaved));
+    setText('tot_saved_pct_'+z.id,zOfferV?pct(zSaved/zOfferV):'0%');
+    const vsRefEl=document.getElementById('tot_vs_ref_'+z.id);
+    const vsRefSub=document.getElementById('tot_vs_ref_sub_'+z.id);
+    if(vsRefEl&&zRefV>0){
+      const diff=zCounterV-zRefV;
+      if(diff>0){vsRefEl.textContent='+'+fmt(diff);vsRefEl.style.color='var(--red)';}
+      else if(diff<0){vsRefEl.textContent='−'+fmt(Math.abs(diff));vsRefEl.style.color='var(--soft)';}
+      else{vsRefEl.textContent='เท่ากัน';vsRefEl.style.color='#aaa';}
+      if(vsRefSub)vsRefSub.textContent=pct(diff/zRefV)+' จากกลาง';
+    }else if(vsRefEl){vsRefEl.textContent='—';vsRefEl.style.color='#aaa';}
+    totalRef+=zRefV;totalOffer+=zOfferV;totalCounter+=zCounterV;
+  });
+
+  let advTotal=0;
+  document.querySelectorAll('#advanceRows .advance-row').forEach(r=>{
+    advTotal+=parseFloat(r.querySelector('input[type=number]')?.value)||0;
+  });
+  const saved=totalOffer-totalCounter;
+  const remain=totalCounter-advTotal;
+  setText('sumOffer',fmt(totalOffer));
+  setText('sumCounter',fmt(totalCounter));
+  setText('sumSaved',fmt(saved));
+  const vsRefSumEl=document.getElementById('sumVsRef');
+  if(vsRefSumEl&&totalRef>0){
+    const d=totalCounter-totalRef;
+    vsRefSumEl.textContent=(d>=0?'+':'')+fmt(d);
+    vsRefSumEl.style.color=d>0?'#e8a09a':d<0?'#7aad8f':'#aaa';
+  }
+  setText('advTotal',fmt(advTotal));
+  setText('advRemain',fmt(Math.max(0,remain)));
+  setText('advPct',totalCounter>0?pct(advTotal/totalCounter):'0%');
+}
+
+function fmt(n){return'฿'+Math.round(n).toLocaleString('th-TH');}
+function pct(r){return(r*100).toFixed(1)+'%';}
+function setText(id,txt){const el=document.getElementById(id);if(el)el.textContent=txt;}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),4000);}
+</script>
+</body>
+</html>

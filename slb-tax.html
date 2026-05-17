@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>สวนหลังบ้าน — สรุปภาษี</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--deep:#1a3a2a;--mid:#2d5a3d;--soft:#4a7c5f;--light:#7aad8f;--cream:#f5f0e8;--warm:#faf8f4;--gold:#c9a84c;--gold-l:#e8d5a0;--red:#c0392b;--red-bg:#fdecea;--blue:#2471a3;--blue-bg:#eaf4fb;--purple:#6c3483;--amber:#d68910;--amber-bg:#fef9e7;--shadow:rgba(26,58,42,0.1);}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Sarabun',sans-serif;background:var(--cream);color:var(--deep);min-height:100vh;}
+.header{background:var(--deep);box-shadow:0 2px 16px rgba(0,0,0,0.25);}
+.header-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;max-width:1300px;margin:0 auto;}
+.brand{display:flex;align-items:center;gap:12px;}
+.brand-logo{width:36px;height:36px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:17px;}
+.brand-name{font-family:'Playfair Display',serif;font-size:16px;color:var(--cream);}
+.brand-sub{font-size:11px;color:var(--light);letter-spacing:1.5px;text-transform:uppercase;}
+.nav-btn{padding:7px 14px;border-radius:6px;border:none;font-family:'Sarabun',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all 0.2s;color:rgba(245,240,232,0.65);background:transparent;text-decoration:none;display:inline-block;}
+.nav-btn:hover{background:rgba(255,255,255,0.1);color:var(--cream);}
+.nav-btn.active{background:var(--gold);color:var(--deep);font-weight:700;}
+.main{max-width:1300px;margin:0 auto;padding:24px 28px 60px;}
+
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;}
+.stat-card{background:var(--warm);border-radius:12px;border:1px solid rgba(74,124,95,0.12);box-shadow:0 2px 10px var(--shadow);padding:18px 20px;position:relative;overflow:hidden;}
+.stat-card::before{content:'';position:absolute;left:0;top:0;width:4px;height:100%;}
+.stat-card.red::before{background:var(--red);}
+.stat-card.amber::before{background:var(--amber);}
+.stat-card.blue::before{background:var(--blue);}
+.stat-card.green::before{background:var(--soft);}
+.stat-label{font-size:11px;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:1px;margin-bottom:7px;}
+.stat-value{font-size:22px;font-weight:700;color:var(--deep);}
+.stat-sub{font-size:12px;color:#888;margin-top:4px;}
+
+/* MAIN GRID */
+.main-grid{display:grid;grid-template-columns:1fr 360px;gap:20px;}
+
+/* CALENDAR GRID */
+.cal-card{background:var(--warm);border-radius:14px;border:1px solid rgba(74,124,95,0.12);box-shadow:0 2px 14px var(--shadow);overflow:hidden;}
+.card-header{background:linear-gradient(135deg,var(--deep),var(--mid));padding:15px 20px;display:flex;align-items:center;justify-content:space-between;}
+.card-header h3{font-family:'Playfair Display',serif;color:var(--cream);font-size:17px;}
+.card-header-sub{font-size:12px;color:rgba(245,240,232,0.55);}
+.year-selector{display:flex;gap:8px;align-items:center;padding:14px 20px;border-bottom:1px solid rgba(74,124,95,0.1);}
+.year-btn{padding:6px 14px;border-radius:20px;border:1.5px solid rgba(74,124,95,0.2);background:var(--cream);font-family:'Sarabun',sans-serif;font-size:13px;font-weight:700;color:var(--soft);cursor:pointer;transition:all 0.2s;}
+.year-btn.active{background:var(--deep);color:var(--gold-l);border-color:var(--deep);}
+.months-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;}
+.month-col{border-right:1px solid rgba(74,124,95,0.08);}
+.month-col:last-child{border-right:none;}
+.month-header{background:rgba(74,124,95,0.07);padding:10px 16px;font-size:12px;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:0.8px;border-bottom:1px solid rgba(74,124,95,0.08);}
+.tax-item{display:flex;align-items:center;justify-content:space-between;padding:9px 16px;border-bottom:1px solid rgba(74,124,95,0.06);}
+.tax-item:last-child{border-bottom:none;}
+.tax-item-left{display:flex;align-items:center;gap:8px;}
+.tax-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.tax-name{font-size:13px;color:#444;font-weight:500;}
+.tax-amount{font-size:13px;font-weight:700;color:var(--deep);}
+.tax-due{font-size:10px;color:#aaa;margin-top:1px;}
+.paid-check{width:18px;height:18px;border-radius:4px;border:2px solid rgba(74,124,95,0.3);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all 0.2s;flex-shrink:0;}
+.paid-check.paid{background:var(--soft);border-color:var(--soft);color:white;}
+.month-footer{background:rgba(74,124,95,0.05);padding:8px 16px;font-size:12px;font-weight:700;color:var(--deep);border-top:1px solid rgba(74,124,95,0.1);}
+
+/* RIGHT PANEL */
+.right-col{display:flex;flex-direction:column;gap:18px;}
+.claude-panel{background:linear-gradient(160deg,#1a3a2a,#2d5a3d);border-radius:14px;padding:18px 20px;border:1px solid rgba(201,168,76,0.25);display:flex;flex-direction:column;gap:12px;}
+.claude-title{font-family:'Playfair Display',serif;color:var(--gold-l);font-size:15px;display:flex;align-items:center;gap:8px;}
+.insight{background:rgba(255,255,255,0.07);border-radius:9px;padding:11px 13px;border-left:3px solid var(--gold);}
+.insight-label{font-size:10px;font-weight:700;color:rgba(201,168,76,0.8);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
+.insight-text{font-size:12.5px;color:rgba(245,240,232,0.85);line-height:1.6;}
+.insight-text strong{color:var(--gold-l);}
+
+/* UPCOMING */
+.upcoming-card{background:var(--warm);border-radius:14px;border:1px solid rgba(74,124,95,0.12);box-shadow:0 2px 12px var(--shadow);overflow:hidden;}
+.upcoming-item{display:flex;align-items:center;gap:12px;padding:12px 18px;border-bottom:1px solid rgba(74,124,95,0.07);}
+.upcoming-item:last-child{border-bottom:none;}
+.upcoming-days{width:48px;height:48px;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;}
+.days-num{font-size:18px;font-weight:700;line-height:1;}
+.days-label{font-size:9px;text-transform:uppercase;letter-spacing:0.5px;}
+.urgent{background:var(--red-bg);color:var(--red);}
+.soon{background:var(--amber-bg);color:var(--amber);}
+.ok{background:rgba(74,124,95,0.1);color:var(--mid);}
+.upcoming-info{flex:1;}
+.upcoming-name{font-size:14px;font-weight:600;color:var(--deep);}
+.upcoming-meta{font-size:12px;color:#888;margin-top:2px;}
+.upcoming-amount{font-size:15px;font-weight:700;color:var(--deep);text-align:right;}
+
+/* ADD FORM */
+.add-card{background:var(--warm);border-radius:14px;border:1.5px dashed rgba(74,124,95,0.3);padding:18px 20px;margin-bottom:20px;}
+.add-title{font-size:13px;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:12px;}
+.add-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr auto;gap:10px;align-items:end;}
+.field-group label{display:block;font-size:11px;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:0.7px;margin-bottom:4px;}
+.field-group input,.field-group select{width:100%;padding:8px 11px;border:1.5px solid rgba(74,124,95,0.2);border-radius:8px;font-family:'Sarabun',sans-serif;font-size:13.5px;background:var(--cream);color:var(--deep);outline:none;transition:border-color 0.2s;}
+.field-group input:focus,.field-group select:focus{border-color:var(--soft);}
+.btn-green{padding:9px 16px;background:var(--soft);color:white;border:none;border-radius:8px;font-family:'Sarabun',sans-serif;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;transition:background 0.2s;}
+.btn-green:hover{background:var(--mid);}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--deep);color:var(--cream);padding:12px 20px;border-radius:8px;font-size:14px;box-shadow:0 4px 20px rgba(0,0,0,0.25);transform:translateY(100px);opacity:0;transition:all 0.3s;z-index:300;border-left:4px solid var(--gold);}
+.toast.show{transform:translateY(0);opacity:1;}
+@media(max-width:1000px){.main-grid{grid-template-columns:1fr;}.stats-row{grid-template-columns:1fr 1fr;}.add-grid{grid-template-columns:1fr 1fr;}.months-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-inner">
+    <div class="brand" style="display:flex;align-items:center;gap:6px;">
+      <button onclick="history.back()" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:var(--cream);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0;margin-right:4px;" title="ย้อนกลับ" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">←</button>
+      <a href="slb-home.html" style="text-decoration:none;display:flex;align-items:center;gap:12px;">
+      <div class="brand-logo">🧾</div>
+      <div>
+        <div class="brand-name">สวนหลังบ้าน สตูดิโอ</div>
+        <div class="brand-sub">สรุปภาษีรายเดือน</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:4px;">
+      <a class="nav-btn" href="slb-home.html">🏠 หน้าหลัก</a>
+      <a class="nav-btn" href="slb-finance-dashboard.html">💰 การเงิน</a>
+      <a class="nav-btn" href="slb-marketing.html">📣 Ad</a>
+      <a class="nav-btn active" href="#">🧾 ภาษี</a>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-card red"><div class="stat-label">ภาษีทั้งปี (คาด)</div><div class="stat-value" id="totalYearTax">฿0</div><div class="stat-sub">ทุกประเภทรวมกัน</div></div>
+    <div class="stat-card amber"><div class="stat-label">ค้างจ่าย</div><div class="stat-value" id="totalUnpaid">฿0</div><div class="stat-sub" id="unpaidCount">0 รายการ</div></div>
+    <div class="stat-card blue"><div class="stat-label">จ่ายแล้วปีนี้</div><div class="stat-value" id="totalPaid">฿0</div><div class="stat-sub" id="paidCount">0 รายการ</div></div>
+    <div class="stat-card green"><div class="stat-label">เดือนหน้า (คาด)</div><div class="stat-value" id="nextMonth">฿0</div><div class="stat-sub">ต้องเตรียมเงิน</div></div>
+  </div>
+
+  <!-- ADD FORM -->
+  <div class="add-card">
+    <div class="add-title">+ เพิ่มรายการภาษี</div>
+    <div class="add-grid">
+      <div class="field-group"><label>ชื่อภาษี</label><input type="text" id="newTaxName" placeholder="เช่น ภาษีมูลค่าเพิ่ม (VAT)"></div>
+      <div class="field-group"><label>ประเภท</label><select id="newTaxType"><option>VAT</option><option>ภาษีหัก ณ ที่จ่าย</option><option>ภาษีนิติบุคคล</option><option>ประกันสังคม</option><option>อื่นๆ</option></select></div>
+      <div class="field-group"><label>จำนวน (฿)</label><input type="number" id="newTaxAmt" placeholder="0"></div>
+      <div class="field-group"><label>กำหนดชำระ</label><input type="text" id="newTaxDue" placeholder="เช่น ก่อน 15 ทุกเดือน"></div>
+      <div class="field-group"><label>บัญชีที่จ่าย</label><select id="newTaxAccount"><option>กรุงเทพ xxx-1-234</option><option>กสิกร xxx-5-678</option></select></div>
+      <button class="btn-green" onclick="addTaxItem()">+ เพิ่ม</button>
+    </div>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="main-grid">
+    <div>
+      <!-- YEAR CALENDAR -->
+      <div class="cal-card">
+        <div class="card-header">
+          <h3>📅 ปฏิทินภาษีรายเดือน</h3>
+          <div class="card-header-sub">คลิก ✓ เพื่อทำเครื่องหมายจ่ายแล้ว</div>
+        </div>
+        <div class="year-selector">
+          <span style="font-size:13px;color:var(--soft);font-weight:700">ปี:</span>
+          <button class="year-btn active" onclick="setYear(2568,this)">2568</button>
+          <button class="year-btn" onclick="setYear(2567,this)">2567</button>
+        </div>
+        <div class="months-grid" id="monthsGrid"></div>
+      </div>
+    </div>
+
+    <div class="right-col">
+      <!-- UPCOMING -->
+      <div class="upcoming-card">
+        <div class="card-header">
+          <h3>⏰ ใกล้ถึงกำหนด</h3>
+        </div>
+        <div id="upcomingList">
+          <div class="upcoming-item">
+            <div class="upcoming-days urgent"><div class="days-num">5</div><div class="days-label">วัน</div></div>
+            <div class="upcoming-info"><div class="upcoming-name">ยื่น VAT (ภ.พ.30)</div><div class="upcoming-meta">กรุงเทพ xxx-1-234 · ก่อน 15 พ.ค.</div></div>
+            <div class="upcoming-amount">฿18,500</div>
+          </div>
+          <div class="upcoming-item">
+            <div class="upcoming-days soon"><div class="days-num">12</div><div class="days-label">วัน</div></div>
+            <div class="upcoming-info"><div class="upcoming-name">ภาษีหัก ณ ที่จ่าย</div><div class="upcoming-meta">กรุงเทพ xxx-1-234 · ก่อน 7 พ.ค.</div></div>
+            <div class="upcoming-amount">฿4,200</div>
+          </div>
+          <div class="upcoming-item">
+            <div class="upcoming-days ok"><div class="days-num">32</div><div class="days-label">วัน</div></div>
+            <div class="upcoming-info"><div class="upcoming-name">ภาษีนิติบุคคลครึ่งปี</div><div class="upcoming-meta">กรุงเทพ xxx-1-234 · ก.ค. 68</div></div>
+            <div class="upcoming-amount">฿45,000</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CLAUDE -->
+      <div class="claude-panel">
+        <div class="claude-title">🌿 Claude วิเคราะห์ภาษี</div>
+        <div class="insight">
+          <div class="insight-label">⚠ ต้องระวัง</div>
+          <div class="insight-text">VAT ต้องยื่นก่อน <strong>วันที่ 15 ทุกเดือน</strong> ถ้ายื่นช้าเสียเบี้ยปรับ 2% ต่อเดือน แนะนำตั้ง reminder ล่วงหน้า 5 วัน</div>
+        </div>
+        <div class="insight">
+          <div class="insight-label">💡 ประมาณการภาษีนิติบุคคล</div>
+          <div class="insight-text">กำไรประมาณการ <strong>฿1.6M/ปี</strong> × อัตราภาษี 15% = <strong>฿240,000/ปี</strong> ควรสำรองไว้ ฿20,000/เดือน</div>
+        </div>
+        <div class="insight">
+          <div class="insight-label">💰 บัญชีที่ใช้จ่ายภาษี</div>
+          <div class="insight-text"><strong>กรุงเทพ xxx-1-234</strong> — ใช้จ่ายภาษีหลักทั้งหมด ตรวจให้แน่ใจว่ามีเงินเพียงพอก่อนวันที่ 15 ของทุกเดือน</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let currentYear = 2568;
+const thMonths = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+
+// ภาษีที่เกิดซ้ำทุกเดือน
+let recurringTaxes = [
+  {name:'VAT (ภ.พ.30)',type:'VAT',amount:18500,due:'ก่อน 15',account:'กรุงเทพ xxx-1-234',color:'#c0392b'},
+  {name:'ภาษีหัก ณ ที่จ่าย',type:'ภาษีหัก ณ ที่จ่าย',amount:4200,due:'ก่อน 7',account:'กรุงเทพ xxx-1-234',color:'#2471a3'},
+  {name:'ประกันสังคม',type:'ประกันสังคม',amount:0,due:'ก่อน 15',account:'กสิกร xxx-5-678',color:'#6c3483',note:'ไม่มีพนักงานประจำ'},
+];
+// ภาษีพิเศษบางเดือน
+let specialTaxes = {
+  6:{name:'ภาษีนิติบุคคลครึ่งปี',amount:45000,account:'กรุงเทพ xxx-1-234',color:'#d68910'},
+  12:{name:'ภาษีนิติบุคคลประจำปี',amount:90000,account:'กรุงเทพ xxx-1-234',color:'#d68910'},
+};
+let paidStatus = {};
+
+document.addEventListener('DOMContentLoaded',()=>{renderAll();});
+
+function setYear(year,btn){
+  currentYear=year;
+  document.querySelectorAll('.year-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderAll();
+}
+
+function addTaxItem(){
+  const name=document.getElementById('newTaxName').value.trim();
+  const amt=parseFloat(document.getElementById('newTaxAmt').value)||0;
+  if(!name||!amt){showToast('⚠ กรุณากรอกชื่อและจำนวนเงิน');return;}
+  recurringTaxes.push({
+    name,type:document.getElementById('newTaxType').value,
+    amount:amt,due:document.getElementById('newTaxDue').value,
+    account:document.getElementById('newTaxAccount').value,color:'var(--soft)'
+  });
+  document.getElementById('newTaxName').value='';
+  document.getElementById('newTaxAmt').value='';
+  renderAll();
+  showToast('✅ เพิ่มรายการภาษีแล้ว');
+}
+
+function togglePaid(key){
+  paidStatus[key]=!paidStatus[key];
+  renderAll();
+}
+
+function renderAll(){
+  const grid=document.getElementById('monthsGrid');
+  const monthGroups=[[0,1,2],[3,4,5],[6,7,8],[9,10,11]];
+  let totalYear=0,totalPaid=0,totalUnpaid=0,paidCount=0,unpaidCount=0,nextMonthAmt=0;
+  const nowMonth=new Date().getMonth(); // 0-based
+
+  grid.innerHTML='';
+  // 4 กลุ่ม 3 เดือน แสดงในแถว
+  grid.style.gridTemplateColumns='repeat(4,1fr)';
+
+  monthGroups.forEach(group=>{
+    const col=document.createElement('div');
+    col.className='month-col';
+    group.forEach(mi=>{
+      const monthTaxes=[...recurringTaxes];
+      if(specialTaxes[mi+1])monthTaxes.push(specialTaxes[mi+1]);
+      const monthTotal=monthTaxes.reduce((s,t)=>s+(t.amount||0),0);
+      totalYear+=monthTotal;
+      if(mi===nowMonth+1)nextMonthAmt=monthTotal;
+
+      const header=document.createElement('div');
+      header.className='month-header';
+      header.textContent=thMonths[mi];
+      col.appendChild(header);
+
+      monthTaxes.forEach((tax,ti)=>{
+        if(!tax.amount)return;
+        const key=`${currentYear}_${mi}_${ti}`;
+        const paid=paidStatus[key]||false;
+        if(paid){totalPaid+=tax.amount;paidCount++;}
+        else{totalUnpaid+=tax.amount;unpaidCount++;}
+
+        const item=document.createElement('div');
+        item.className='tax-item';
+        item.innerHTML=`
+          <div class="tax-item-left">
+            <div class="tax-dot" style="background:${tax.color}"></div>
+            <div>
+              <div class="tax-name" style="${paid?'text-decoration:line-through;color:#aaa':''}">${tax.name}</div>
+              <div class="tax-due">${tax.due||''} · ${tax.account||''}</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div class="tax-amount" style="${paid?'color:#aaa':''}">${tax.amount?'฿'+tax.amount.toLocaleString():''}</div>
+            <div class="paid-check ${paid?'paid':''}" onclick="togglePaid('${key}')" title="${paid?'ยกเลิกจ่าย':'ทำเครื่องหมายจ่ายแล้ว'}">${paid?'✓':''}</div>
+          </div>`;
+        col.appendChild(item);
+      });
+
+      const footer=document.createElement('div');
+      footer.className='month-footer';
+      footer.textContent='รวม: ฿'+monthTotal.toLocaleString();
+      col.appendChild(footer);
+    });
+    grid.appendChild(col);
+  });
+
+  // Stats
+  setText('totalYearTax','฿'+totalYear.toLocaleString());
+  setText('totalPaid','฿'+totalPaid.toLocaleString());
+  setText('paidCount',paidCount+' รายการ');
+  setText('totalUnpaid','฿'+totalUnpaid.toLocaleString());
+  setText('unpaidCount',unpaidCount+' รายการ');
+  setText('nextMonth','฿'+(nextMonthAmt||monthGroups[0].reduce((s,mi)=>{
+    return s+recurringTaxes.reduce((t,tax)=>t+(tax.amount||0),0)+(specialTaxes[mi+1]?.amount||0);
+  },0)).toLocaleString());
+}
+
+function setText(id,txt){const el=document.getElementById(id);if(el)el.textContent=txt;}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
+</script>
+</body>
+</html>

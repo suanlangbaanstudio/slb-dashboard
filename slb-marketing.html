@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>สวนหลังบ้าน — Ad Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--deep:#1a3a2a;--mid:#2d5a3d;--soft:#4a7c5f;--light:#7aad8f;--cream:#f5f0e8;--warm:#faf8f4;--gold:#c9a84c;--gold-l:#e8d5a0;--red:#c0392b;--red-bg:#fdecea;--blue:#2471a3;--blue-bg:#eaf4fb;--purple:#6c3483;--purple-bg:#f4ecf7;--shadow:rgba(26,58,42,0.1);}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Sarabun',sans-serif;background:var(--cream);color:var(--deep);min-height:100vh;}
+.header{background:var(--deep);box-shadow:0 2px 16px rgba(0,0,0,0.25);}
+.header-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;max-width:1300px;margin:0 auto;}
+.brand{display:flex;align-items:center;gap:12px;}
+.brand-logo{width:36px;height:36px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:17px;}
+.brand-name{font-family:'Playfair Display',serif;font-size:16px;color:var(--cream);}
+.brand-sub{font-size:11px;color:var(--light);letter-spacing:1.5px;text-transform:uppercase;}
+.header-nav{display:flex;gap:4px;}
+.nav-btn{padding:7px 14px;border-radius:6px;border:none;font-family:'Sarabun',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all 0.2s;color:rgba(245,240,232,0.65);background:transparent;text-decoration:none;display:inline-block;}
+.nav-btn:hover{background:rgba(255,255,255,0.1);color:var(--cream);}
+.nav-btn.active{background:var(--gold);color:var(--deep);font-weight:700;}
+.main{max-width:1300px;margin:0 auto;padding:24px 28px 60px;}
+.field-group label{display:block;font-size:11px;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:5px;}
+.field-group input,.field-group select{width:100%;padding:9px 12px;border:1.5px solid rgba(74,124,95,0.2);border-radius:8px;font-family:'Sarabun',sans-serif;font-size:13.5px;background:var(--cream);color:var(--deep);outline:none;transition:border-color 0.2s;}
+.field-group input:focus,.field-group select:focus{border-color:var(--soft);box-shadow:0 0 0 3px rgba(74,124,95,0.1);}
+
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:24px;}
+.stat-card{background:var(--warm);border-radius:12px;border:1px solid rgba(74,124,95,0.12);box-shadow:0 2px 10px var(--shadow);padding:18px 20px;position:relative;overflow:hidden;}
+.stat-card::before{content:'';position:absolute;left:0;top:0;width:4px;height:100%;}
+.stat-card.purple::before{background:var(--purple);}
+.stat-card.blue::before{background:var(--blue);}
+.stat-card.gold::before{background:var(--gold);}
+.stat-card.green::before{background:var(--soft);}
+.stat-card.red::before{background:var(--red);}
+.stat-label{font-size:11px;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:1px;margin-bottom:7px;}
+.stat-value{font-size:22px;font-weight:700;color:var(--deep);}
+.stat-sub{font-size:12px;color:#888;margin-top:4px;}
+
+/* ADD FORM */
+.add-card{background:var(--warm);border-radius:14px;border:1.5px dashed rgba(74,124,95,0.3);padding:20px 24px;margin-bottom:22px;}
+.add-card-title{font-size:13px;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:14px;}
+.add-grid{display:grid;grid-template-columns:1fr 1fr 1fr 0.8fr 0.8fr 0.8fr 0.8fr auto;gap:10px;align-items:end;}
+
+/* MAIN GRID */
+.main-grid{display:grid;grid-template-columns:1fr 380px;gap:20px;}
+
+/* TABLE */
+.table-card{background:var(--warm);border-radius:14px;border:1px solid rgba(74,124,95,0.12);box-shadow:0 2px 14px var(--shadow);overflow:hidden;}
+.card-header{background:linear-gradient(135deg,var(--deep),var(--mid));padding:15px 20px;display:flex;align-items:center;justify-content:space-between;}
+.card-header h3{font-family:'Playfair Display',serif;color:var(--cream);font-size:17px;}
+.card-header-sub{font-size:12px;color:rgba(245,240,232,0.55);}
+.ad-table{width:100%;border-collapse:collapse;}
+.ad-table th{background:rgba(74,124,95,0.07);padding:9px 14px;text-align:left;font-size:11px;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:0.7px;border-bottom:1px solid rgba(74,124,95,0.1);}
+.ad-table td{padding:11px 14px;font-size:13.5px;border-bottom:1px solid rgba(74,124,95,0.06);color:#444;vertical-align:middle;}
+.ad-table tr:last-child td{border-bottom:none;}
+.ad-table tr:hover td{background:rgba(74,124,95,0.03);}
+.platform-badge{display:inline-block;padding:3px 9px;border-radius:99px;font-size:11px;font-weight:700;}
+.fb{background:#1877f2;color:white;}
+.ig{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:white;}
+.tiktok{background:#000;color:white;}
+.google{background:#4285f4;color:white;}
+.goal-badge{display:inline-block;padding:2px 8px;border-radius:99px;font-size:10px;font-weight:700;}
+.goal-brand{background:var(--purple-bg);color:var(--purple);}
+.goal-lead{background:var(--blue-bg);color:var(--blue);}
+.goal-traffic{background:rgba(74,124,95,0.12);color:var(--mid);}
+.cpl-good{color:var(--soft);font-weight:700;}
+.cpl-mid{color:var(--gold);font-weight:700;}
+.cpl-bad{color:var(--red);font-weight:700;}
+
+/* CLAUDE PANEL */
+.claude-panel{background:linear-gradient(160deg,#1a3a2a,#2d5a3d);border-radius:14px;padding:20px;border:1px solid rgba(201,168,76,0.25);display:flex;flex-direction:column;gap:14px;}
+.claude-title{font-family:'Playfair Display',serif;color:var(--gold-l);font-size:16px;display:flex;align-items:center;gap:8px;}
+.insight{background:rgba(255,255,255,0.07);border-radius:9px;padding:12px 14px;border-left:3px solid var(--gold);}
+.insight-label{font-size:10px;font-weight:700;color:rgba(201,168,76,0.8);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px;}
+.insight-text{font-size:12.5px;color:rgba(245,240,232,0.85);line-height:1.65;}
+.insight-text strong{color:var(--gold-l);}
+
+/* CHART */
+.chart-card{background:var(--warm);border-radius:14px;border:1px solid rgba(74,124,95,0.12);box-shadow:0 2px 12px var(--shadow);overflow:hidden;margin-top:20px;}
+.bar-chart-wrap{padding:18px 20px;}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.bar-label{font-size:13px;color:#555;width:100px;flex-shrink:0;}
+.bar-track{flex:1;height:22px;background:rgba(74,124,95,0.08);border-radius:6px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:6px;display:flex;align-items:center;padding-left:8px;font-size:11px;font-weight:700;color:white;transition:width 0.6s ease;}
+.bar-meta{font-size:12px;color:#888;min-width:80px;text-align:right;}
+
+.btn{padding:8px 16px;border-radius:7px;border:none;font-family:'Sarabun',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.2s;}
+.btn-green{background:var(--soft);color:white;}
+.btn-green:hover{background:var(--mid);}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--deep);color:var(--cream);padding:12px 20px;border-radius:8px;font-size:14px;box-shadow:0 4px 20px rgba(0,0,0,0.25);transform:translateY(100px);opacity:0;transition:all 0.3s;z-index:300;border-left:4px solid var(--gold);}
+.toast.show{transform:translateY(0);opacity:1;}
+@media(max-width:1000px){.main-grid{grid-template-columns:1fr;}.stats-row{grid-template-columns:repeat(3,1fr);}.add-grid{grid-template-columns:1fr 1fr;}}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-inner">
+    <div class="brand" style="display:flex;align-items:center;gap:6px;">
+      <button onclick="history.back()" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:var(--cream);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0;margin-right:4px;" title="ย้อนกลับ" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">←</button>
+      <a href="slb-home.html" style="text-decoration:none;display:flex;align-items:center;gap:12px;">
+      <div class="brand-logo">📣</div>
+      <div>
+        <div class="brand-name">สวนหลังบ้าน สตูดิโอ</div>
+        <div class="brand-sub">Ad Tracker</div>
+      </div>
+      </a>
+    </div>
+    <div class="header-nav">
+      <a class="nav-btn" href="slb-home.html">🏠 หน้าหลัก</a>
+      <a class="nav-btn" href="suanlangbaan-project-tracker-v2.html">📋 โปรเจค</a>
+      <a class="nav-btn" href="slb-finance-dashboard.html">💰 การเงิน</a>
+      <a class="nav-btn" href="slb-quote-tool-v2.html">📝 ต่อราคา</a>
+      <a class="nav-btn active" href="#">📣 Ad</a>
+      <a class="nav-btn" href="slb-tax.html">🧾 ภาษี</a>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-card purple"><div class="stat-label">งบโฆษณารวม (ปีนี้)</div><div class="stat-value" id="totalBudget">฿0</div><div class="stat-sub" id="totalCampaigns">0 แคมเปญ</div></div>
+    <div class="stat-card blue"><div class="stat-label">Leads ทั้งหมด</div><div class="stat-value" id="totalLeads">0</div><div class="stat-sub">จากทุกแพลตฟอร์ม</div></div>
+    <div class="stat-card gold"><div class="stat-label">Cost per Lead เฉลี่ย</div><div class="stat-value" id="avgCpl">—</div><div class="stat-sub">บาท / lead</div></div>
+    <div class="stat-card green"><div class="stat-label">แปลงเป็นลูกค้า</div><div class="stat-value" id="totalConvert">0</div><div class="stat-sub" id="convertRate">0% conversion</div></div>
+    <div class="stat-card red"><div class="stat-label">Cost per ลูกค้า</div><div class="stat-value" id="costPerClient">—</div><div class="stat-sub">บาท / ลูกค้า</div></div>
+  </div>
+
+  <!-- ADD FORM -->
+  <div class="add-card">
+    <div class="add-card-title">+ บันทึกแคมเปญโฆษณา</div>
+    <div class="add-grid">
+      <div class="field-group"><label>แคมเปญ</label><input type="text" id="newCamp" placeholder="เช่น สวนโมเดิร์น พ.ค.68"></div>
+      <div class="field-group"><label>แพลตฟอร์ม</label><select id="newPlat"><option>Facebook</option><option>Instagram</option><option>TikTok</option><option>Google</option></select></div>
+      <div class="field-group"><label>เป้าหมาย</label><select id="newGoal"><option>Lead / สอบถาม</option><option>Brand Awareness</option><option>Traffic เว็บ</option></select></div>
+      <div class="field-group"><label>งบที่ใช้ (฿)</label><input type="number" id="newBudget" placeholder="0"></div>
+      <div class="field-group"><label>Leads ที่ได้</label><input type="number" id="newLeads" placeholder="0"></div>
+      <div class="field-group"><label>แปลงเป็นลูกค้า</label><input type="number" id="newConvert" placeholder="0"></div>
+      <div class="field-group"><label>เดือน</label><input type="month" id="newMonth"></div>
+      <button class="btn btn-green" onclick="addCampaign()" style="white-space:nowrap">+ บันทึก</button>
+    </div>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="main-grid">
+    <div>
+      <!-- TABLE -->
+      <div class="table-card">
+        <div class="card-header">
+          <h3>📊 ประวัติแคมเปญทั้งหมด</h3>
+          <div class="card-header-sub" id="tableMeta">—</div>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="ad-table">
+            <thead>
+              <tr><th>แคมเปญ</th><th>แพลตฟอร์ม</th><th>เป้าหมาย</th><th>งบ</th><th>Leads</th><th>Cost/Lead</th><th>ลูกค้า</th><th>Cost/ลูกค้า</th><th>เดือน</th></tr>
+            </thead>
+            <tbody id="adBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- BAR CHART -->
+      <div class="chart-card">
+        <div class="card-header">
+          <h3>📈 ประสิทธิภาพแยกแพลตฟอร์ม</h3>
+        </div>
+        <div class="bar-chart-wrap" id="barChart"></div>
+      </div>
+    </div>
+
+    <!-- CLAUDE PANEL -->
+    <div class="claude-panel">
+      <div class="claude-title">🌿 Claude วิเคราะห์ Ad</div>
+      <div class="insight" id="ins1">
+        <div class="insight-label">📣 แพลตฟอร์มที่คุ้มที่สุด</div>
+        <div class="insight-text" id="ins1text">เพิ่มข้อมูลแคมเปญเพื่อให้ Claude วิเคราะห์ได้</div>
+      </div>
+      <div class="insight" id="ins2">
+        <div class="insight-label">💡 งบที่ควรจัดสรร</div>
+        <div class="insight-text" id="ins2text">ยังไม่มีข้อมูลเพียงพอ</div>
+      </div>
+      <div class="insight">
+        <div class="insight-label">🎯 Content ที่แนะนำ</div>
+        <div class="insight-text">
+          จากโปรไฟล์ลูกค้าที่มี — <strong>Reels ติดตามงานก่อสร้าง</strong> สร้าง engagement สูงที่สุดในธุรกิจงานสวน เฉพาะอย่างยิ่ง Before/After และ Time-lapse ควรโพสต์ช่วง 18:00–21:00 น. วันพฤหัส–เสาร์
+        </div>
+      </div>
+      <div class="insight">
+        <div class="insight-label">📍 Target Audience แนะนำ</div>
+        <div class="insight-text">
+          กทม. ฝั่งตะวันออก อายุ 30–50 ปี เจ้าของบ้าน รายได้ 50K+/เดือน สนใจ Interior Design, Home Improvement งบ Ad ที่เหมาะสม: <strong>฿5,000–15,000/เดือน</strong> ต่อแพลตฟอร์ม
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let campaigns = [
+  {name:'สวนโมเดิร์น เมษา',platform:'Instagram',goal:'Lead / สอบถาม',budget:8500,leads:12,convert:2,month:'2568-04'},
+  {name:'Before After สวน',platform:'Facebook',goal:'Brand Awareness',budget:5000,leads:8,convert:1,month:'2568-04'},
+  {name:'Tropical Garden',platform:'Instagram',goal:'Lead / สอบถาม',budget:12000,leads:18,convert:3,month:'2568-05'},
+  {name:'งานสวนครบวงจร',platform:'Facebook',goal:'Lead / สอบถาม',budget:6000,leads:7,convert:1,month:'2568-05'},
+];
+
+document.addEventListener('DOMContentLoaded',()=>{
+  const now = new Date();
+  document.getElementById('newMonth').value = now.getFullYear()+543+'-'+ String(now.getMonth()+1).padStart(2,'0');
+  render();
+});
+
+function addCampaign(){
+  const name=document.getElementById('newCamp').value.trim();
+  const budget=parseFloat(document.getElementById('newBudget').value)||0;
+  if(!name||!budget){showToast('⚠ กรุณากรอกชื่อแคมเปญและงบ');return;}
+  campaigns.unshift({
+    name,
+    platform:document.getElementById('newPlat').value,
+    goal:document.getElementById('newGoal').value,
+    budget,
+    leads:parseInt(document.getElementById('newLeads').value)||0,
+    convert:parseInt(document.getElementById('newConvert').value)||0,
+    month:document.getElementById('newMonth').value,
+  });
+  document.getElementById('newCamp').value='';
+  document.getElementById('newBudget').value='';
+  document.getElementById('newLeads').value='';
+  document.getElementById('newConvert').value='';
+  render();
+  showToast('✅ บันทึกแคมเปญแล้ว');
+}
+
+function render(){
+  const totalBudget=campaigns.reduce((s,c)=>s+c.budget,0);
+  const totalLeads=campaigns.reduce((s,c)=>s+c.leads,0);
+  const totalConvert=campaigns.reduce((s,c)=>s+c.convert,0);
+  const avgCpl=totalLeads>0?totalBudget/totalLeads:0;
+  const cpc=totalConvert>0?totalBudget/totalConvert:0;
+
+  setText('totalBudget','฿'+totalBudget.toLocaleString());
+  setText('totalCampaigns',campaigns.length+' แคมเปญ');
+  setText('totalLeads',totalLeads.toLocaleString());
+  setText('avgCpl',avgCpl>0?'฿'+Math.round(avgCpl).toLocaleString():'—');
+  setText('totalConvert',totalConvert);
+  setText('convertRate',totalLeads>0?(totalConvert/totalLeads*100).toFixed(1)+'% conversion':'0%');
+  setText('costPerClient',cpc>0?'฿'+Math.round(cpc).toLocaleString():'—');
+  setText('tableMeta',campaigns.length+' แคมเปญ · งบรวม ฿'+totalBudget.toLocaleString());
+
+  // Table
+  const tbody=document.getElementById('adBody');
+  tbody.innerHTML=campaigns.map(c=>{
+    const cpl=c.leads>0?c.budget/c.leads:0;
+    const cpc=c.convert>0?c.budget/c.convert:0;
+    const platClass={'Facebook':'fb','Instagram':'ig','TikTok':'tiktok','Google':'google'}[c.platform]||'fb';
+    const goalClass={'Lead / สอบถาม':'goal-lead','Brand Awareness':'goal-brand','Traffic เว็บ':'goal-traffic'}[c.goal]||'goal-brand';
+    const cplClass=cpl<700?'cpl-good':cpl<1500?'cpl-mid':'cpl-bad';
+    return`<tr>
+      <td style="font-weight:600;color:var(--deep)">${c.name}</td>
+      <td><span class="platform-badge ${platClass}">${c.platform}</span></td>
+      <td><span class="goal-badge ${goalClass}">${c.goal}</span></td>
+      <td style="font-weight:700">฿${c.budget.toLocaleString()}</td>
+      <td style="text-align:center">${c.leads}</td>
+      <td class="${cplClass}">${cpl>0?'฿'+Math.round(cpl).toLocaleString():'—'}</td>
+      <td style="text-align:center">${c.convert}</td>
+      <td style="font-weight:700">${cpc>0?'฿'+Math.round(cpc).toLocaleString():'—'}</td>
+      <td style="font-size:12px;color:#aaa">${c.month}</td>
+    </tr>`;
+  }).join('');
+
+  // Bar chart by platform
+  const platData={};
+  campaigns.forEach(c=>{
+    if(!platData[c.platform])platData[c.platform]={budget:0,leads:0};
+    platData[c.platform].budget+=c.budget;
+    platData[c.platform].leads+=c.leads;
+  });
+  const maxBudget=Math.max(...Object.values(platData).map(p=>p.budget),1);
+  const colors={'Facebook':'#1877f2','Instagram':'#e1306c','TikTok':'#333','Google':'#4285f4'};
+  document.getElementById('barChart').innerHTML=Object.entries(platData).map(([plat,data])=>{
+    const w=Math.round(data.budget/maxBudget*100);
+    const cpl=data.leads>0?Math.round(data.budget/data.leads):0;
+    return`<div class="bar-row">
+      <div class="bar-label">${plat}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${w}%;background:${colors[plat]||'var(--soft)'}">฿${data.budget.toLocaleString()}</div></div>
+      <div class="bar-meta">${data.leads} leads · ${cpl?'฿'+cpl+'/lead':'—'}</div>
+    </div>`;
+  }).join('');
+
+  // Claude insight
+  if(campaigns.length>0){
+    const byPlat=Object.entries(platData).sort((a,b)=>{
+      const cplA=a[1].leads>0?a[1].budget/a[1].leads:999999;
+      const cplB=b[1].leads>0?b[1].budget/b[1].leads:999999;
+      return cplA-cplB;
+    });
+    if(byPlat.length>0){
+      const best=byPlat[0];
+      const bestCpl=best[1].leads>0?Math.round(best[1].budget/best[1].leads):0;
+      setText('ins1text',`<strong>${best[0]}</strong> ให้ Cost/Lead ดีที่สุดที่ <strong>฿${bestCpl.toLocaleString()}/lead</strong> จาก ${best[1].leads} leads รวมงบ ฿${best[1].budget.toLocaleString()} — แนะนำเพิ่มงบที่นี่ก่อน`);
+    }
+    const totalMonthBudget=totalBudget/Math.max(new Set(campaigns.map(c=>c.month)).size,1);
+    setText('ins2text',`งบเฉลี่ย <strong>฿${Math.round(totalMonthBudget).toLocaleString()}/เดือน</strong> — ถ้า conversion rate อยู่ที่ ${totalLeads>0?(totalConvert/totalLeads*100).toFixed(1):'0'}% การเพิ่มงบเป็น ฿20,000/เดือนน่าจะได้ลูกค้าเพิ่ม ${Math.round(20000/(avgCpl||1)*((totalConvert||1)/(totalLeads||1)))} รายต่อเดือน`);
+  }
+}
+
+function setText(id,html){const el=document.getElementById(id);if(el)el.innerHTML=html;}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
+</script>
+</body>
+</html>

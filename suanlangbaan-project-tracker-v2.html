@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>สวนหลังบ้าน สตูดิโอ — Project Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-deep: #1a3a2a;
+    --green-mid: #2d5a3d;
+    --green-soft: #4a7c5f;
+    --green-light: #7aad8f;
+    --cream: #f5f0e8;
+    --warm-white: #faf8f4;
+    --gold: #c9a84c;
+    --gold-light: #e8d5a0;
+    --earth: #8b6f47;
+    --earth-light: #d4b896;
+    --red-alert: #c0392b;
+    --red-soft: #e8c4c0;
+    --blue: #2980b9;
+    --blue-soft: #d6eaf8;
+    --purple: #7d3c98;
+    --purple-soft: #e8daef;
+    --shadow: rgba(26,58,42,0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Sarabun', sans-serif;
+    background: var(--cream);
+    color: var(--green-deep);
+    min-height: 100vh;
+  }
+
+  .header {
+    background: var(--green-deep);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 32px;
+  }
+
+  .brand { display: flex; align-items: center; gap: 14px; }
+
+  .brand-icon {
+    width: 42px; height: 42px;
+    background: var(--gold);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+
+  .brand-text h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; color: var(--cream); letter-spacing: 0.5px;
+  }
+
+  .brand-text p {
+    font-size: 11px; color: var(--green-light);
+    letter-spacing: 2px; text-transform: uppercase; margin-top: 1px;
+  }
+
+  .header-actions { display: flex; gap: 10px; }
+
+  .btn {
+    padding: 9px 20px; border-radius: 6px; border: none;
+    font-family: 'Sarabun', sans-serif; font-size: 14px; font-weight: 500;
+    cursor: pointer; transition: all 0.2s;
+  }
+
+  .btn-primary { background: var(--gold); color: var(--green-deep); }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+  .btn-outline { background: transparent; color: var(--cream); border: 1px solid rgba(255,255,255,0.3); }
+  .btn-outline:hover { background: rgba(255,255,255,0.1); }
+
+  .main { padding: 28px 32px; max-width: 1300px; margin: 0 auto; }
+
+  /* Summary cards */
+  .summary-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .summary-card {
+    background: var(--warm-white);
+    border-radius: 12px; padding: 20px 22px;
+    border: 1px solid rgba(74,124,95,0.15);
+    box-shadow: 0 2px 12px var(--shadow);
+    position: relative; overflow: hidden;
+  }
+
+  .summary-card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; width: 4px; height: 100%;
+    background: var(--green-soft);
+  }
+
+  .summary-card.gold::before { background: var(--gold); }
+  .summary-card.alert::before { background: var(--red-alert); }
+  .summary-card.earth::before { background: var(--earth); }
+
+  .summary-label {
+    font-size: 12px; color: var(--green-soft);
+    letter-spacing: 1px; text-transform: uppercase;
+    margin-bottom: 8px; font-weight: 600;
+  }
+
+  .summary-value { font-size: 26px; font-weight: 700; color: var(--green-deep); line-height: 1; }
+  .summary-sub { font-size: 12px; color: #888; margin-top: 6px; }
+
+  .summary-badge {
+    display: inline-block; padding: 2px 8px; border-radius: 20px;
+    font-size: 11px; font-weight: 600; margin-top: 6px;
+  }
+
+  .badge-green { background: rgba(74,124,95,0.15); color: var(--green-mid); }
+  .badge-red { background: var(--red-soft); color: var(--red-alert); }
+  .badge-gold { background: rgba(201,168,76,0.2); color: #8a6f1e; }
+  .badge-blue { background: var(--blue-soft); color: var(--blue); }
+  .badge-purple { background: var(--purple-soft); color: var(--purple); }
+
+  /* Insight box */
+  .insight-box {
+    background: linear-gradient(135deg, #1a3a2a, #2d5a3d);
+    border-radius: 12px; padding: 20px 24px; margin-bottom: 28px;
+    border: 1px solid rgba(201,168,76,0.3);
+    display: flex; gap: 16px; align-items: flex-start;
+  }
+
+  .insight-icon { font-size: 28px; flex-shrink: 0; margin-top: 2px; }
+
+  .insight-content h4 {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold-light); font-size: 15px; margin-bottom: 6px;
+  }
+
+  .insight-content p {
+    color: rgba(245,240,232,0.85); font-size: 13.5px; line-height: 1.7;
+  }
+
+  .insight-content p strong { color: var(--gold-light); }
+
+  .insight-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 12px; margin-top: 12px;
+  }
+
+  .insight-stat {
+    background: rgba(255,255,255,0.07); border-radius: 8px;
+    padding: 10px 14px; border: 1px solid rgba(201,168,76,0.15);
+  }
+
+  .insight-stat-label { font-size: 11px; color: rgba(245,240,232,0.5); margin-bottom: 3px; text-transform: uppercase; letter-spacing: 1px; }
+  .insight-stat-value { font-size: 16px; font-weight: 700; color: var(--gold-light); }
+
+  /* Tabs */
+  .tabs {
+    display: flex; gap: 4px;
+    background: rgba(45,90,61,0.08); padding: 4px;
+    border-radius: 8px; margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .tab {
+    padding: 8px 20px; border-radius: 6px; border: none;
+    background: transparent;
+    font-family: 'Sarabun', sans-serif; font-size: 14px;
+    color: var(--green-soft); cursor: pointer; transition: all 0.2s; font-weight: 500;
+  }
+
+  .tab.active {
+    background: var(--warm-white); color: var(--green-deep);
+    box-shadow: 0 1px 4px var(--shadow); font-weight: 600;
+  }
+
+  /* Project cards */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 18px; margin-bottom: 32px;
+  }
+
+  .project-card {
+    background: var(--warm-white); border-radius: 14px;
+    border: 1px solid rgba(74,124,95,0.12);
+    box-shadow: 0 2px 16px var(--shadow);
+    overflow: hidden; transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .project-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 28px rgba(26,58,42,0.18);
+  }
+
+  .card-header {
+    background: linear-gradient(135deg, var(--green-deep), var(--green-mid));
+    padding: 18px 20px 14px; position: relative;
+  }
+
+  .card-header.warning { background: linear-gradient(135deg, #7a3520, #c0392b); }
+  .card-header.complete { background: linear-gradient(135deg, #2c4a1e, var(--green-mid)); }
+
+  .card-project-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px; color: var(--cream); margin-bottom: 4px;
+  }
+
+  .card-client { font-size: 12px; color: rgba(245,240,232,0.7); display: flex; align-items: center; gap: 5px; }
+
+  .status-pill {
+    position: absolute; top: 16px; right: 16px;
+    padding: 3px 10px; border-radius: 20px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
+  }
+
+  .status-active { background: rgba(201,168,76,0.9); color: var(--green-deep); }
+  .status-warning { background: rgba(255,255,255,0.25); color: white; }
+  .status-design { background: rgba(201,168,76,0.3); color: var(--gold-light); }
+
+  .card-body { padding: 16px 20px; }
+
+  .progress-section { margin-bottom: 14px; }
+  .progress-label { display: flex; justify-content: space-between; font-size: 12px; color: #777; margin-bottom: 6px; }
+  .progress-track { height: 6px; background: rgba(74,124,95,0.12); border-radius: 99px; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--green-soft), var(--green-light)); transition: width 0.6s ease; }
+  .progress-fill.warning { background: linear-gradient(90deg, #c0392b, #e74c3c); }
+
+  .cost-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+  .cost-item { background: rgba(74,124,95,0.06); border-radius: 8px; padding: 10px 12px; }
+  .cost-item-label { font-size: 11px; color: #888; margin-bottom: 3px; display: flex; align-items: center; gap: 4px; }
+  .cost-item-value { font-size: 15px; font-weight: 700; color: var(--green-deep); }
+  .cost-item.over .cost-item-value { color: var(--red-alert); }
+
+  .profit-bar-wrap { margin: 14px 0 10px; }
+  .profit-label { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px; }
+  .profit-label .label { color: #777; }
+  .profit-label .pct { font-weight: 700; color: var(--green-mid); }
+  .profit-label .pct.low { color: var(--red-alert); }
+  .profit-track { height: 8px; background: rgba(192,57,43,0.12); border-radius: 99px; overflow: hidden; }
+  .profit-fill { height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--green-light), var(--green-soft)); }
+
+  .milestones { margin-bottom: 14px; }
+  .milestone-title { font-size: 12px; font-weight: 600; color: var(--green-soft); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .milestone-list { display: flex; flex-direction: column; gap: 5px; }
+  .milestone-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #555; }
+  .milestone-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .dot-done { background: var(--green-soft); }
+  .dot-active { background: var(--gold); box-shadow: 0 0 0 3px rgba(201,168,76,0.3); }
+  .dot-pending { background: #ddd; }
+  .milestone-date { margin-left: auto; font-size: 11px; color: #aaa; }
+
+  .card-footer {
+    padding: 12px 20px; border-top: 1px solid rgba(74,124,95,0.1);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .footer-meta { font-size: 12px; color: #999; display: flex; align-items: center; gap: 14px; }
+  .footer-meta span { display: flex; align-items: center; gap: 4px; }
+  .card-actions { display: flex; gap: 6px; }
+
+  .btn-sm {
+    padding: 5px 12px; font-size: 12px; border-radius: 5px;
+    border: 1px solid rgba(74,124,95,0.25); background: transparent;
+    color: var(--green-soft); cursor: pointer; font-family: 'Sarabun', sans-serif;
+    font-weight: 500; transition: all 0.2s;
+  }
+
+  .btn-sm:hover { background: var(--green-deep); color: var(--cream); border-color: var(--green-deep); }
+  .btn-sm.primary { background: var(--green-mid); color: var(--cream); border-color: var(--green-mid); }
+
+  /* Daily log */
+  .daily-log {
+    background: var(--warm-white); border-radius: 14px;
+    border: 1px solid rgba(74,124,95,0.12);
+    box-shadow: 0 2px 16px var(--shadow); overflow: hidden; margin-bottom: 28px;
+  }
+
+  .daily-log-header {
+    background: var(--green-deep); padding: 16px 22px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .daily-log-header h3 { font-family: 'Playfair Display', serif; color: var(--cream); font-size: 17px; }
+
+  .log-table { width: 100%; border-collapse: collapse; }
+  .log-table th {
+    background: rgba(74,124,95,0.08); padding: 11px 16px; text-align: left;
+    font-size: 11px; font-weight: 700; color: var(--green-soft);
+    text-transform: uppercase; letter-spacing: 1px;
+    border-bottom: 1px solid rgba(74,124,95,0.1);
+  }
+  .log-table td { padding: 13px 16px; font-size: 14px; border-bottom: 1px solid rgba(74,124,95,0.07); color: #444; }
+  .log-table tr:hover td { background: rgba(74,124,95,0.04); }
+  .log-table tr:last-child td { border-bottom: none; }
+
+  .type-badge { display: inline-block; padding: 2px 9px; border-radius: 99px; font-size: 11px; font-weight: 600; }
+  .type-labor { background: rgba(139,111,71,0.15); color: var(--earth); }
+  .type-material { background: rgba(74,124,95,0.15); color: var(--green-mid); }
+  .type-design { background: rgba(201,168,76,0.2); color: #8a6f1e; }
+  .type-other { background: #f0f0f0; color: #666; }
+
+  .amount-cell { font-weight: 700; color: var(--green-deep); font-size: 15px; }
+
+  .add-entry-form {
+    padding: 20px 22px; background: rgba(74,124,95,0.04);
+    border-top: 1px solid rgba(74,124,95,0.1);
+    display: grid; grid-template-columns: 2fr 1.5fr 1fr 1fr auto;
+    gap: 10px; align-items: end;
+  }
+
+  .form-group label {
+    display: block; font-size: 11px; font-weight: 600; color: var(--green-soft);
+    text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 5px;
+  }
+
+  .form-group input, .form-group select {
+    width: 100%; padding: 9px 12px;
+    border: 1px solid rgba(74,124,95,0.25); border-radius: 7px;
+    font-family: 'Sarabun', sans-serif; font-size: 14px;
+    background: var(--warm-white); color: var(--green-deep); outline: none; transition: border-color 0.2s;
+  }
+
+  .form-group input:focus, .form-group select:focus {
+    border-color: var(--green-soft); box-shadow: 0 0 0 3px rgba(74,124,95,0.1);
+  }
+
+  /* ===== CONTACTS TAB ===== */
+  .contacts-header-row {
+    display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 24px;
+  }
+
+  .contacts-stat-card {
+    background: var(--warm-white); border-radius: 12px; padding: 18px 20px;
+    border: 1px solid rgba(74,124,95,0.15); box-shadow: 0 2px 12px var(--shadow);
+    position: relative; overflow: hidden;
+  }
+
+  .contacts-stat-card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; width: 4px; height: 100%;
+  }
+
+  .contacts-stat-card.c1::before { background: var(--gold); }
+  .contacts-stat-card.c2::before { background: var(--blue); }
+  .contacts-stat-card.c3::before { background: var(--purple); }
+
+  .contacts-stat-label { font-size: 11px; font-weight: 600; color: var(--green-soft); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+  .contacts-stat-value { font-size: 22px; font-weight: 700; color: var(--green-deep); }
+  .contacts-stat-sub { font-size: 12px; color: #888; margin-top: 4px; }
+
+  /* Analysis section */
+  .analysis-section {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 24px;
+  }
+
+  .analysis-card {
+    background: var(--warm-white); border-radius: 12px; padding: 0;
+    border: 1px solid rgba(74,124,95,0.12); box-shadow: 0 2px 12px var(--shadow);
+    overflow: hidden;
+  }
+
+  .analysis-card-header {
+    background: var(--green-deep); padding: 14px 18px;
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .analysis-card-header h4 {
+    font-family: 'Playfair Display', serif; color: var(--cream); font-size: 15px;
+  }
+
+  .analysis-card-body { padding: 16px 18px; }
+
+  /* Bar chart */
+  .bar-chart { display: flex; flex-direction: column; gap: 10px; }
+
+  .bar-row { display: flex; align-items: center; gap: 10px; }
+  .bar-label { font-size: 13px; color: #555; width: 90px; flex-shrink: 0; }
+  .bar-track { flex: 1; height: 10px; background: rgba(74,124,95,0.1); border-radius: 99px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 99px; transition: width 0.8s ease; }
+  .bar-value { font-size: 12px; font-weight: 700; color: var(--green-deep); width: 60px; text-align: right; flex-shrink: 0; }
+
+  /* Donut chart placeholder */
+  .donut-wrap { display: flex; align-items: center; gap: 20px; }
+  .donut-svg { flex-shrink: 0; }
+  .donut-legend { display: flex; flex-direction: column; gap: 8px; }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #555; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+  /* Claude insight contacts */
+  .claude-contacts-insight {
+    background: linear-gradient(135deg, #1a3a2a, #2d5a3d);
+    border-radius: 12px; padding: 20px 24px; margin-bottom: 24px;
+    border: 1px solid rgba(201,168,76,0.3);
+  }
+
+  .claude-contacts-insight h4 {
+    font-family: 'Playfair Display', serif; color: var(--gold-light);
+    font-size: 15px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+  }
+
+  .insight-points { display: flex; flex-direction: column; gap: 10px; }
+
+  .insight-point {
+    display: flex; gap: 12px; align-items: flex-start;
+    background: rgba(255,255,255,0.06); border-radius: 8px; padding: 12px 14px;
+    border-left: 3px solid var(--gold);
+  }
+
+  .insight-point-icon { font-size: 18px; flex-shrink: 0; }
+  .insight-point-text { font-size: 13.5px; color: rgba(245,240,232,0.85); line-height: 1.6; }
+  .insight-point-text strong { color: var(--gold-light); }
+
+  /* Contact cards */
+  .contacts-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+  }
+
+  .contact-card {
+    background: var(--warm-white); border-radius: 12px;
+    border: 1px solid rgba(74,124,95,0.12); box-shadow: 0 2px 12px var(--shadow);
+    overflow: hidden; transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .contact-card:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(26,58,42,0.15); }
+
+  .contact-card-header {
+    padding: 16px 18px 12px;
+    background: linear-gradient(135deg, var(--green-deep), var(--green-mid));
+    position: relative;
+  }
+
+  .contact-name { font-family: 'Playfair Display', serif; font-size: 16px; color: var(--cream); margin-bottom: 3px; }
+  .contact-sub { font-size: 12px; color: rgba(245,240,232,0.65); }
+
+  .contact-style-pill {
+    position: absolute; top: 14px; right: 14px;
+    padding: 3px 10px; border-radius: 20px;
+    font-size: 11px; font-weight: 700;
+    background: rgba(201,168,76,0.85); color: var(--green-deep);
+  }
+
+  .contact-card-body { padding: 14px 18px; }
+
+  .contact-info-row {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; color: #555; margin-bottom: 8px;
+  }
+
+  .contact-info-icon { font-size: 14px; flex-shrink: 0; width: 18px; }
+
+  .contact-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+
+  .contact-stat {
+    background: rgba(74,124,95,0.06); border-radius: 7px; padding: 8px 10px;
+  }
+
+  .contact-stat-label { font-size: 10px; color: #999; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 2px; }
+  .contact-stat-value { font-size: 14px; font-weight: 700; color: var(--green-deep); }
+
+  .contact-card-footer {
+    padding: 10px 18px; border-top: 1px solid rgba(74,124,95,0.1);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .contact-tags { display: flex; gap: 5px; flex-wrap: wrap; }
+  .contact-tag {
+    padding: 2px 8px; border-radius: 99px; font-size: 11px; font-weight: 600;
+    background: rgba(74,124,95,0.1); color: var(--green-soft);
+  }
+
+  /* Section header */
+  .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--green-deep); display: flex; align-items: center; gap: 10px; }
+  .section-title span { font-size: 20px; }
+
+  /* Modal */
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; align-items: center; justify-content: center; }
+  .modal-overlay.show { display: flex; }
+  .modal { background: var(--warm-white); border-radius: 16px; width: 560px; max-width: 95vw; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+  .modal-header { background: var(--green-deep); padding: 20px 24px; border-radius: 16px 16px 0 0; display: flex; justify-content: space-between; align-items: center; }
+  .modal-header h3 { font-family: 'Playfair Display', serif; color: var(--cream); font-size: 18px; }
+  .modal-close { background: none; border: none; color: rgba(255,255,255,0.6); font-size: 22px; cursor: pointer; padding: 0; line-height: 1; }
+  .modal-body { padding: 24px; }
+  .modal-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .modal-form-grid .full-width { grid-column: 1 / -1; }
+  .modal-footer { padding: 16px 24px; border-top: 1px solid rgba(74,124,95,0.1); display: flex; justify-content: flex-end; gap: 10px; }
+
+  .toast {
+    position: fixed; bottom: 24px; right: 24px;
+    background: var(--green-deep); color: var(--cream);
+    padding: 12px 20px; border-radius: 8px; font-size: 14px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    transform: translateY(100px); opacity: 0; transition: all 0.3s;
+    z-index: 300; border-left: 4px solid var(--gold);
+  }
+
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  @media (max-width: 768px) {
+    .main { padding: 16px; }
+    .summary-row { grid-template-columns: 1fr 1fr; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .add-entry-form { grid-template-columns: 1fr 1fr; }
+    .header-inner { padding: 12px 16px; }
+    .brand-text p { display: none; }
+    .modal-form-grid { grid-template-columns: 1fr; }
+    .analysis-section { grid-template-columns: 1fr; }
+    .contacts-header-row { grid-template-columns: 1fr; }
+    .contacts-grid { grid-template-columns: 1fr; }
+    .insight-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="brand" style="display:flex;align-items:center;gap:10px;">
+      <button onclick="history.back()" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:var(--cream);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0;" title="ย้อนกลับ">←</button>
+      <a href="slb-home.html" style="text-decoration:none;display:flex;align-items:center;gap:12px;">
+        <div class="brand-icon">🌿</div>
+        <div class="brand-text">
+          <h1>สวนหลังบ้าน สตูดิโอ</h1>
+          <p>Project Cost Tracker</p>
+        </div>
+      </a>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-outline" onclick="showAIInsight()">🤖 Claude วิเคราะห์</button>
+      <button class="btn btn-primary" onclick="openModal()">+ เพิ่มโปรเจกต์</button>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- Summary -->
+  <div class="summary-row">
+    <div class="summary-card gold">
+      <div class="summary-label">มูลค่างานทั้งหมด</div>
+      <div class="summary-value">฿1,285,000</div>
+      <div class="summary-sub">3 โปรเจกต์ที่กำลังดำเนินการ</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-label">ต้นทุนสะสม</div>
+      <div class="summary-value">฿748,500</div>
+      <span class="summary-badge badge-green">58.2% ของมูลค่า</span>
+    </div>
+    <div class="summary-card alert">
+      <div class="summary-label">งานเกินงบ</div>
+      <div class="summary-value" style="color:var(--red-alert)">1 โปรเจกต์</div>
+      <span class="summary-badge badge-red">⚠ ต้องการความสนใจ</span>
+    </div>
+    <div class="summary-card earth">
+      <div class="summary-label">กำไรประมาณการ</div>
+      <div class="summary-value">฿536,500</div>
+      <span class="summary-badge badge-gold">41.8% margin</span>
+    </div>
+  </div>
+
+  <!-- AI Insight -->
+  <div class="insight-box" id="aiInsight" style="display:none">
+    <div class="insight-icon">🌿</div>
+    <div class="insight-content">
+      <h4>Claude วิเคราะห์: ภาพรวมสุขภาพโปรเจกต์เดือนนี้</h4>
+      <p>
+        <strong>โปรเจกต์บ้านคุณสมชาย</strong> มีต้นทุนเกินงบแล้ว 12% — ค่าแรงช่างปูนสูงกว่าประมาณการ 18,000 บาท ควรตรวจสอบว่ามีงานเพิ่มเติมจากขอบเขตเดิมหรือไม่ หากขอบเขตงานขยาย ควรแจ้งลูกค้าเพื่อปรับ BOQ ก่อนงานเสร็จ<br><br>
+        <strong>กำไรรวม 41.8%</strong> อยู่ในระดับดีสำหรับงานจัดสวนพร้อมก่อสร้าง แต่ถ้าต้นทุนบ้านคุณสมชายบานปลายต่อ อาจลดเหลือต่ำกว่า 35% — ระดับที่ควรระวัง
+      </p>
+      <div class="insight-grid">
+        <div class="insight-stat">
+          <div class="insight-stat-label">โปรเจกต์อยู่ในงบ</div>
+          <div class="insight-stat-value">2 / 3</div>
+        </div>
+        <div class="insight-stat">
+          <div class="insight-stat-label">Margin เฉลี่ย</div>
+          <div class="insight-stat-value">41.8%</div>
+        </div>
+        <div class="insight-stat">
+          <div class="insight-stat-label">ค่าแรงต่อมูลค่างาน</div>
+          <div class="insight-stat-value">31.2%</div>
+        </div>
+        <div class="insight-stat">
+          <div class="insight-stat-label">ค่าวัสดุต่อมูลค่างาน</div>
+          <div class="insight-stat-value">27.0%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab(this, 'projects')">📋 โปรเจกต์ทั้งหมด</button>
+    <button class="tab" onclick="switchTab(this, 'daily')">📆 บันทึกรายวัน</button>
+    <button class="tab" onclick="switchTab(this, 'clients')">👤 ฐานข้อมูลลูกค้า</button>
+  </div>
+
+  <!-- Projects Tab -->
+  <div id="tab-projects">
+    <div class="section-header">
+      <div class="section-title"><span>🌳</span> โปรเจกต์ที่กำลังดำเนินการ</div>
+    </div>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="card-header warning">
+          <div class="card-project-name">บ้านคุณสมชาย — สวนญี่ปุ่น</div>
+          <div class="card-client">📍 พระราม 9 • เริ่ม 1 มี.ค. 68</div>
+          <div class="status-pill status-warning">⚠ เกินงบ</div>
+        </div>
+        <div class="card-body">
+          <div class="progress-section">
+            <div class="progress-label"><span>ความคืบหน้า</span><span style="font-weight:600">75%</span></div>
+            <div class="progress-track"><div class="progress-fill warning" style="width:75%"></div></div>
+          </div>
+          <div class="profit-bar-wrap">
+            <div class="profit-label"><span class="label">อัตรากำไร</span><span class="pct low">28% ⚠ ต่ำกว่าเป้า</span></div>
+            <div class="profit-track"><div class="profit-fill" style="width:28%;background:linear-gradient(90deg,#e74c3c,#c0392b)"></div></div>
+          </div>
+          <div class="cost-grid">
+            <div class="cost-item"><div class="cost-item-label">💰 มูลค่าสัญญา</div><div class="cost-item-value">฿385,000</div></div>
+            <div class="cost-item over"><div class="cost-item-label">📊 ต้นทุนจริง</div><div class="cost-item-value">฿278,500</div></div>
+            <div class="cost-item over"><div class="cost-item-label">🔨 ค่าแรง (เกิน)</div><div class="cost-item-value" style="color:var(--red-alert)">฿148,000</div></div>
+            <div class="cost-item"><div class="cost-item-label">🪴 ค่าวัสดุ/ต้นไม้</div><div class="cost-item-value">฿130,500</div></div>
+          </div>
+          <div class="milestones">
+            <div class="milestone-title">Milestones</div>
+            <div class="milestone-list">
+              <div class="milestone-item"><div class="milestone-dot dot-done"></div>ออกแบบ & อนุมัติแบบ<span class="milestone-date">5 มี.ค.</span></div>
+              <div class="milestone-item"><div class="milestone-dot dot-done"></div>งานโครงสร้าง (ทางเดิน, บ่อน้ำ)<span class="milestone-date">20 มี.ค.</span></div>
+              <div class="milestone-item"><div class="milestone-dot dot-active"></div>ปลูกต้นไม้ & ตกแต่ง <strong>(กำลังดำเนินการ)</strong><span class="milestone-date">10 เม.ย.</span></div>
+              <div class="milestone-item"><div class="milestone-dot dot-pending"></div>ส่งมอบงาน & เก็บเงินงวดสุดท้าย<span class="milestone-date">30 เม.ย.</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="footer-meta"><span>📷 12 รูป</span><span>📄 3 เอกสาร</span></div>
+          <div class="card-actions"><button class="btn-sm">บันทึกรายวัน</button><button class="btn-sm primary">ดูรายละเอียด</button></div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="card-header">
+          <div class="card-project-name">คุณวราภรณ์ — สวนโมเดิร์น</div>
+          <div class="card-client">📍 ลาดพร้าว • เริ่ม 15 มี.ค. 68</div>
+          <div class="status-pill status-active">✦ กำลังดำเนินการ</div>
+        </div>
+        <div class="card-body">
+          <div class="progress-section">
+            <div class="progress-label"><span>ความคืบหน้า</span><span style="font-weight:600">40%</span></div>
+            <div class="progress-track"><div class="progress-fill" style="width:40%"></div></div>
+          </div>
+          <div class="profit-bar-wrap">
+            <div class="profit-label"><span class="label">อัตรากำไรประมาณการ</span><span class="pct">45%</span></div>
+            <div class="profit-track"><div class="profit-fill" style="width:45%"></div></div>
+          </div>
+          <div class="cost-grid">
+            <div class="cost-item"><div class="cost-item-label">💰 มูลค่าสัญญา</div><div class="cost-item-value">฿520,000</div></div>
+            <div class="cost-item"><div class="cost-item-label">📊 ต้นทุนจริง</div><div class="cost-item-value">฿186,000</div></div>
+            <div class="cost-item"><div class="cost-item-label">🔨 ค่าแรง</div><div class="cost-item-value">฿98,000</div></div>
+            <div class="cost-item"><div class="cost-item-label">🪴 ค่าวัสดุ/ต้นไม้</div><div class="cost-item-value">฿88,000</div></div>
+          </div>
+          <div class="milestones">
+            <div class="milestone-title">Milestones</div>
+            <div class="milestone-list">
+              <div class="milestone-item"><div class="milestone-dot dot-done"></div>Concept & แบบ 3D<span class="milestone-date">18 มี.ค.</span></div>
+              <div class="milestone-item"><div class="milestone-dot dot-active"></div>งานดิน & ระบบน้ำ <strong>(กำลังดำเนินการ)</strong><span class="milestone-date">5 เม.ย.</span></div>
+              <div class="milestone-item"><div class="milestone-dot dot-pending"></div>งานก่อสร้างโครงสร้าง<span class="milestone-date">25 เม.ย.</span></div>
+              <div class="milestone-item"><div class="milestone-dot dot-pending"></div>ปลูกต้นไม้ & ส่งมอบ<span class="milestone-date">20 พ.ค.</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="footer-meta"><span>📷 8 รูป</span><span>📄 5 เอกสาร</span></div>
+          <div class="card-actions"><button class="btn-sm">บันทึกรายวัน</button><button class="btn-sm primary">ดูรายละเอียด</button></div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="card-header complete">
+          <div class="card-project-name">คุณนภัสสร — Tropical Lush</div>
+          <div class="card-client">📍 บางนา • เริ่ม 1 เม.ย. 68</div>
+          <div class="status-pill status-design">✏ ขั้นออกแบบ</div>
+        </div>
+        <div class="card-body">
+          <div class="progress-section">
+            <div class="progress-label"><span>ความคืบหน้า</span><span style="font-weight:600">15%</span></div>
+            <div class="progress-track"><div class="progress-fill" style="width:15%"></div></div>
+          </div>
+          <div class="profit-bar-wrap">
+            <div class="profit-label"><span class="label">อัตรากำไรประมาณการ</span><span class="pct">52%</span></div>
+            <div class="profit-track"><div class="profit-fill" style="width:52%"></div></div>
+          </div>
+          <div class="cost-grid">
+            <div class="cost-item"><div class="cost-item-label">💰 มูลค่าสัญญา</div><div class="cost-item-value">฿380,000</div></div>
+            <div class="cost-item"><div class="cost-item-label">📊 ต้นทุนจริง</div><div class="cost-item-value">฿54,000</div></div>
+            <div class="cost-item"><div class="cost-item-label">✏ ค่าออกแบบ</div><div class="cost-item-value">฿34,000</div></div>
+            <div class="cost-item"><div class="cost-item-label">🪴 ค่าวัสดุ (ล่วงหน้า)</div><div class="cost-item-value">฿20,000</div></div>
+          </div>
+          <div class="milestones">
+            <div class="milestone-title">Milestones</div>
+            <div class="milestone-list">
+              <div class="milestone-item"><div class="milestone-dot dot-done"></div>สำรวจพื้นที่ & Briefing<span class="milestone-date">3 เม.ย.</span></div>
+              <div class="milestone-item"><div class="milestone-dot dot-active"></div>นำเสนอแบบ 3D รอบแรก <strong>(รอลูกค้า)</strong><span class="milestone-date">15 เม.ย.</span></div>
+              <div class="milestone-item"><div class="milestone-dot dot-pending"></div>อนุมัติแบบ & เริ่มก่อสร้าง<span class="milestone-date">1 พ.ค.</span></div>
+              <div class="milestone-item"><div class="milestone-dot dot-pending"></div>ส่งมอบงาน<span class="milestone-date">30 มิ.ย.</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="footer-meta"><span>📷 4 รูป</span><span>📄 2 เอกสาร</span></div>
+          <div class="card-actions"><button class="btn-sm">บันทึกรายวัน</button><button class="btn-sm primary">ดูรายละเอียด</button></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Daily Log Tab -->
+  <div id="tab-daily" style="display:none">
+    <div class="daily-log">
+      <div class="daily-log-header">
+        <h3>📆 บันทึกค่าใช้จ่ายรายวัน</h3>
+        <span style="color:rgba(245,240,232,0.6);font-size:13px">เดือนพฤษภาคม 2568</span>
+      </div>
+      <table class="log-table" id="logTable">
+        <thead>
+          <tr>
+            <th>วันที่</th><th>โปรเจกต์</th><th>ประเภท</th>
+            <th>รายละเอียด</th><th>ผู้รับ/ช่าง</th><th>จำนวนเงิน</th>
+          </tr>
+        </thead>
+        <tbody id="logBody">
+          <tr><td>3 พ.ค.</td><td>คุณอั้น ST-10</td><td><span class="type-badge type-material">ค่าวัสดุ</span></td><td>น้ำยาทำความสะอาด</td><td>—</td><td class="amount-cell">฿156</td></tr>
+          <tr><td>3 พ.ค.</td><td>คุณอั้น ST-10</td><td><span class="type-badge type-labor">ค่าแรง</span></td><td>ค่าแรงคนรดน้ำต้นไม้</td><td>ทีมช่าง</td><td class="amount-cell">฿2,500</td></tr>
+          <tr><td>30 เม.ย.</td><td>บ้านคุณสมชาย</td><td><span class="type-badge type-labor">ค่าแรง</span></td><td>ช่างปูกระเบื้องทางเดิน 2 คน</td><td>ทีมพี่สมพงษ์</td><td class="amount-cell">฿4,800</td></tr>
+          <tr><td>30 เม.ย.</td><td>คุณวราภรณ์</td><td><span class="type-badge type-material">ค่าวัสดุ</span></td><td>ดินปลูก 5 กระสอบ + ทราย</td><td>ร้านวัสดุสุขสวัสดิ์</td><td class="amount-cell">฿2,350</td></tr>
+          <tr><td>29 เม.ย.</td><td>บ้านคุณสมชาย</td><td><span class="type-badge type-material">ค่าวัสดุ</span></td><td>ต้นพุทธรักษา 8 ต้น + Bamboo</td><td>สวนแม่กลอง</td><td class="amount-cell">฿12,800</td></tr>
+          <tr><td>29 เม.ย.</td><td>คุณนภัสสร</td><td><span class="type-badge type-design">งานออกแบบ</span></td><td>ค่าจ้างวาด 3D ทบทวนรอบ 2</td><td>พี่แบงก์ (Freelance)</td><td class="amount-cell">฿8,000</td></tr>
+          <tr><td>28 เม.ย.</td><td>คุณวราภรณ์</td><td><span class="type-badge type-labor">ค่าแรง</span></td><td>ขุดดิน + วางท่อน้ำ 3 คน</td><td>ทีมช่างเอก</td><td class="amount-cell">฿7,200</td></tr>
+        </tbody>
+      </table>
+      <div class="add-entry-form">
+        <div class="form-group">
+          <label>รายละเอียด</label>
+          <input type="text" id="newDesc" placeholder="เช่น ค่าแรงช่างปูน 2 คน...">
+        </div>
+        <div class="form-group">
+          <label>โปรเจกต์</label>
+          <select id="newProject">
+            <option>บ้านคุณสมชาย</option><option>คุณวราภรณ์</option><option>คุณนภัสสร</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>ประเภท</label>
+          <select id="newType">
+            <option value="labor">ค่าแรง</option><option value="material">ค่าวัสดุ</option>
+            <option value="design">งานออกแบบ</option><option value="other">อื่นๆ</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>จำนวนเงิน (บาท)</label>
+          <input type="number" id="newAmount" placeholder="0">
+        </div>
+        <button class="btn btn-primary" onclick="addEntry()" style="white-space:nowrap">+ บันทึก</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Clients Tab -->
+  <div id="tab-clients" style="display:none">
+
+    <!-- Stats row -->
+    <div class="contacts-header-row">
+      <div class="contacts-stat-card c1">
+        <div class="contacts-stat-label">ลูกค้าทั้งหมด</div>
+        <div class="contacts-stat-value">3 ราย</div>
+        <div class="contacts-stat-sub">งบเฉลี่ย ฿428,333 / โปรเจกต์</div>
+      </div>
+      <div class="contacts-stat-card c2">
+        <div class="contacts-stat-label">สไตล์ที่รับมากสุด</div>
+        <div class="contacts-stat-value">Tropical / Modern</div>
+        <div class="contacts-stat-sub">2 ใน 3 โปรเจกต์ปัจจุบัน</div>
+      </div>
+      <div class="contacts-stat-card c3">
+        <div class="contacts-stat-label">โซนหน้างานหลัก</div>
+        <div class="contacts-stat-value">กทม. ฝั่งตะวันออก</div>
+        <div class="contacts-stat-sub">ลาดพร้าว · บางนา · พระราม 9</div>
+      </div>
+    </div>
+
+    <!-- Analysis section -->
+    <div class="analysis-section">
+
+      <!-- งบโปรเจกต์ -->
+      <div class="analysis-card">
+        <div class="analysis-card-header">
+          <h4>📊 งบโปรเจกต์ตามช่วงราคา</h4>
+        </div>
+        <div class="analysis-card-body">
+          <div class="bar-chart">
+            <div class="bar-row">
+              <span class="bar-label">ต่ำกว่า 300K</span>
+              <div class="bar-track"><div class="bar-fill" style="width:0%;background:var(--green-light)"></div></div>
+              <span class="bar-value">0 ราย</span>
+            </div>
+            <div class="bar-row">
+              <span class="bar-label">300K – 500K</span>
+              <div class="bar-track"><div class="bar-fill" style="width:67%;background:var(--green-soft)"></div></div>
+              <span class="bar-value">2 ราย</span>
+            </div>
+            <div class="bar-row">
+              <span class="bar-label">500K – 1M</span>
+              <div class="bar-track"><div class="bar-fill" style="width:33%;background:var(--gold)"></div></div>
+              <span class="bar-value">1 ราย</span>
+            </div>
+            <div class="bar-row">
+              <span class="bar-label">มากกว่า 1M</span>
+              <div class="bar-track"><div class="bar-fill" style="width:0%;background:var(--earth)"></div></div>
+              <span class="bar-value">0 ราย</span>
+            </div>
+          </div>
+          <p style="font-size:12px;color:#999;margin-top:14px">💡 ฐานลูกค้าอยู่ในช่วง 300K–500K เป็นหลัก ยังมีพื้นที่โตสู่งานระดับ 1M+</p>
+        </div>
+      </div>
+
+      <!-- สไตล์งาน -->
+      <div class="analysis-card">
+        <div class="analysis-card-header">
+          <h4>🎨 สไตล์งานที่ลูกค้าเลือก</h4>
+        </div>
+        <div class="analysis-card-body">
+          <div class="donut-wrap">
+            <svg class="donut-svg" width="110" height="110" viewBox="0 0 110 110">
+              <circle cx="55" cy="55" r="38" fill="none" stroke="#f0ebe2" stroke-width="18"/>
+              <!-- Tropical 33% -->
+              <circle cx="55" cy="55" r="38" fill="none" stroke="#4a7c5f" stroke-width="18"
+                stroke-dasharray="79.2 238.76" stroke-dashoffset="0" transform="rotate(-90 55 55)"/>
+              <!-- Modern 33% -->
+              <circle cx="55" cy="55" r="38" fill="none" stroke="#c9a84c" stroke-width="18"
+                stroke-dasharray="79.2 238.76" stroke-dashoffset="-79.2" transform="rotate(-90 55 55)"/>
+              <!-- Japanese 33% -->
+              <circle cx="55" cy="55" r="38" fill="none" stroke="#8b6f47" stroke-width="18"
+                stroke-dasharray="79.2 238.76" stroke-dashoffset="-158.4" transform="rotate(-90 55 55)"/>
+              <text x="55" y="51" text-anchor="middle" font-size="11" fill="#1a3a2a" font-family="Sarabun" font-weight="600">3</text>
+              <text x="55" y="64" text-anchor="middle" font-size="10" fill="#777" font-family="Sarabun">สไตล์</text>
+            </svg>
+            <div class="donut-legend">
+              <div class="legend-item"><div class="legend-dot" style="background:var(--green-soft)"></div>Tropical — 1 ราย (33%)</div>
+              <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div>Modern / Minimal — 1 ราย (33%)</div>
+              <div class="legend-item"><div class="legend-dot" style="background:var(--earth)"></div>Japanese — 1 ราย (33%)</div>
+            </div>
+          </div>
+          <p style="font-size:12px;color:#999;margin-top:14px">💡 พอร์ตงานหลากหลาย ดีต่อการทำ content โซเชียลแยกตามสไตล์</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Claude insight สำหรับโปรโมทโซเชียล -->
+    <div class="claude-contacts-insight">
+      <h4>🤖 Claude วิเคราะห์: ข้อมูลลูกค้า & แนวทางโปรโมทโซเชียล</h4>
+      <div class="insight-points">
+        <div class="insight-point">
+          <div class="insight-point-icon">📍</div>
+          <div class="insight-point-text">
+            <strong>โซนหน้างาน:</strong> ลูกค้าทั้งหมดอยู่ใน กทม. ฝั่งตะวันออก (ลาดพร้าว, บางนา, พระราม 9) — แนะนำให้ยิง Ads Facebook/Instagram เจาะพื้นที่รัศมี 15 กม. จากย่านเหล่านี้ก่อน เพราะลูกค้าแนวโน้มสูงจะอยู่ใกล้งานที่เห็น
+          </div>
+        </div>
+        <div class="insight-point">
+          <div class="insight-point-icon">💰</div>
+          <div class="insight-point-text">
+            <strong>ช่วงงบลูกค้า:</strong> ฐานปัจจุบันอยู่ที่ 380K–520K บาท — Content ที่เหมาะสม คือโชว์ "คุณค่า" ไม่ใช่แค่ราคา เช่น ใช้ต้นทุนเท่าไหร่ ได้อะไรกลับมา, Before & After, ดูแลง่ายแค่ไหน เพื่อดึงกลุ่มที่งบ 300K+ ตัดสินใจได้เร็วขึ้น
+          </div>
+        </div>
+        <div class="insight-point">
+          <div class="insight-point-icon">🎨</div>
+          <div class="insight-point-text">
+            <strong>สไตล์งาน:</strong> มี 3 สไตล์ชัดเจน (Tropical, Modern, Japanese) — แนะนำทำ Content Series แยกกัน เช่น "สวน Tropical ราคาเข้าถึงได้" vs "สวนญี่ปุ่นสำหรับคนรักความสงบ" เพื่อเจาะ Niche ได้ตรงกว่า Boost โพสต์ทั่วไป
+          </div>
+        </div>
+        <div class="insight-point">
+          <div class="insight-point-icon">📱</div>
+          <div class="insight-point-text">
+            <strong>แนะนำทันที:</strong> โปรเจกต์คุณวราภรณ์ (สวนโมเดิร์น ลาดพร้าว) กำลังก่อสร้าง 40% — เหมาะมากสำหรับ Reels ติดตามงาน "สวนโมเดิร์นกำลังก่อสร้าง EP.1" เพราะ Content แบบ Progress สร้าง Trust ได้ดีกว่าโฆษณาตรงๆ
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact cards -->
+    <div class="section-header">
+      <div class="section-title"><span>👤</span> รายชื่อผู้ติดต่อทั้งหมด</div>
+    </div>
+
+    <div class="contacts-grid">
+
+      <div class="contact-card">
+        <div class="contact-card-header">
+          <div class="contact-name">คุณสมชาย วงศ์เจริญ</div>
+          <div class="contact-sub">📍 พระราม 9, กรุงเทพฯ</div>
+          <div class="contact-style-pill">Japanese</div>
+        </div>
+        <div class="contact-card-body">
+          <div class="contact-info-row"><span class="contact-info-icon">📞</span> 081-234-5678</div>
+          <div class="contact-info-row"><span class="contact-info-icon">🏡</span> บ้านเดี่ยว 2 ชั้น, พื้นที่สวน ~120 ตร.ม.</div>
+          <div class="contact-info-row"><span class="contact-info-icon">🎯</span> ชอบความเรียบ สงบ ดูแลง่าย มีบ่อน้ำ</div>
+          <div class="contact-stats">
+            <div class="contact-stat">
+              <div class="contact-stat-label">มูลค่างาน</div>
+              <div class="contact-stat-value">฿385,000</div>
+            </div>
+            <div class="contact-stat">
+              <div class="contact-stat-label">สถานะ</div>
+              <div class="contact-stat-value" style="color:var(--red-alert)">เกินงบ ⚠</div>
+            </div>
+          </div>
+        </div>
+        <div class="contact-card-footer">
+          <div class="contact-tags">
+            <span class="contact-tag">ลูกค้าปัจจุบัน</span>
+            <span class="contact-tag">กำลังก่อสร้าง</span>
+          </div>
+          <button class="btn-sm primary">ดูโปรเจกต์</button>
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <div class="contact-card-header">
+          <div class="contact-name">คุณวราภรณ์ สุขสมบูรณ์</div>
+          <div class="contact-sub">📍 ลาดพร้าว, กรุงเทพฯ</div>
+          <div class="contact-style-pill">Modern</div>
+        </div>
+        <div class="contact-card-body">
+          <div class="contact-info-row"><span class="contact-info-icon">📞</span> 089-876-5432</div>
+          <div class="contact-info-row"><span class="contact-info-icon">🏡</span> บ้านเดี่ยว, พื้นที่สวน ~200 ตร.ม.</div>
+          <div class="contact-info-row"><span class="contact-info-icon">🎯</span> Minimal, ใช้งานได้จริง มีระบบน้ำอัตโนมัติ</div>
+          <div class="contact-stats">
+            <div class="contact-stat">
+              <div class="contact-stat-label">มูลค่างาน</div>
+              <div class="contact-stat-value">฿520,000</div>
+            </div>
+            <div class="contact-stat">
+              <div class="contact-stat-label">สถานะ</div>
+              <div class="contact-stat-value" style="color:var(--gold)">กำลังก่อสร้าง</div>
+            </div>
+          </div>
+        </div>
+        <div class="contact-card-footer">
+          <div class="contact-tags">
+            <span class="contact-tag">ลูกค้าปัจจุบัน</span>
+            <span class="contact-tag">งบสูงสุด</span>
+          </div>
+          <button class="btn-sm primary">ดูโปรเจกต์</button>
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <div class="contact-card-header">
+          <div class="contact-name">คุณนภัสสร ธนาพร</div>
+          <div class="contact-sub">📍 บางนา, กรุงเทพฯ</div>
+          <div class="contact-style-pill">Tropical</div>
+        </div>
+        <div class="contact-card-body">
+          <div class="contact-info-row"><span class="contact-info-icon">📞</span> 062-111-2233</div>
+          <div class="contact-info-row"><span class="contact-info-icon">🏡</span> บ้านเดี่ยว, พื้นที่สวน ~180 ตร.ม.</div>
+          <div class="contact-info-row"><span class="contact-info-icon">🎯</span> ธรรมชาติ หนาแน่น มีน้ำตก ต้นไม้ใหญ่</div>
+          <div class="contact-stats">
+            <div class="contact-stat">
+              <div class="contact-stat-label">มูลค่างาน</div>
+              <div class="contact-stat-value">฿380,000</div>
+            </div>
+            <div class="contact-stat">
+              <div class="contact-stat-label">สถานะ</div>
+              <div class="contact-stat-value" style="color:var(--green-soft)">ขั้นออกแบบ</div>
+            </div>
+          </div>
+        </div>
+        <div class="contact-card-footer">
+          <div class="contact-tags">
+            <span class="contact-tag">ลูกค้าปัจจุบัน</span>
+            <span class="contact-tag">รอ Approve</span>
+          </div>
+          <button class="btn-sm primary">ดูโปรเจกต์</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>🌿 เพิ่มโปรเจกต์ใหม่</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-form-grid">
+        <div class="form-group full-width">
+          <label>ชื่อโปรเจกต์</label>
+          <input type="text" placeholder="เช่น คุณมานพ — สวน Tropical กรุงเทพ">
+        </div>
+        <div class="form-group"><label>ชื่อลูกค้า</label><input type="text" placeholder="คุณ..."></div>
+        <div class="form-group"><label>เบอร์โทรลูกค้า</label><input type="text" placeholder="08X-XXX-XXXX"></div>
+        <div class="form-group"><label>สถานที่</label><input type="text" placeholder="เขต/จังหวัด"></div>
+        <div class="form-group">
+          <label>สไตล์งาน</label>
+          <select>
+            <option>ญี่ปุ่น</option><option>โมเดิร์น / Minimal</option>
+            <option>Tropical</option><option>อังกฤษ / Cottage</option><option>อื่นๆ</option>
+          </select>
+        </div>
+        <div class="form-group"><label>มูลค่าสัญญา (บาท)</label><input type="number" placeholder="0"></div>
+        <div class="form-group"><label>งบต้นทุนประมาณการ (บาท)</label><input type="number" placeholder="0"></div>
+        <div class="form-group"><label>วันเริ่มต้น</label><input type="date"></div>
+        <div class="form-group"><label>วันส่งมอบ (เป้า)</label><input type="date"></div>
+        <div class="form-group full-width">
+          <label>หมายเหตุ / ความต้องการพิเศษ</label>
+          <input type="text" placeholder="เช่น ลูกค้าต้องการต้นไม้ดูแลง่าย, มีสัตว์เลี้ยง...">
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" style="color:#555;border-color:#ccc" onclick="closeModal()">ยกเลิก</button>
+      <button class="btn btn-primary" onclick="saveProject()">บันทึกโปรเจกต์</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  function switchTab(el, tab) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    ['projects','daily','clients'].forEach(t => {
+      document.getElementById('tab-'+t).style.display = t === tab ? 'block' : 'none';
+    });
+  }
+
+  function openModal() { document.getElementById('modal').classList.add('show'); }
+  function closeModal() { document.getElementById('modal').classList.remove('show'); }
+
+  document.getElementById('modal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+
+  function saveProject() { closeModal(); showToast('✅ เพิ่มโปรเจกต์ใหม่เรียบร้อยแล้ว'); }
+
+  function showAIInsight() {
+    const box = document.getElementById('aiInsight');
+    if (box.style.display === 'none') {
+      box.style.display = 'flex';
+      box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    } else {
+      box.style.display = 'none';
+    }
+  }
+
+  function addEntry() {
+    const desc = document.getElementById('newDesc').value;
+    const project = document.getElementById('newProject').value;
+    const type = document.getElementById('newType').value;
+    const amount = document.getElementById('newAmount').value;
+
+    if (!desc || !amount) { showToast('⚠ กรุณากรอกรายละเอียดและจำนวนเงิน'); return; }
+
+    const typeMap = {
+      labor: ['ค่าแรง','type-labor'], material: ['ค่าวัสดุ','type-material'],
+      design: ['งานออกแบบ','type-design'], other: ['อื่นๆ','type-other']
+    };
+
+    const today = new Date();
+    const dateStr = today.getDate() + ' ' + ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'][today.getMonth()];
+
+    const tbody = document.getElementById('logBody');
+    const row = document.createElement('tr');
+    row.innerHTML = `<td>${dateStr}</td><td>${project}</td><td><span class="type-badge ${typeMap[type][1]}">${typeMap[type][0]}</span></td><td>${desc}</td><td>—</td><td class="amount-cell">฿${parseInt(amount).toLocaleString()}</td>`;
+    tbody.insertBefore(row, tbody.firstChild);
+
+    document.getElementById('newDesc').value = '';
+    document.getElementById('newAmount').value = '';
+    showToast('✅ บันทึกค่าใช้จ่ายเรียบร้อย');
+  }
+
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.querySelectorAll('.progress-fill, .profit-fill, .bar-fill').forEach(el => {
+        const w = el.style.width;
+        el.style.width = '0';
+        setTimeout(() => { el.style.width = w; }, 50);
+      });
+    }, 200);
+  });
+</script>
+
+<script>
+// ===== Notion Live Data Loader =====
+const API = '/api/notion';
+const getTitle = (p,k) => p?.properties?.[k]?.title?.[0]?.plain_text || '';
+const getRich  = (p,k) => p?.properties?.[k]?.rich_text?.[0]?.plain_text || '';
+const getNum   = (p,k) => p?.properties?.[k]?.number || 0;
+const getSel   = (p,k) => p?.properties?.[k]?.select?.name || '';
+const getDate  = (p,k) => p?.properties?.[k]?.date?.start || '';
+const fmtB     = (n) => '฿' + Math.round(n||0).toLocaleString('th-TH');
+
+const statusMap = {
+  '✏️ ขั้นออกแบบ': {cls:'status-design', label:'✏ ขั้นออกแบบ'},
+  '🔨 กำลังก่อสร้าง': {cls:'status-active', label:'✦ กำลังดำเนินการ'},
+  '⏳ รอส่งมอบ': {cls:'status-active', label:'⏳ รอส่งมอบ'},
+  '✅ ส่งมอบแล้ว': {cls:'status-design', label:'✓ ส่งมอบแล้ว'},
+  '⚠️ เกินงบ': {cls:'status-warning', label:'⚠ เกินงบ'},
+};
+
+async function loadProjects() {
+  try {
+    const res = await fetch(API);
+    const json = await res.json();
+    if (!json.success) throw new Error(json.error);
+    // เรียงโปรเจคจากล่าสุดไปเก่าสุด
+    json.data.projects.sort((a,b) => new Date(b.created_time) - new Date(a.created_time));
+    const { projects, expenses, payments } = json.data;
+
+    // คำนวณ summary
+    let totalVal = 0, totalPaid = 0, totalCost = 0;
+    projects.forEach(p => totalVal += getNum(p,'มูลค่าสัญญา'));
+    payments.forEach(p => { if(getSel(p,'สถานะ')==='✅ รับเงินแล้ว') totalPaid += getNum(p,'ยอดที่ต้องรับ'); });
+    expenses.forEach(p => totalCost += getNum(p,'จ่ายแล้ว'));
+
+    // อัปเดต summary cards
+    const cards = document.querySelectorAll('.summary-card');
+    if (cards[0]) cards[0].querySelector('.summary-value').textContent = fmtB(totalVal);
+    if (cards[1]) cards[1].querySelector('.summary-value').textContent = fmtB(totalCost);
+    const overBudget = projects.filter(p => getSel(p,'สถานะ') === '⚠️ เกินงบ');
+    if (cards[2]) {
+      cards[2].querySelector('.summary-value').textContent = overBudget.length + ' โปรเจค';
+    }
+    const profit = totalVal - totalCost;
+    const margin = totalVal > 0 ? (profit/totalVal*100).toFixed(1) : 0;
+    if (cards[3]) {
+      cards[3].querySelector('.summary-value').textContent = fmtB(profit);
+      const sub = cards[3].querySelector('.summary-sub');
+      if (sub) sub.textContent = margin + '% margin';
+    }
+
+    // แสดงโปรเจคจาก Notion
+    const grid = document.querySelector('.projects-grid');
+    if (grid && projects.length > 0) {
+      grid.innerHTML = projects.map(p => {
+        const name    = getTitle(p, 'ชื่อโปรเจค');
+        const code    = getRich(p, 'รหัสโปรเจค');
+        const client  = getRich(p, 'ลูกค้า');
+        const status  = getSel(p, 'สถานะ');
+        const value   = getNum(p, 'มูลค่าสัญญา');
+        const loc     = getRich(p, 'ที่อยู่หน้างาน');
+        const start   = getDate(p, 'วันเริ่มต้น');
+        const type    = getSel(p, 'ประเภทงาน');
+        const sm      = statusMap[status] || {cls:'status-design', label: status};
+        const isWarn  = status === '⚠️ เกินงบ';
+        const isDone  = status === '✅ ส่งมอบแล้ว';
+
+        // หาค่าใช้จ่ายของโปรเจคนี้
+        const projExp = expenses.filter(e => {
+          const rel = e?.properties?.['โปรเจค']?.relation || [];
+          return rel.some(r => r.id === p.id);
+        });
+        const totalProjCost = projExp.reduce((s,e) => s + getNum(e,'จ่ายแล้ว'), 0);
+        const projMargin = value > 0 ? ((value - totalProjCost) / value * 100).toFixed(0) : 0;
+
+        const headerCls = isWarn ? 'card-header warning' : isDone ? 'card-header complete' : 'card-header';
+        const statusCls = isWarn ? 'status-pill status-warning' : isDone ? 'status-pill status-design' : 'status-pill status-active';
+
+        return '<div class="project-card">' +
+          '<div class="' + headerCls + '">' +
+            '<div class="card-project-name">' + (name || code) + '</div>' +
+            '<div class="card-client">📍 ' + (loc || '-') + (start ? ' · เริ่ม ' + start.substring(0,7) : '') + '</div>' +
+            '<div class="' + statusCls + '">' + sm.label + '</div>' +
+          '</div>' +
+          '<div class="card-body">' +
+            '<div class="cost-grid">' +
+              '<div class="cost-item"><div class="cost-item-label">💰 มูลค่าสัญญา</div><div class="cost-item-value">' + fmtB(value) + '</div></div>' +
+              '<div class="cost-item"><div class="cost-item-label">📊 ต้นทุนจริง</div><div class="cost-item-value">' + fmtB(totalProjCost) + '</div></div>' +
+              '<div class="cost-item"><div class="cost-item-label">👤 ลูกค้า</div><div class="cost-item-value" style="font-size:13px">' + client + '</div></div>' +
+              '<div class="cost-item"><div class="cost-item-label">📋 ประเภท</div><div class="cost-item-value" style="font-size:12px">' + (type||'-') + '</div></div>' +
+            '</div>' +
+            '<div class="profit-bar-wrap">' +
+              '<div class="profit-label"><span class="label">อัตรากำไรประมาณการ</span><span class="pct' + (projMargin < 20 ? ' low' : '') + '">' + projMargin + '%</span></div>' +
+              '<div class="profit-track"><div class="profit-fill" style="width:' + Math.min(projMargin,100) + '%"></div></div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="card-footer">' +
+            '<div class="footer-meta"><span>📋 ' + code + '</span></div>' +
+            '<div class="card-actions"><button class="btn-sm primary">ดูรายละเอียด</button></div>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+    }
+
+  } catch(e) {
+    console.error('Notion error:', e);
+  }
+}
+
+// โหลดเมื่อหน้าเปิด
+window.addEventListener('load', () => {
+  setTimeout(loadProjects, 300);
+});
+</script>
+</body>
+</html>
