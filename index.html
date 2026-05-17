@@ -17,6 +17,8 @@ body{font-family:'Sarabun',sans-serif;background:#f5f0e8;color:#1a3a2a;min-heigh
 .nav a{padding:7px 14px;border-radius:6px;font-family:'Sarabun',sans-serif;font-size:13px;font-weight:500;color:rgba(245,240,232,0.65);background:transparent;text-decoration:none;transition:all 0.2s}
 .nav a:hover{background:rgba(255,255,255,0.1);color:#f5f0e8}
 .nav a.active{background:#c9a84c;color:#1a3a2a;font-weight:700}
+.nav a .lbl{display:inline}
+@media(max-width:600px){.nav a .lbl{display:none}.nav a{padding:8px 10px;font-size:16px}.status span{display:none}.nav{gap:2px}}
 .status{display:flex;align-items:center;gap:8px;color:#7aad8f;font-size:12px}
 .dot{width:8px;height:8px;border-radius:50%;background:#7aad8f;animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
@@ -67,12 +69,13 @@ body{font-family:'Sarabun',sans-serif;background:#f5f0e8;color:#1a3a2a;min-heigh
     </div>
   </div>
   <div class="nav">
-    <a class="active" href="/">🏠 หน้าหลัก</a>
-    <a href="/suanlangbaan-project-tracker-v2.html">📋 โปรเจค</a>
-    <a href="/slb-finance-dashboard.html">💰 การเงิน</a>
-    <a href="/slb-tax.html">🧾 ภาษี</a>
-    <a href="/slb-marketing.html">📣 Ad</a>
-    <a href="/slb-quote-tool-v2.html">📝 ต่อราคา</a>
+    <a class="active" href="/">🏠 <span class="lbl">หน้าหลัก</span></a>
+    <a href="/suanlangbaan-project-tracker-v2.html">📋 <span class="lbl">โปรเจค</span></a>
+    <a href="/slb-finance-dashboard.html">💰 <span class="lbl">การเงิน</span></a>
+    <a href="/slb-tax.html">🧾 <span class="lbl">ภาษี</span></a>
+    <a href="/slb-marketing.html">📣 <span class="lbl">Ad</span></a>
+    <a href="/slb-quote-tool-v2.html">📝 <span class="lbl">ต่อราคา</span></a>
+    <a href="/slb-client-portal.html">👤 <span class="lbl">Client Portal</span></a>
   </div>
   <div class="status">
     <div class="dot"></div>
